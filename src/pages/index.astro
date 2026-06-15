@@ -1,0 +1,294 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import SectionHeader from "@/components/elements/SectionHeader.astro";
+import Pricing from "@/components/sections/Pricing.astro";
+import FAQ from "@/components/sections/FAQ.astro";
+import Button from "@/components/ui/Button.astro";
+import Badge from "@/components/ui/Badge.astro";
+import BrowserFrame from "@/components/ui/BrowserFrame.astro";
+import { siteConfig } from "@/config/site";
+import { Send, ArrowRight } from "@lucide/astro";
+
+// Manual ceremonies SORT replaces (the error surfaces)
+const ceremonies = [
+  { ritual: "Стікери з датами / тримати терміни в голові", error: "стікер відклеївся, забули, не дотримались ротації — прострочене на полиці", sort: "партія з терміном створюється сама + пуш на зміні + порядок FEFO" },
+  { ritual: "Фото холодильника, щоб оцінити стан і що замовляти", error: "забули; з фото не видно кількостей; кожен трактує по-своєму; терміну на фото немає", sort: "полиця повторює реальний склад — позиції, залишок і термін в одному місці" },
+  { ritual: "Записати «скільки молока / випічки лишилось»", error: "прорахувались, нерозбірливо, загубили, застаріло до замовлення", sort: "приблизний залишок на кожній картці (візуалізація)" },
+  { ritual: "Усне «скільки лишилось?» — питаєш баристу на зміні", error: "відриває від зміни; по пам'яті; ефект зіпсованого телефону", sort: "менеджер відкриває полицю й бачить — нікого не відриваючи" },
+  { ritual: "Вирішити, що і скільки замовити, з фото й нотаток", error: "над- або недозамовлення; замовляєш те, що зіпсується; немає зв'язку зі списаннями", sort: "склад полиці + аналітика списань підказують замовлення" },
+  { ritual: "Списання «на око» в кінці дня", error: "над- або недосписання, неправильна чи порожня причина, не записано", sort: "списання в один дотик, залишок підставлено, запис у Poster" },
+];
+
+// How it works
+const steps = [
+  { n: "1", title: "Постачання в Poster", desc: "SORT створює партію з терміном придатності." },
+  { n: "2", title: "Бариста підтверджує", desc: "Одним дотиком — без вводу даних і дат." },
+  { n: "3", title: "Пуш на зміні", desc: "Що прострочено, що псується сьогодні." },
+  { n: "4", title: "Списати в дотик", desc: "Запис іде в Poster — облік лишається там." },
+];
+
+// Feature cards (the important / cool ones)
+const features = [
+  { ico: "🔔", title: "Пуш на початку зміни", desc: "Дізнаєтесь не на касі, а до відкриття — бариста готовий ще до першого гостя.", shot: "F1 · пуш на локскріні" },
+  { ico: "📋", title: "Екран «Сьогодні»", desc: "Один пріоритезований екран на початок зміни. Нічого не губиться.", shot: "F2 · скриншот «Сьогодні»" },
+  { ico: "🗑️", title: "Списання в один дотик", desc: "Кількість підставлено з продажів. Запис іде в Poster, усе оборотне.", shot: "F3 · картка списання" },
+  { ico: "✓", title: "Нуль ручного вводу", desc: "Партії з'являються з постачань Poster. Бариста лише підтверджує.", shot: "F4 · «Нові партії»" },
+  { ico: "📊", title: "Аналітика списань", desc: "Видно чому викинули гроші, а не лише скільки. За 7 / 30 / 90 днів.", shot: "F5 · аналітика за причинами" },
+  { ico: "🥛", title: "Візуалізація залишку", desc: "Скільки лишилось — видно з відстані. Колір показує терміновість.", shot: "F6 · картки з візуалізацією" },
+];
+
+// Trust chips
+const chips = ["📶 Працює офлайн", "🇺🇦 Українською", "📒 Poster — джерело правди", "↩️ Все оборотне в Poster"];
+
+// Before / after
+const before = [
+  "Стікери з датами, нотатки, дзвінки менеджеру",
+  "«Здається, це ще норм?»",
+  "Фото холодильника й записи «скільки лишилось»",
+  "Списання навмання в кінці дня",
+  "Сюрприз у звіті наприкінці місяця",
+];
+const after = [
+  "Партія з терміном з'являється сама з постачання Poster",
+  "Пуш на початку зміни: що прострочено, що псується сьогодні",
+  "Полиця показує склад і приблизний залишок — без фото",
+  "Одне натискання «Списати» → запис у Poster",
+  "Аналітика: за що саме викинули гроші",
+];
+
+// FAQ
+const faqItems = [
+  { question: "Чи замінює SORT Poster?", answer: "Ні. SORT працює поверх Poster — він лишається вашим обліком. SORT лише додає шар рішень про терміни придатності." },
+  { question: "Скільки навчати баристу?", answer: "Майже не треба: одна дія, інтерфейс українською. Підтвердити, списати — в один дотик." },
+  { question: "Що потрібно для підключення?", answer: "Доступ до вашого Poster. Усе інше — реєстр термінів, розклад, налаштування — робимо ми разом із вами." },
+  { question: "Чи можна скасувати списання?", answer: "Так. Кожне списання оборотне в Poster, а в застосунку є вікно «Скасувати»." },
+  { question: "Працює, якщо впав інтернет?", answer: "Так. Дані показуються з кешу, а дії стають у чергу й синхронізуються самі, коли зв'язок повернеться." },
+  { question: "Скільки це коштує?", answer: "Є безкоштовний тариф. Платний — від ₴… за заклад на місяць; точну ціну узгодимо при підключенні." },
+];
+---
+
+<Layout
+  title={siteConfig.meta.title}
+  description={siteConfig.meta.description}
+  keywords={siteConfig.meta.keywords}
+>
+  <!-- 1. HERO -->
+  <section class="site-container z-20 w-full mx-auto mt-12 md:mt-20 px-4">
+    <div class="flex flex-col items-center justify-between gap-12 md:flex-row">
+      <div class="w-full md:w-1/2 text-center sm:text-left">
+        <div class="flex flex-wrap gap-2 justify-center sm:justify-start mb-6">
+          <Badge variant="primary">Поверх Poster</Badge>
+          <Badge variant="accent">Для кав'ярень</Badge>
+        </div>
+        <h1 class="font-brand text-4xl leading-tight md:text-5xl lg:text-6xl mb-4">
+          Бариста бачить прострочку ще до першого гостя.
+        </h1>
+        <p class="text-base md:text-lg text-neutral-600 dark:text-neutral-300 leading-relaxed mb-6 max-w-xl mx-auto sm:mx-0">
+          SORT під'єднується до вашого Poster, сам рахує термін кожної партії й надсилає баристі сповіщення на початку зміни. Без таблиць, без ручного обліку, без навчання — одна дія.
+        </p>
+        <div class="flex flex-wrap gap-3 justify-center sm:justify-start">
+          <Button url="#contact" type="fill" size="lg">
+            Підключити свій Poster <ArrowRight size={18} />
+          </Button>
+          <Button url={siteConfig.telegram} type="solid" size="lg" target="_blank">
+            <Send size={16} /> Telegram
+          </Button>
+        </div>
+        <p class="mt-4 text-sm text-neutral-400 dark:text-neutral-500">
+          Перші заклади під'єднуємо особисто й безкоштовно.
+        </p>
+      </div>
+
+      <div class="w-full md:w-1/2">
+        <BrowserFrame url="sort · Сьогодні" className="w-full">
+          <div class="h-[320px] md:h-[380px] flex items-center justify-center p-6 text-center bg-[repeating-linear-gradient(135deg,transparent,transparent_10px,rgba(111,78,55,0.04)_10px,rgba(111,78,55,0.04)_20px)]">
+            <div>
+              <div class="text-4xl mb-3">📱</div>
+              <p class="text-sm font-semibold text-neutral-700 dark:text-neutral-200">Скриншот «Сьогодні» на планшеті</p>
+              <p class="text-xs text-neutral-400 dark:text-neutral-500 mt-1 max-w-xs mx-auto">червона секція «Прострочено» + бурштинова «Знижка сьогодні». Зняти на dev із демо-даними.</p>
+            </div>
+          </div>
+        </BrowserFrame>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. PROBLEM / ERROR SURFACES -->
+  <section class="py-16 md:py-24 site-container">
+    <SectionHeader
+      title="Зараз терміни тримаються на пам'яті й удачі"
+      description="Ранок. Гість замовляє — а ви розумієте, що молоко скисло вчора. Більшість кафе тримає терміни й залишки на ручних ритуалах. Ось де вони ламаються:"
+    />
+    <div class="mt-8 max-w-5xl mx-auto overflow-x-auto rounded-2xl border border-primary/10 dark:border-neutral-700 bg-bg-secondary dark:bg-bg-secondary-dark">
+      <table class="w-full border-collapse text-left text-sm min-w-[640px]">
+        <thead>
+          <tr class="text-xs uppercase tracking-wider text-primary">
+            <th class="px-4 py-3 font-semibold">Ручний ритуал</th>
+            <th class="px-4 py-3 font-semibold">Де виникає помилка</th>
+            <th class="px-4 py-3 font-semibold">Із SORT</th>
+          </tr>
+        </thead>
+        <tbody>
+          {ceremonies.map((row) => (
+            <tr class="border-t border-primary/10 dark:border-neutral-700 align-top">
+              <td class="px-4 py-3 text-neutral-700 dark:text-neutral-200">{row.ritual}</td>
+              <td class="px-4 py-3 text-[#a8553f] dark:text-amber-400/80">{row.error}</td>
+              <td class="px-4 py-3 text-emerald-700 dark:text-emerald-400">{row.sort}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="text-center text-xs text-neutral-400 dark:text-neutral-500 mt-4 max-w-2xl mx-auto">
+      Рішення про замовлення лишається за менеджером у Poster — SORT лише робить вхідні дані видимими.
+    </p>
+  </section>
+
+  <!-- 3. BEFORE / AFTER -->
+  <section class="py-8 md:py-12 site-container">
+    <SectionHeader title="Від ручного контролю — до системи, якій можна довіряти" />
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+      <div class="rounded-2xl border border-primary/10 dark:border-neutral-700 bg-[#fbf3ee] dark:bg-bg-secondary-dark p-6">
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-[#a8553f] mb-4">Раніше · вручну</h3>
+        <ul class="space-y-3">
+          {before.map((b) => (
+            <li class="text-sm text-neutral-600 dark:text-neutral-300 border-t border-dashed border-neutral-200 dark:border-neutral-700 pt-3 first:border-0 first:pt-0">{b}</li>
+          ))}
+        </ul>
+      </div>
+      <div class="rounded-2xl border border-emerald-500/20 bg-[#f1f7f3] dark:bg-bg-secondary-dark p-6">
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-emerald-700 mb-4">Із SORT · система</h3>
+        <ul class="space-y-3">
+          {after.map((a) => (
+            <li class="text-sm text-neutral-600 dark:text-neutral-300 border-t border-dashed border-emerald-200/60 dark:border-neutral-700 pt-3 first:border-0 first:pt-0">{a}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. HOW IT WORKS -->
+  <section id="how" class="py-16 md:py-24 site-container scroll-mt-24">
+    <SectionHeader title="Один надійний цикл замість ручних кроків" description="Чотири кроки — і прострочка під контролем без жодної таблиці." />
+    <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+      {steps.map((s) => (
+        <div class="p-6 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-700">
+          <div class="w-10 h-10 rounded-xl bg-primary text-white font-brand text-lg flex items-center justify-center mb-3">{s.n}</div>
+          <h3 class="text-base font-semibold text-neutral-800 dark:text-neutral-100 mb-1">{s.title}</h3>
+          <p class="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">{s.desc}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- 5. FEATURES -->
+  <section id="features" class="py-16 md:py-24 site-container scroll-mt-24">
+    <SectionHeader title="Що отримує заклад" description="Найважливіше з того, що SORT робить за вашу команду щодня." />
+    <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {features.map((f) => (
+        <div class="h-full rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-700 overflow-hidden hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+          <div class="h-36 flex flex-col items-center justify-center gap-1 border-b border-dashed border-primary/15 dark:border-neutral-700 bg-bg-primary/40 dark:bg-neutral-900/30 text-center px-4">
+            <span class="text-3xl">{f.ico}</span>
+            <span class="text-[11px] uppercase tracking-wider text-neutral-400 dark:text-neutral-500">{f.shot}</span>
+          </div>
+          <div class="p-6">
+            <h3 class="text-lg font-semibold text-neutral-800 dark:text-neutral-100 mb-1">{f.title}</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">{f.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+    <div class="mt-8 flex flex-wrap gap-2.5 justify-center">
+      {chips.map((c) => (
+        <span class="px-4 py-2 rounded-full bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-700 text-sm font-medium text-neutral-600 dark:text-neutral-300">{c}</span>
+      ))}
+    </div>
+  </section>
+
+  <!-- 6. SHELF MIRRORS REAL LIFE + QoL -->
+  <section class="py-16 md:py-24 site-container">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center max-w-5xl mx-auto">
+      <BrowserFrame url="sort · Полиця" className="w-full">
+        <div class="h-[300px] md:h-[340px] flex items-center justify-center p-6 text-center bg-[repeating-linear-gradient(135deg,transparent,transparent_10px,rgba(111,78,55,0.04)_10px,rgba(111,78,55,0.04)_20px)]">
+          <div>
+            <div class="text-4xl mb-3">🧱</div>
+            <p class="text-sm font-semibold text-neutral-700 dark:text-neutral-200">Скриншот «Полиця»</p>
+            <p class="text-xs text-neutral-400 dark:text-neutral-500 mt-1 max-w-xs mx-auto">партії за реальними полицями (емодзі) + візуалізація залишку — найбільш схожий на кафе кадр.</p>
+          </div>
+        </div>
+      </BrowserFrame>
+      <div>
+        <Badge variant="accent">Зручність</Badge>
+        <h2 class="font-brand text-3xl md:text-4xl mt-4 mb-3">Полиця, як у житті</h2>
+        <p class="text-neutral-600 dark:text-neutral-300 leading-relaxed">
+          Полиці в SORT відтворюють реальний склад вашого закладу — видно, що стоїть, скільки приблизно лишилось і коли псується. Менше фото холодильника, менше нотаток, менше «скільки лишилось?» на зміні.
+        </p>
+        <p class="mt-3 font-semibold text-primary">Зроблено, щоб користуватись було приємно.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. OBJECTION -->
+  <section class="py-16 md:py-24 site-container">
+    <SectionHeader title="Хіба Poster цього вже не вміє?" description="Ваш POS знає цифру. SORT каже людині." />
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+      <div class="rounded-2xl border border-primary/10 dark:border-neutral-700 bg-bg-secondary dark:bg-bg-secondary-dark p-6">
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-neutral-400 mb-2">Poster</h3>
+        <p class="text-sm text-neutral-500 dark:text-neutral-400">Знає залишок і собівартість на складі — для обліку.</p>
+      </div>
+      <div class="rounded-2xl border border-primary/30 bg-bg-secondary dark:bg-bg-secondary-dark p-6">
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-primary mb-2">SORT</h3>
+        <p class="text-sm text-neutral-600 dark:text-neutral-300">Створює фізичну партію, штовхає баристу на зміні й готує списання в один дотик — те, чого модуль складу не робить.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. PRICING -->
+  <div id="pricing" class="scroll-mt-24"></div>
+  <Pricing />
+
+  <!-- 9. FAQ -->
+  <div id="faq" class="scroll-mt-24"></div>
+  <FAQ title="Часті запитання" items={faqItems} />
+
+  <!-- 10. FINAL CTA + CONTACT FORM -->
+  <section id="contact" class="py-12 md:py-20 site-container scroll-mt-24">
+    <div class="max-w-4xl mx-auto rounded-3xl border border-primary/10 dark:border-neutral-700 bg-bg-secondary dark:bg-bg-secondary-dark p-8 md:p-12">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+        <div>
+          <h2 class="font-brand text-3xl md:text-4xl mb-3">Підключіть свій заклад</h2>
+          <p class="text-neutral-600 dark:text-neutral-300 leading-relaxed">
+            Залиште контакт — ми під'єднаємо ваш Poster особисто й безкоштовно. Перші заклади запускаємо вручну, разом із вами.
+          </p>
+          <p class="mt-4 text-sm text-neutral-500 dark:text-neutral-400">
+            Або напишіть прямо:
+            <a href={siteConfig.telegram} target="_blank" class="text-primary font-medium hover:underline">Telegram {siteConfig.telegramHandle}</a>
+          </p>
+        </div>
+
+        <form id="lead-form" class="grid gap-3" action="/api/lead" method="post">
+          <input class="px-4 py-3 rounded-xl border border-primary/15 dark:border-neutral-700 bg-bg-primary/60 dark:bg-neutral-900/40 focus:outline-none focus:border-primary" name="name" required placeholder="Ваше ім'я" />
+          <input class="px-4 py-3 rounded-xl border border-primary/15 dark:border-neutral-700 bg-bg-primary/60 dark:bg-neutral-900/40 focus:outline-none focus:border-primary" name="cafe" required placeholder="Назва кафе" />
+          <input class="px-4 py-3 rounded-xl border border-primary/15 dark:border-neutral-700 bg-bg-primary/60 dark:bg-neutral-900/40 focus:outline-none focus:border-primary" name="poster" required placeholder="Субдомен Poster: yourcafe.joinposter.com" />
+          <input class="px-4 py-3 rounded-xl border border-primary/15 dark:border-neutral-700 bg-bg-primary/60 dark:bg-neutral-900/40 focus:outline-none focus:border-primary" name="contact" required placeholder="Telegram або email" />
+          <!-- honeypot -->
+          <input type="text" name="company_url" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+          <button type="submit" class="flex justify-center items-center gap-1.5 px-6 py-3.5 rounded-xl bg-btn-primary text-neutral-50 font-medium text-base transition hover:bg-btn-primary-hover hover:-translate-y-[2px]">
+            Підключити свій Poster
+          </button>
+          <p id="lead-done" class="hidden text-sm text-emerald-700 dark:text-emerald-400">Дякуємо! Напишемо вам у Telegram протягом доби. <span class="text-neutral-400">(чернетка — форму ще не під'єднано)</span></p>
+        </form>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  // Draft-only: no backend yet (Pages Function = SCRUM-67). Show the thank-you state.
+  const form = document.getElementById("lead-form") as HTMLFormElement | null;
+  form?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    document.getElementById("lead-done")?.classList.remove("hidden");
+    form.querySelector("button[type=submit]")?.setAttribute("disabled", "true");
+  });
+</script>

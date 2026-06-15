@@ -1,0 +1,107 @@
+---
+import SectionHeader from "@/components/elements/SectionHeader.astro";
+import Button from "@/components/ui/Button.astro";
+import { Check, ArrowRight, Sparkles } from "@lucide/astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  showHeader?: boolean;
+}
+
+const {
+  title = "Коштує менше, ніж ви викидаєте за тиждень",
+  description = "Безкоштовний тариф, щоб спробувати все. Платний — коли зрозумієте, що працює.",
+  showHeader = true,
+} = Astro.props;
+
+const plans = [
+  {
+    name: "Безкоштовно",
+    price: "₴0",
+    suffix: "назавжди",
+    desc: "Спробувати все на одному закладі.",
+    features: [
+      "Пуш на початку та в кінці зміни",
+      "Підтвердження й списання в один дотик",
+      "До ~15 товарів у реєстрі",
+      "Аналітика за 7 днів",
+    ],
+    cta: "Спробувати",
+    popular: false,
+  },
+  {
+    name: "Pro · за заклад",
+    price: "від ₴…",
+    suffix: "/міс",
+    desc: "Для щоденної роботи кафе.",
+    features: [
+      "Усе з безкоштовного, без лімітів",
+      "Необмежені партії й полиці",
+      "Аналітика за 90 днів",
+      "Під-партії, ротація, ролі",
+    ],
+    cta: "Підключити свій Poster",
+    popular: true,
+  },
+];
+---
+
+<section class="pricing-section">
+  {showHeader && (
+    <div class="site-container pt-16 md:pt-20">
+      <SectionHeader title={title} description={description} />
+    </div>
+  )}
+
+  <div class="site-container pt-8 pb-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+      {plans.map((plan) => (
+        <div
+          class={`relative p-6 md:p-8 rounded-2xl border bg-bg-secondary dark:bg-bg-secondary-dark ${
+            plan.popular
+              ? "border-primary shadow-lg"
+              : "border-primary/10 dark:border-neutral-700"
+          }`}
+        >
+          {plan.popular && (
+            <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 z-10">
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold text-white bg-primary shadow-sm">
+                <Sparkles class="w-3.5 h-3.5" stroke-width={2.25} /> Рекомендуємо
+              </span>
+            </div>
+          )}
+
+          <h3 class="text-xl font-semibold text-neutral-800 dark:text-neutral-100 mb-1">{plan.name}</h3>
+          <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-4">{plan.desc}</p>
+
+          <div class="mb-6">
+            <span class="text-4xl font-brand text-neutral-800 dark:text-neutral-100">{plan.price}</span>
+            <span class="text-sm text-neutral-400 ml-1">{plan.suffix}</span>
+          </div>
+
+          <ul class="space-y-3 mb-8">
+            {plan.features.map((feature) => (
+              <li class="flex items-start gap-2">
+                <Check class="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                <span class="text-sm text-neutral-600 dark:text-neutral-300">{feature}</span>
+              </li>
+            ))}
+          </ul>
+
+          <Button
+            url="#contact"
+            type={plan.popular ? "fill" : "outline"}
+            className="w-full justify-center"
+          >
+            {plan.cta} {plan.popular && <ArrowRight size={16} />}
+          </Button>
+        </div>
+      ))}
+    </div>
+
+    <p class="text-center text-xs text-neutral-400 dark:text-neutral-500 mt-6">
+      Перші заклади запускаємо особисто — точну ціну узгодимо при підключенні.
+    </p>
+  </div>
+</section>
