@@ -282,11 +282,14 @@ const faqItems = [
 
         <div id="lead-form-wrapper">
           <form id="lead-form" class="grid gap-3" action="/api/lead" method="post">
-            <input class="px-4 py-3 rounded-xl border border-primary/15 dark:border-neutral-700 bg-bg-primary/60 dark:bg-neutral-900/40 focus:outline-none focus:border-primary" name="name" placeholder="Ваше ім'я (необов'язково)" />
-            <input class="px-4 py-3 rounded-xl border border-primary/15 dark:border-neutral-700 bg-bg-primary/60 dark:bg-neutral-900/40 focus:outline-none focus:border-primary" name="cafe" placeholder="Назва кафе (необов'язково)" />
-            <input class="px-4 py-3 rounded-xl border border-primary/15 dark:border-neutral-700 bg-bg-primary/60 dark:bg-neutral-900/40 focus:outline-none focus:border-primary" name="poster" placeholder="Субдомен Poster (необов'язково)" />
+            <input class="px-4 py-3 rounded-xl border border-primary/15 dark:border-neutral-700 bg-bg-primary/60 dark:bg-neutral-900/40 focus:outline-none focus:border-primary" name="name" placeholder="Ваше ім'я — Олена" />
+            <input class="px-4 py-3 rounded-xl border border-primary/15 dark:border-neutral-700 bg-bg-primary/60 dark:bg-neutral-900/40 focus:outline-none focus:border-primary" name="cafe" placeholder="Кав'ярня «Весна»" />
+            <input class="px-4 py-3 rounded-xl border border-primary/15 dark:border-neutral-700 bg-bg-primary/60 dark:bg-neutral-900/40 focus:outline-none focus:border-primary" name="poster" placeholder="myname.joinposter.com" />
             <div>
-              <input class="w-full px-4 py-3 rounded-xl border border-primary/15 dark:border-neutral-700 bg-bg-primary/60 dark:bg-neutral-900/40 focus:outline-none focus:border-primary" name="contact" required placeholder="@tg_handle або email@example.com" />
+              <label class="flex items-center gap-1 text-xs text-neutral-500 dark:text-neutral-400 mb-1.5 px-1" for="contact-input">
+                Контакт для зв'язку <span class="text-red-500" aria-label="обов'язкове поле">*</span>
+              </label>
+              <input id="contact-input" class="w-full px-4 py-3 rounded-xl border border-primary/15 dark:border-neutral-700 bg-bg-primary/60 dark:bg-neutral-900/40 focus:outline-none focus:border-primary" name="contact" required placeholder="@username або email@example.com" />
               <p id="contact-hint" class="hidden mt-1.5 text-xs text-[#a8553f] dark:text-amber-400">Вкажіть @Telegram-нік (напр. @ivanka) або email</p>
             </div>
             <!-- honeypot -->
@@ -315,7 +318,7 @@ const faqItems = [
   const form = document.getElementById("lead-form") as HTMLFormElement | null;
   const formWrapper = document.getElementById("lead-form-wrapper");
   const successEl = document.getElementById("lead-success");
-  const contactInput = form?.querySelector('input[name="contact"]') as HTMLInputElement | null;
+  const contactInput = document.getElementById("contact-input") as HTMLInputElement | null;
   const contactHint = document.getElementById("contact-hint");
   const done = document.getElementById("lead-done");
 

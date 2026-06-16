@@ -89,8 +89,12 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
     user_agent: request.headers.get("user-agent"),
   };
 
-  // Backend not provisioned yet (SCRUM-63) → accept so the UI flows, flag not-stored.
+  // If env vars are missing, accept the lead so the UI flows but flag not-stored.
   if (!env.SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY) {
+    console.error("SORT lead: missing env var(s)", {
+      SUPABASE_URL: !!env.SUPABASE_URL,
+      SUPABASE_SERVICE_ROLE_KEY: !!env.SUPABASE_SERVICE_ROLE_KEY,
+    });
     return json({ ok: true, persisted: false });
   }
 
