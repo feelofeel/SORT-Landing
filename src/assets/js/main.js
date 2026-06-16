@@ -62,9 +62,16 @@ document.addEventListener("DOMContentLoaded", () => {
 // }
 
 window.stickyHeaderFuncionality = () => {
+	let ticking = false;
 	window.addEventListener("scroll", () => {
-		evaluateHeaderPosition();
-	});
+		if (!ticking) {
+			window.requestAnimationFrame(() => {
+				evaluateHeaderPosition();
+				ticking = false;
+			});
+			ticking = true;
+		}
+	}, { passive: true });
 };
 
 window.evaluateHeaderPosition = () => {
