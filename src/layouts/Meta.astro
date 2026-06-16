@@ -1,27 +1,42 @@
 ---
-import { siteConfig } from '@/config/site.js';
+import { siteConfig } from "@/config/site.js";
+import type { Lang } from "@/i18n";
 export interface Props {
-  title?: string;
-  description?: string;
-  keywords?: string;
-  url?: string;
-  ogImage?: string;
-  twitterHandle?: string;
+	lang?: Lang;
+	title?: string;
+	description?: string;
+	keywords?: string;
+	url?: string;
+	ogImage?: string;
+	twitterHandle?: string;
 }
 
 const {
-  title,
-  description,
-  keywords = "",
-  ogImage = "/og.jpg",
-  twitterHandle = siteConfig.social.twitterName || '',
+	lang = "uk",
+	title,
+	description,
+	keywords = "",
+	ogImage = "/og.jpg",
+	twitterHandle = siteConfig.social.twitterName || "",
 } = Astro.props;
 
 // Canonical = real page URL (origin from astro.config `site`, path from the request).
 // Falls back to siteConfig.url if Astro.site is somehow unset.
 const origin = (Astro.site ?? new URL(siteConfig.url)).origin;
-const canonical = new URL(Astro.url.pathname, origin).href.replace(/\/$/, "") + (Astro.url.pathname === "/" ? "/" : "");
-const absoluteOg = ogImage.startsWith("http") ? ogImage : new URL(ogImage, origin).href;
+const canonical =
+	new URL(Astro.url.pathname, origin).href.replace(/\/$/, "") +
+	(Astro.url.pathname === "/" ? "/" : "");
+const absoluteOg = ogImage.startsWith("http")
+	? ogImage
+	: new URL(ogImage, origin).href;
+
+// hreflang: the home page exists in uk + en, so cross-link them; other pages
+// (404, blog) self-reference. uk is x-default (the primary locale).
+const path = Astro.url.pathname;
+const isHome = path === "/" || path === "/en" || path === "/en/";
+const ukHome = new URL("/", origin).href;
+const enHome = new URL("/en/", origin).href;
+const ogLocale = lang === "en" ? "en_US" : "uk_UA";
 ---
 
 <!-- Meta Tags -->
@@ -50,10 +65,20 @@ const absoluteOg = ogImage.startsWith("http") ? ogImage : new URL(ogImage, origi
 <meta name="keywords" content={keywords} />
 <meta name="author" content={siteConfig.author} />
 
-<!-- Canonical + hreflang (uk now; ru/en added when those localizations ship) -->
+<!-- Canonical + hreflang -->
 <link rel="canonical" href={canonical} />
-<link rel="alternate" hreflang="uk" href={canonical} />
-<link rel="alternate" hreflang="x-default" href={canonical} />
+{isHome ? (
+  <>
+    <link rel="alternate" hreflang="uk" href={ukHome} />
+    <link rel="alternate" hreflang="en" href={enHome} />
+    <link rel="alternate" hreflang="x-default" href={ukHome} />
+  </>
+) : (
+  <>
+    <link rel="alternate" hreflang="uk" href={canonical} />
+    <link rel="alternate" hreflang="x-default" href={canonical} />
+  </>
+)}
 
 <!-- Open Graph Tags -->
 <meta property="og:type" content="website" />
@@ -62,7 +87,9 @@ const absoluteOg = ogImage.startsWith("http") ? ogImage : new URL(ogImage, origi
 <meta property="og:url" content={canonical} />
 <meta property="og:image" content={absoluteOg} />
 <meta property="og:site_name" content={siteConfig.title} />
-<meta property="og:locale" content="uk_UA" />
+<meta property="og:locale" content={ogLocale} />
+{isHome && lang === "en" && <meta property="og:locale:alternate" content="uk_UA" />}
+{isHome && lang === "uk" && <meta property="og:locale:alternate" content="en_US" />}
 
 <!-- Twitter Meta Tags -->
 <meta name="twitter:card" content="summary_large_image" />

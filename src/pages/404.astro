@@ -1,11 +1,18 @@
 ---
-import PageLayout from "@/layouts/PageLayout.astro";
 import Button from "@/components/ui/Button.astro";
-import { ArrowLeft, Compass, House, Mail, Search, ShieldAlert } from "@lucide/astro";
 import { siteConfig } from "@/config/site";
+import PageLayout from "@/layouts/PageLayout.astro";
+import {
+	ArrowLeft,
+	Compass,
+	House,
+	Mail,
+	Search,
+	ShieldAlert,
+} from "@lucide/astro";
 ---
 
-<PageLayout title="Page Not Found - RicoFast" description="The page you're looking for doesn't exist.">
+<PageLayout title="Сторінку не знайдено · Page not found — SORT" description="Такої сторінки не існує. The page you're looking for doesn't exist.">
   <section class="site-container py-14 md:py-24">
     <div class="grid min-h-[62vh] items-center gap-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(420px,1fr)]">
       <div data-aos="fade-up-xs" data-aos-once="true">
@@ -15,19 +22,20 @@ import { siteConfig } from "@/config/site";
         </p>
 
         <h1 class="max-w-2xl font-brand text-5xl leading-[1.04] tracking-normal text-neutral-800 dark:text-neutral-100 md:text-6xl">
-          This route does not have a page yet.
+          Такої сторінки немає.
         </h1>
 
         <p class="mt-5 max-w-xl text-base leading-8 text-neutral-600 dark:text-neutral-300">
-          The link may be outdated, mistyped, or still waiting to be built. Start from a known page, or send us the broken URL so we can trace it.
+          Можливо, посилання застаріле або з помилкою. Почніть з головної сторінки.<br />
+          <span class="text-neutral-500 dark:text-neutral-400">This page doesn't exist. The link may be outdated or mistyped — start from the home page.</span>
         </p>
 
         <div class="mt-7 flex flex-wrap gap-3">
           <Button url="/" type="fill">
-            <ArrowLeft size={16} /> Back to Home
+            <ArrowLeft size={16} /> На головну · Home
           </Button>
-          <Button url={`mailto:${siteConfig.mail}?subject=Broken%20link%20on%20RicoFast`}>
-            <Mail size={16} /> Report link
+          <Button url={`mailto:${siteConfig.mail}?subject=Broken%20link%20on%20SORT`}>
+            <Mail size={16} /> Повідомити · Report
           </Button>
         </div>
 

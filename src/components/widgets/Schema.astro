@@ -3,57 +3,61 @@
 // Organization + SoftwareApplication render site-wide; FAQPage only when `faq` is passed
 // (so the markup always matches the FAQ actually visible on the page).
 import { siteConfig } from "@/config/site.js";
+import { type Lang, getContent } from "@/i18n";
 
 interface Props {
-  faq?: Array<{ question: string; answer: string }>;
+	lang?: Lang;
+	faq?: Array<{ question: string; answer: string }>;
 }
-const { faq } = Astro.props;
+const { lang = "uk", faq } = Astro.props;
+const c = getContent(lang);
 
 const origin = (Astro.site ?? new URL(siteConfig.url)).origin;
 
 const organization = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: siteConfig.author,
-  url: origin,
-  logo: new URL("/favicon.png", origin).href,
-  sameAs: [siteConfig.telegram],
-  contactPoint: {
-    "@type": "ContactPoint",
-    contactType: "sales",
-    email: siteConfig.mail,
-    availableLanguage: ["uk"],
-  },
+	"@context": "https://schema.org",
+	"@type": "Organization",
+	name: siteConfig.author,
+	url: origin,
+	logo: new URL("/favicon.png", origin).href,
+	sameAs: [siteConfig.telegram],
+	contactPoint: {
+		"@type": "ContactPoint",
+		contactType: "sales",
+		email: siteConfig.mail,
+		availableLanguage: ["uk", "en"],
+	},
 };
 
 const softwareApplication = {
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  name: "SORT",
-  applicationCategory: "BusinessApplication",
-  operatingSystem: "Web",
-  description: siteConfig.meta.description,
-  url: origin,
-  inLanguage: "uk",
-  offers: {
-    "@type": "Offer",
-    price: "0",
-    priceCurrency: "UAH",
-    description: "Безкоштовний тариф для одного закладу.",
-  },
+	"@context": "https://schema.org",
+	"@type": "SoftwareApplication",
+	name: "SORT",
+	applicationCategory: "BusinessApplication",
+	operatingSystem: "Web",
+	description: c.meta.description,
+	url: lang === "en" ? new URL("/en/", origin).href : origin,
+	inLanguage: lang,
+	offers: {
+		"@type": "Offer",
+		price: "0",
+		priceCurrency: "UAH",
+		description: c.schema.offerDescription,
+	},
 };
 
-const faqPage = faq && faq.length > 0
-  ? {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: faq.map((item) => ({
-        "@type": "Question",
-        name: item.question,
-        acceptedAnswer: { "@type": "Answer", text: item.answer },
-      })),
-    }
-  : null;
+const faqPage =
+	faq && faq.length > 0
+		? {
+				"@context": "https://schema.org",
+				"@type": "FAQPage",
+				mainEntity: faq.map((item) => ({
+					"@type": "Question",
+					name: item.question,
+					acceptedAnswer: { "@type": "Answer", text: item.answer },
+				})),
+			}
+		: null;
 ---
 {/* JSON.stringify doesn't escape </script>, which would break the enclosing script tag. */}
 {(() => {

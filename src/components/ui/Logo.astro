@@ -1,7 +1,17 @@
+---
+import { type Lang, getContent, homePath } from "@/i18n";
+
+interface Props {
+	lang?: Lang;
+}
+const { lang = "uk" } = Astro.props;
+const c = getContent(lang);
+---
+
 <a
-  href="/"
+  href={homePath(lang)}
   class="group relative z-30 flex items-center gap-2.5 h-10"
-  aria-label="SORT — на головну"
+  aria-label={c.logo.aria}
 >
   <img
     src="/icons/icon.svg"

@@ -1,0 +1,42 @@
+---
+import { type Lang, homePath, languages } from "@/i18n";
+
+interface Props {
+	lang: Lang;
+	ariaLabel: string;
+}
+
+const { lang, ariaLabel } = Astro.props;
+---
+
+<div
+  class="lang-switcher inline-flex items-center rounded-full border-[0.5px] border-primary/15 dark:border-neutral-600 bg-bg-secondary/60 dark:bg-neutral-800/60 p-0.5 text-xs font-medium"
+  role="group"
+  aria-label={ariaLabel}
+>
+  {languages.map(({ code, label }) => (
+    <a
+      href={homePath(code)}
+      data-lang={code}
+      aria-current={code === lang ? "true" : undefined}
+      class:list={[
+        "lang-option px-2.5 py-1 rounded-full transition-colors duration-150",
+        code === lang
+          ? "bg-primary text-white"
+          : "text-neutral-500 dark:text-neutral-400 hover:text-primary dark:hover:text-primary-light",
+      ]}
+    >
+      {label}
+    </a>
+  ))}
+</div>
+
+<script>
+  // Persist the manual choice so the auto-detect redirect (Layout) defers to it.
+  document.querySelectorAll<HTMLAnchorElement>(".lang-option").forEach((el) => {
+    el.addEventListener("click", () => {
+      const code = el.dataset.lang;
+      if (code) localStorage.setItem("sort_lang", code);
+    });
+  });
+</script>

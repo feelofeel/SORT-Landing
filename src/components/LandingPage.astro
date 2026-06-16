@@ -1,0 +1,294 @@
+---
+import SectionHeader from "@/components/elements/SectionHeader.astro";
+import FAQ from "@/components/sections/FAQ.astro";
+import Pricing from "@/components/sections/Pricing.astro";
+import Badge from "@/components/ui/Badge.astro";
+import BrowserFrame from "@/components/ui/BrowserFrame.astro";
+import Button from "@/components/ui/Button.astro";
+import Schema from "@/components/widgets/Schema.astro";
+import { siteConfig } from "@/config/site";
+import { type Lang, getContent } from "@/i18n";
+import Layout from "@/layouts/Layout.astro";
+import { ArrowRight, Send } from "@lucide/astro";
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const c = getContent(lang);
+---
+
+<Layout lang={lang} title={c.meta.title} description={c.meta.description} keywords={c.meta.keywords}>
+  <!-- 1. HERO -->
+  <section class="site-container z-20 w-full mx-auto mt-12 md:mt-20 px-4">
+    <div class="flex flex-col items-center justify-between gap-12 md:flex-row">
+      <div class="w-full md:w-1/2 text-center sm:text-left">
+        <div class="flex flex-wrap gap-2 justify-center sm:justify-start mb-6">
+          <Badge variant="primary">{c.hero.badges[0]}</Badge>
+          <Badge variant="accent">{c.hero.badges[1]}</Badge>
+        </div>
+        <h1 class="font-brand text-4xl leading-tight md:text-5xl lg:text-6xl mb-4">
+          {c.hero.headline}
+        </h1>
+        <p class="text-base md:text-lg text-neutral-600 dark:text-neutral-300 leading-relaxed mb-6 max-w-xl mx-auto sm:mx-0">
+          {c.hero.sub}
+        </p>
+        <div class="flex flex-wrap gap-3 justify-center sm:justify-start">
+          <Button url="#contact" type="fill" size="lg" className="evt-cta-hero">
+            {c.hero.ctaConnect} <ArrowRight size={18} />
+          </Button>
+          <Button url={siteConfig.telegram} type="solid" size="lg" target="_blank">
+            <Send size={16} /> {c.hero.ctaTelegram}
+          </Button>
+        </div>
+        <p class="mt-4 text-sm text-neutral-600 dark:text-neutral-400">
+          {c.hero.note}
+        </p>
+      </div>
+
+      <div class="w-full md:w-1/2">
+        <BrowserFrame url={c.hero.frame.url} className="w-full">
+          <div class="h-[320px] md:h-[380px] flex items-center justify-center p-6 text-center bg-[repeating-linear-gradient(135deg,transparent,transparent_10px,rgba(111,78,55,0.04)_10px,rgba(111,78,55,0.04)_20px)]">
+            <div>
+              <div class="text-4xl mb-3">📱</div>
+              <p class="text-sm font-semibold text-neutral-700 dark:text-neutral-200">{c.hero.frame.title}</p>
+              <p class="text-xs text-neutral-400 dark:text-neutral-500 mt-1 max-w-xs mx-auto">{c.hero.frame.desc}</p>
+            </div>
+          </div>
+        </BrowserFrame>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. PROBLEM + REFRAME (combined) -->
+  <section id="problem" class="py-16 md:py-24 site-container scroll-mt-24">
+    <SectionHeader title={c.problem.title} description={c.problem.description} />
+    <div class="mt-8 max-w-4xl mx-auto overflow-x-auto rounded-2xl border border-primary/10 dark:border-neutral-700 bg-bg-secondary dark:bg-bg-secondary-dark">
+      <table class="w-full border-collapse text-left text-sm min-w-[560px]">
+        <thead>
+          <tr>
+            <th class="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-[#a8553f] dark:text-amber-400/80 w-1/2 border-b border-primary/10 dark:border-neutral-700">{c.problem.thManual}</th>
+            <th class="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 w-1/2 border-b border-primary/10 dark:border-neutral-700">{c.problem.thSort}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {c.problem.comparison.map((row) => (
+            <tr class="border-t border-primary/10 dark:border-neutral-700 align-top">
+              <td class="px-4 py-3 text-neutral-600 dark:text-neutral-400 bg-[#fbf3ee]/60 dark:bg-transparent">{row.manual}</td>
+              <td class="px-4 py-3 text-neutral-700 dark:text-neutral-200">{row.sort}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="text-center text-xs text-neutral-500 dark:text-neutral-400 mt-4 max-w-2xl mx-auto">
+      {c.problem.note}
+    </p>
+  </section>
+
+  <!-- 4. HOW IT WORKS -->
+  <section id="how" class="py-16 md:py-24 site-container scroll-mt-24">
+    <SectionHeader title={c.how.title} description={c.how.description} />
+    <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+      {c.how.steps.map((s) => (
+        <div class="p-6 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-700">
+          <div class="w-10 h-10 rounded-xl bg-primary text-white font-brand text-lg flex items-center justify-center mb-3">{s.n}</div>
+          <h3 class="text-base font-semibold text-neutral-800 dark:text-neutral-100 mb-1">{s.title}</h3>
+          <p class="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">{s.desc}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- 5. FEATURES -->
+  <section id="features" class="py-16 md:py-24 site-container scroll-mt-24">
+    <SectionHeader title={c.features.title} description={c.features.description} />
+    <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {c.features.items.map((f) => (
+        <div class="h-full rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-700 overflow-hidden hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+          <div class="h-36 flex flex-col items-center justify-center gap-1 border-b border-dashed border-primary/15 dark:border-neutral-700 bg-bg-primary/40 dark:bg-neutral-900/30 text-center px-4">
+            <span class="text-3xl">{f.ico}</span>
+            <span class="text-[11px] uppercase tracking-wider text-neutral-500 dark:text-neutral-400">{f.shot}</span>
+          </div>
+          <div class="p-6">
+            <h3 class="text-lg font-semibold text-neutral-800 dark:text-neutral-100 mb-1">{f.title}</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">{f.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+    <div class="mt-8 flex flex-wrap gap-2.5 justify-center">
+      {c.features.chips.map((chip) => (
+        <span class="px-4 py-2 rounded-full bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-700 text-sm font-medium text-neutral-600 dark:text-neutral-300">{chip}</span>
+      ))}
+    </div>
+  </section>
+
+  <!-- 6. SHELF MIRRORS REAL LIFE + QoL -->
+  <section class="py-16 md:py-24 site-container">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center max-w-5xl mx-auto">
+      <BrowserFrame url={c.shelf.frame.url} className="w-full">
+        <div class="h-[300px] md:h-[340px] flex items-center justify-center p-6 text-center bg-[repeating-linear-gradient(135deg,transparent,transparent_10px,rgba(111,78,55,0.04)_10px,rgba(111,78,55,0.04)_20px)]">
+          <div>
+            <div class="text-4xl mb-3">🧱</div>
+            <p class="text-sm font-semibold text-neutral-700 dark:text-neutral-200">{c.shelf.frame.title}</p>
+            <p class="text-xs text-neutral-400 dark:text-neutral-500 mt-1 max-w-xs mx-auto">{c.shelf.frame.desc}</p>
+          </div>
+        </div>
+      </BrowserFrame>
+      <div>
+        <Badge variant="accent">{c.shelf.badge}</Badge>
+        <h2 class="font-brand text-3xl md:text-4xl mt-4 mb-3">{c.shelf.title}</h2>
+        <p class="text-neutral-600 dark:text-neutral-300 leading-relaxed">
+          {c.shelf.body}
+        </p>
+        <p class="mt-3 font-semibold text-primary">{c.shelf.tagline}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. OBJECTION -->
+  <section class="py-16 md:py-24 site-container">
+    <SectionHeader title={c.objection.title} description={c.objection.description} />
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+      <div class="rounded-2xl border border-primary/10 dark:border-neutral-700 bg-bg-secondary dark:bg-bg-secondary-dark p-6">
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-neutral-400 mb-2">{c.objection.posterLabel}</h3>
+        <p class="text-sm text-neutral-500 dark:text-neutral-400">{c.objection.posterBody}</p>
+      </div>
+      <div class="rounded-2xl border border-primary/30 bg-bg-secondary dark:bg-bg-secondary-dark p-6">
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-primary mb-2">{c.objection.sortLabel}</h3>
+        <p class="text-sm text-neutral-600 dark:text-neutral-300">{c.objection.sortBody}</p>
+      </div>
+    </div>
+    <p class="text-center text-sm text-neutral-500 dark:text-neutral-400 mt-6 max-w-2xl mx-auto">
+      {c.objection.note}
+    </p>
+  </section>
+
+  <!-- 8. PRICING -->
+  <div id="pricing" class="scroll-mt-24"></div>
+  <Pricing content={c.pricing} />
+
+  <!-- 9. FAQ -->
+  <div id="faq" class="scroll-mt-24"></div>
+  <FAQ title={c.faq.title} items={c.faq.items} />
+
+  <!-- 10. FINAL CTA + CONTACT FORM -->
+  <section id="contact" class="py-12 md:py-20 site-container scroll-mt-24">
+    <div class="max-w-4xl mx-auto rounded-3xl border border-primary/10 dark:border-neutral-700 bg-bg-secondary dark:bg-bg-secondary-dark p-8 md:p-12">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+        <div>
+          <h2 class="font-brand text-3xl md:text-4xl mb-3">{c.contact.title}</h2>
+          <p class="text-neutral-600 dark:text-neutral-300 leading-relaxed">
+            {c.contact.body}
+          </p>
+          <p class="mt-4 text-sm text-neutral-500 dark:text-neutral-400">
+            {c.contact.orWrite}
+            <a href={siteConfig.telegram} target="_blank" class="text-primary font-medium hover:underline">{c.contact.telegramPrefix} {siteConfig.telegramHandle}</a>
+          </p>
+        </div>
+
+        <div id="lead-form-wrapper">
+          <form id="lead-form" class="grid gap-3" action="/api/lead" method="post">
+            <input class="px-4 py-3 rounded-xl border border-primary/15 dark:border-neutral-700 bg-bg-primary/60 dark:bg-neutral-900/40 focus:outline-none focus:border-primary" name="name" placeholder={c.contact.form.namePh} />
+            <input class="px-4 py-3 rounded-xl border border-primary/15 dark:border-neutral-700 bg-bg-primary/60 dark:bg-neutral-900/40 focus:outline-none focus:border-primary" name="cafe" placeholder={c.contact.form.cafePh} />
+            <input class="px-4 py-3 rounded-xl border border-primary/15 dark:border-neutral-700 bg-bg-primary/60 dark:bg-neutral-900/40 focus:outline-none focus:border-primary" name="poster" placeholder={c.contact.form.posterPh} />
+            <div>
+              <label class="flex items-center gap-1 text-xs text-neutral-500 dark:text-neutral-400 mb-1.5 px-1" for="contact-input">
+                {c.contact.form.contactLabel} <span class="text-red-500" aria-label={c.contact.form.requiredAria}>*</span>
+              </label>
+              <input id="contact-input" class="w-full px-4 py-3 rounded-xl border border-primary/15 dark:border-neutral-700 bg-bg-primary/60 dark:bg-neutral-900/40 focus:outline-none focus:border-primary" name="contact" required placeholder={c.contact.form.contactPh} />
+              <p id="contact-hint" class="hidden mt-1.5 text-xs text-[#a8553f] dark:text-amber-400">{c.contact.form.contactHint}</p>
+            </div>
+            <!-- honeypot -->
+            <input type="text" name="company_url" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+            <button type="submit" class="flex justify-center items-center gap-1.5 px-6 py-3.5 rounded-xl bg-btn-primary text-neutral-50 font-medium text-base transition hover:bg-btn-primary-hover hover:-translate-y-[2px]">
+              {c.contact.form.submit}
+            </button>
+            <p id="lead-done" class="hidden text-sm" data-error-msg={c.contact.form.errorMsg}></p>
+          </form>
+        </div>
+        <div id="lead-success" class="hidden flex flex-col items-center justify-center text-center py-10 gap-5">
+          <div class="w-14 h-14 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center text-xl font-bold text-emerald-700 dark:text-emerald-400">✓</div>
+          <div>
+            <p class="font-semibold text-neutral-800 dark:text-neutral-100 text-lg">{c.contact.success.title}</p>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1.5">{c.contact.success.body}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Schema lang={lang} faq={c.faq.items} />
+</Layout>
+
+<script>
+  const form = document.getElementById("lead-form") as HTMLFormElement | null;
+  const formWrapper = document.getElementById("lead-form-wrapper");
+  const successEl = document.getElementById("lead-success");
+  const contactInput = document.getElementById("contact-input") as HTMLInputElement | null;
+  const contactHint = document.getElementById("contact-hint");
+  const done = document.getElementById("lead-done");
+
+  function isValidContact(v: string) {
+    return /^@[A-Za-z]\w{4,31}$/.test(v) || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+  }
+
+  contactInput?.addEventListener("input", () => {
+    const val = contactInput.value.trim();
+    if (val && !isValidContact(val)) {
+      contactHint?.classList.remove("hidden");
+    } else {
+      contactHint?.classList.add("hidden");
+    }
+  });
+
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const contact = contactInput?.value.trim() ?? "";
+    if (!isValidContact(contact)) {
+      contactHint?.classList.remove("hidden");
+      contactInput?.focus();
+      return;
+    }
+    contactHint?.classList.add("hidden");
+
+    const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+    submitBtn?.setAttribute("disabled", "true");
+
+    // Carry UTM params into the lead so we know where it came from (spec §7.3).
+    const params = new URLSearchParams(location.search);
+    for (const k of ["utm_source", "utm_medium", "utm_campaign"]) {
+      const v = params.get(k);
+      if (v && !form.querySelector(`input[name="${k}"]`)) {
+        const hidden = document.createElement("input");
+        hidden.type = "hidden";
+        hidden.name = k;
+        hidden.value = v;
+        form.appendChild(hidden);
+      }
+    }
+
+    try {
+      const res = await fetch("/api/lead", {
+        method: "POST",
+        body: new URLSearchParams(new FormData(form) as any),
+      });
+      const data = await res.json().catch(() => ({ ok: res.ok }));
+      if (!res.ok || !data.ok) throw new Error("submit_failed");
+      if (data.persisted === false) console.warn("SORT: lead accepted but not persisted — check SUPABASE env vars (SCRUM-63)");
+      (window as any).plausible?.("form_submit");
+      formWrapper?.classList.add("hidden");
+      successEl?.classList.remove("hidden");
+    } catch {
+      submitBtn?.removeAttribute("disabled");
+      if (done) {
+        done.textContent = done.dataset.errorMsg ?? "";
+        done.classList.remove("hidden");
+        done.classList.add("text-[#a8553f]");
+      }
+    }
+  });
+</script>

@@ -1,38 +1,60 @@
 ---
-import Meta from './Meta.astro';
-import TopBg from "@/components/ui/TopBg.astro";
 import Footer from "@/components/sections/Footer.astro";
 import Header from "@/components/sections/Header.astro";
+import TopBg from "@/components/ui/TopBg.astro";
 import TrackGa from "@/components/widgets/TrackGa.astro";
+import type { Lang } from "@/i18n";
+import Meta from "./Meta.astro";
 interface Props {
+	lang?: Lang;
 	title?: string | undefined;
 	description?: string | undefined;
 	keywords?: string | undefined;
 }
 
-const {
-	title,
-	description,
-	keywords
-} = Astro.props;
-
+const { lang = "uk", title, description, keywords } = Astro.props;
 
 import "../styles/global.css";
 import "aos/dist/aos.css";
 import "../styles/aos-custom.css";
-import '../styles/article.css';
-import '../styles/article-enhancements.css';
+import "../styles/article.css";
+import "../styles/article-enhancements.css";
 ---
 
-<html lang="uk">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <Meta
+      lang = {lang}
       title = {title}
       description = {description}
       keywords = {keywords}
     />
     <TrackGa />
+    <!-- Language auto-routing: on first visit (no manual choice stored), send a
+         non-Ukrainian/Russian browser to /en/. Manual switcher choice always wins.
+         Inline + location.replace before paint avoids a content flash. SEO-safe:
+         crawlers index both URLs via hreflang regardless of this redirect. -->
+    <script is:inline>
+      (function () {
+        try {
+          var path = location.pathname;
+          var onEn = path === '/en' || path.indexOf('/en/') === 0;
+          var stored = localStorage.getItem('sort_lang');
+          var desired;
+          if (stored === 'uk' || stored === 'en') {
+            desired = stored;
+          } else {
+            var l = (navigator.language || '').toLowerCase();
+            desired = (l === '' || l.indexOf('uk') === 0 || l.indexOf('ru') === 0) ? 'uk' : 'en';
+          }
+          if (path === '/' || path === '/en' || path === '/en/') {
+            if (desired === 'en' && !onEn) location.replace('/en/');
+            else if (desired === 'uk' && onEn) location.replace('/');
+          }
+        } catch (e) {}
+      })();
+    </script>
     <!-- Used to add dark mode right away, adding here prevents any flicker -->
     <script is:inline>
       if (typeof Storage !== 'undefined') {
@@ -49,11 +71,11 @@ import '../styles/article-enhancements.css';
   </head>
   <body class="antialiased bg-bg-primary dark:bg-bg-primary-dark max-w-full overflow-x-hidden">
     <TopBg />
-    <Header />
+    <Header lang={lang} />
     <main>
       <slot />
     </main>
-    <Footer />
+    <Footer lang={lang} />
     <script src="../assets/js/main.js"></script>
   </body>
 </html>

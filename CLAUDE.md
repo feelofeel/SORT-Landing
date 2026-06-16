@@ -33,11 +33,11 @@ Docs run on **[FEEL](docs/conventions/feel.md)** — this file is the super-inde
 
 | Changing… | Read first | Code anchor |
 |---|---|---|
-| Page copy / UA text | [landing-page-definition](docs/landing-page-definition.md) | `src/pages/index.astro` |
-| Lead form / API | [landing-page-definition](docs/landing-page-definition.md) §lead-form | `functions/api/lead.ts` · `src/assets/js/main.js` |
-| SEO / meta / JSON-LD | [landing-page-definition](docs/landing-page-definition.md) §SEO | `src/layouts/Meta.astro` · `src/components/widgets/Schema.astro` |
+| Page copy / UA + EN text | [landing-page-definition](docs/landing-page-definition.md) | `src/i18n/{uk,en}.ts` (strings) · `src/components/LandingPage.astro` (markup) |
+| Lead form / API | [landing-page-definition](docs/landing-page-definition.md) §lead-form | `functions/api/lead.ts` · form markup+script in `src/components/LandingPage.astro` |
+| SEO / meta / JSON-LD / i18n | [landing-page-definition](docs/landing-page-definition.md) §SEO | `src/layouts/Meta.astro` (hreflang/og) · `src/components/widgets/Schema.astro` · `astro.config.mjs` i18n |
 | Analytics / Plausible | [landing-page-definition](docs/landing-page-definition.md) §analytics | `src/components/widgets/TrackGa.astro` · `src/assets/js/main.js` |
-| Nav / menu | — | `src/collections/menu.json` |
+| Nav / menu / language switch | — | `nav` in `src/i18n/{uk,en}.ts` · `src/components/ui/LangSwitcher.astro` (`menu.json` now unused) |
 | Layout / design / CSS | — | `src/layouts/Layout.astro` · `src/styles/` |
 | Env vars / secrets | — | `.env.example` |
 | FEEL docs / CLAUDE.md | [feel](docs/conventions/feel.md) | — |
