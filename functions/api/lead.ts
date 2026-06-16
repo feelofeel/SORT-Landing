@@ -8,8 +8,10 @@
 // page's thank-you state works — but reports `persisted:false` so we don't think
 // a lead was stored when it wasn't.
 
+// Supabase project URL is public — no need to env-var it.
+const SUPABASE_URL = "https://demlkcxujqtdbtppqmvl.supabase.co";
+
 interface Env {
-  SUPABASE_URL?: string;
   SUPABASE_SERVICE_ROLE_KEY?: string;
   RESEND_API_KEY?: string;
   LEAD_NOTIFY_EMAIL?: string;
@@ -89,18 +91,15 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
     user_agent: request.headers.get("user-agent"),
   };
 
-  // If env vars are missing, accept the lead so the UI flows but flag not-stored.
-  if (!env.SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY) {
-    console.error("SORT lead: missing env var(s)", {
-      SUPABASE_URL: !!env.SUPABASE_URL,
-      SUPABASE_SERVICE_ROLE_KEY: !!env.SUPABASE_SERVICE_ROLE_KEY,
-    });
+  // Service role key is the only required secret.
+  if (!env.SUPABASE_SERVICE_ROLE_KEY) {
+    console.error("SORT lead: SUPABASE_SERVICE_ROLE_KEY not set");
     return json({ ok: true, persisted: false });
   }
 
   // 1) Persist (service-role key bypasses RLS).
   try {
-    const res = await fetch(`${env.SUPABASE_URL}/rest/v1/leads`, {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/leads`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -111,7 +110,8 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
       body: JSON.stringify(lead),
     });
     if (!res.ok) {
-      console.error("supabase insert failed", res.status, await res.text());
+      const body = await res.text();
+      console.error("supabase insert failed", res.status, body);
       return json({ ok: false, error: "store_failed" }, 502);
     }
   } catch (e) {
