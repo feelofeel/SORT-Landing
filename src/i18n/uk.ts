@@ -261,12 +261,13 @@ export const uk = {
 		orWrite: "Або напишіть прямо:",
 		telegramPrefix: "Telegram",
 		form: {
-			namePh: "Ваше ім'я — Олена",
-			cafePh: "Кав'ярня «Весна»",
+			nameLabel: "Ім'я",
+			namePh: "Ваше ім'я",
+			posterLabel: "URL Poster-акаунту",
 			posterPh: "myname.joinposter.com",
 			contactLabel: "Контакт для зв'язку",
 			requiredAria: "обов'язкове поле",
-			contactPh: "@username або email@example.com",
+			contactPh: "@tg_username або email",
 			contactHint: "Вкажіть @Telegram-нік (напр. @ivanka) або email",
 			submit: "Підключити свій Poster",
 			errorMsg:

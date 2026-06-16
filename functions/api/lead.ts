@@ -52,12 +52,11 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
   if (get("company_url")) return json({ ok: true, persisted: false });
 
   const name = get("name");
-  const cafe = get("cafe");
   const poster = get("poster");
   const contact = get("contact");
   const message = get("message");
 
-  // Only contact is required; name/cafe/poster are helpful but not gated.
+  // Only contact is required; name/poster are helpful but not gated.
   if (!contact) {
     return json({ ok: false, error: "missing_fields" }, 422);
   }
@@ -69,7 +68,6 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
 
   if (
     name.length > 200 ||
-    cafe.length > 200 ||
     poster.length > 200 ||
     contact.length > 200 ||
     message.length > 2000
@@ -79,7 +77,6 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
 
   const lead = {
     name: name || null,
-    cafe: cafe || null,
     poster_subdomain: poster || null,
     contact,
     contact_type: contactResult.type,
@@ -131,11 +128,10 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
         body: JSON.stringify({
           from: env.LEAD_FROM_EMAIL || "SORT Leads <onboarding@resend.dev>",
           to: [env.LEAD_NOTIFY_EMAIL],
-          subject: `Новий лід: ${cafe || contact}`,
+          subject: `Новий лід: ${name || contact}`,
           reply_to: contactResult.type === "email" ? contact : undefined,
           text:
             `Ім'я: ${name || "—"}\n` +
-            `Заклад: ${cafe || "—"}\n` +
             `Poster: ${poster || "—"}\n` +
             `Контакт: ${contact} (${contactResult.type})\n` +
             `Повідомлення: ${message || "—"}\n\n` +
@@ -157,7 +153,6 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
           chat_id: env.TELEGRAM_CHAT_ID,
           text:
             `🟢 Новий лід SORT\n` +
-            `Заклад: ${cafe || "—"}\n` +
             `Ім'я: ${name || "—"}\n` +
             `Poster: ${poster || "—"}\n` +
             `Контакт: ${contact} (${contactResult.type})`,

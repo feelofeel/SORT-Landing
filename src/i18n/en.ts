@@ -259,12 +259,13 @@ export const en: Content = {
 		orWrite: "Or write to us directly:",
 		telegramPrefix: "Telegram",
 		form: {
-			namePh: "Your name — Olena",
-			cafePh: "«Vesna» coffee shop",
+			nameLabel: "Name",
+			namePh: "Your name",
+			posterLabel: "Poster account URL",
 			posterPh: "myname.joinposter.com",
 			contactLabel: "Contact for us to reach you",
 			requiredAria: "required field",
-			contactPh: "@username or email@example.com",
+			contactPh: "@tg_username or email",
 			contactHint: "Enter a @Telegram handle (e.g. @ivanka) or an email",
 			submit: "Connect your Poster",
 			errorMsg:

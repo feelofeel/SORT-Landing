@@ -191,9 +191,18 @@ const c = getContent(lang);
 
         <div id="lead-form-wrapper">
           <form id="lead-form" class="grid gap-3" action="/api/lead" method="post">
-            <input class="px-4 py-3 rounded-xl border border-primary/15 dark:border-neutral-700 bg-bg-primary/60 dark:bg-neutral-900/40 focus:outline-none focus:border-primary" name="name" placeholder={c.contact.form.namePh} />
-            <input class="px-4 py-3 rounded-xl border border-primary/15 dark:border-neutral-700 bg-bg-primary/60 dark:bg-neutral-900/40 focus:outline-none focus:border-primary" name="cafe" placeholder={c.contact.form.cafePh} />
-            <input class="px-4 py-3 rounded-xl border border-primary/15 dark:border-neutral-700 bg-bg-primary/60 dark:bg-neutral-900/40 focus:outline-none focus:border-primary" name="poster" placeholder={c.contact.form.posterPh} />
+            <div>
+              <label class="flex items-center gap-1 text-xs text-neutral-500 dark:text-neutral-400 mb-1.5 px-1" for="name-input">
+                {c.contact.form.nameLabel}
+              </label>
+              <input id="name-input" class="w-full px-4 py-3 rounded-xl border border-primary/15 dark:border-neutral-700 bg-bg-primary/60 dark:bg-neutral-900/40 focus:outline-none focus:border-primary" name="name" placeholder={c.contact.form.namePh} />
+            </div>
+            <div>
+              <label class="flex items-center gap-1 text-xs text-neutral-500 dark:text-neutral-400 mb-1.5 px-1" for="poster-input">
+                {c.contact.form.posterLabel}
+              </label>
+              <input id="poster-input" class="w-full px-4 py-3 rounded-xl border border-primary/15 dark:border-neutral-700 bg-bg-primary/60 dark:bg-neutral-900/40 focus:outline-none focus:border-primary" name="poster" placeholder={c.contact.form.posterPh} />
+            </div>
             <div>
               <label class="flex items-center gap-1 text-xs text-neutral-500 dark:text-neutral-400 mb-1.5 px-1" for="contact-input">
                 {c.contact.form.contactLabel} <span class="text-red-500" aria-label={c.contact.form.requiredAria}>*</span>
