@@ -63,14 +63,16 @@ const icons = [
     <path d="M26.5 30 l2.5 2.5 l5-5"/>
   </svg>`,
 ];
+
+const arrowStyle = "color: var(--color-primary-light)";
 ---
 
 <!-- Mobile: single column, sequential -->
-<div class="md:hidden grid grid-cols-1 gap-4 mt-8 max-w-sm mx-auto">
+<div class="md:hidden grid grid-cols-1 gap-3 mt-6 max-w-sm mx-auto">
   {steps.map((s, i) => (
-    <div class="p-5 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-700">
-      <div class="flex items-start gap-4">
-        <div class="shrink-0 w-9 h-9 rounded-xl bg-primary text-white font-brand text-base flex items-center justify-center">
+    <div class="p-4 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-700">
+      <div class="flex items-start gap-3">
+        <div class="shrink-0 w-8 h-8 rounded-lg bg-primary text-white font-brand text-sm flex items-center justify-center">
           {s.n}
         </div>
         <div class="min-w-0">
@@ -79,8 +81,8 @@ const icons = [
         </div>
       </div>
       {i < steps.length - 1 && (
-        <div class="flex justify-center mt-3 text-primary/30 dark:text-neutral-600">
-          <ArrowDown size={16} />
+        <div class="flex justify-center mt-2" style={arrowStyle}>
+          <ArrowDown size={15} />
         </div>
       )}
     </div>
@@ -88,56 +90,53 @@ const icons = [
 </div>
 
 <!-- Desktop: 2×2 grid with directional arrows in the gaps -->
-<div class="hidden md:grid mt-8 max-w-3xl mx-auto"
-     style="grid-template-columns: 1fr 48px 1fr; grid-template-rows: auto 48px auto; gap: 0;">
+<div class="hidden md:grid mt-6 max-w-2xl mx-auto"
+     style="grid-template-columns: 1fr 40px 1fr; grid-template-rows: auto 36px auto; gap: 0;">
 
   <!-- Row 1: card 1 · arrow-right · card 2 -->
-  <div class="p-6 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-700 m-2">
-    <div class="w-10 h-10 rounded-xl bg-primary text-white font-brand text-lg flex items-center justify-center mb-3">1</div>
-    <div class="w-10 h-10 mb-3" style="color: var(--color-primary-light)" set:html={icons[0]} />
-    <h3 class="text-base font-semibold text-neutral-800 dark:text-neutral-100 mb-1">{steps[0].title}</h3>
-    <p class="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">{steps[0].desc}</p>
+  <div class="p-5 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-700 m-1.5">
+    <div class="w-9 h-9 rounded-xl bg-primary text-white font-brand text-base flex items-center justify-center mb-2">1</div>
+    <div class="w-9 h-9 mb-2" style={arrowStyle} set:html={icons[0]} />
+    <h3 class="text-sm font-semibold text-neutral-800 dark:text-neutral-100 mb-1">{steps[0].title}</h3>
+    <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">{steps[0].desc}</p>
   </div>
 
-  <!-- Center column top: right arrow -->
-  <div class="flex items-center justify-center text-primary/30 dark:text-neutral-600" style="grid-row:1; grid-column:2;">
-    <ArrowRight size={20} />
+  <div class="flex items-center justify-center" style={`grid-row:1; grid-column:2; ${arrowStyle}`}>
+    <ArrowRight size={22} strokeWidth={2} />
   </div>
 
-  <div class="p-6 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-700 m-2">
-    <div class="w-10 h-10 rounded-xl bg-primary text-white font-brand text-lg flex items-center justify-center mb-3">2</div>
-    <div class="w-10 h-10 mb-3" style="color: var(--color-primary-light)" set:html={icons[1]} />
-    <h3 class="text-base font-semibold text-neutral-800 dark:text-neutral-100 mb-1">{steps[1].title}</h3>
-    <p class="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">{steps[1].desc}</p>
+  <div class="p-5 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-700 m-1.5">
+    <div class="w-9 h-9 rounded-xl bg-primary text-white font-brand text-base flex items-center justify-center mb-2">2</div>
+    <div class="w-9 h-9 mb-2" style={arrowStyle} set:html={icons[1]} />
+    <h3 class="text-sm font-semibold text-neutral-800 dark:text-neutral-100 mb-1">{steps[1].title}</h3>
+    <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">{steps[1].desc}</p>
   </div>
 
-  <!-- Row 2: up arrow (left) · empty · down arrow (right) -->
-  <div class="flex items-center justify-center text-primary/30 dark:text-neutral-600" style="grid-row:2; grid-column:1;">
-    <ArrowUp size={20} />
+  <!-- Row 2: up arrow · empty · down arrow -->
+  <div class="flex items-center justify-center" style={`grid-row:2; grid-column:1; ${arrowStyle}`}>
+    <ArrowUp size={22} strokeWidth={2} />
   </div>
-  <!-- center cell empty -->
   <div style="grid-row:2; grid-column:2;"></div>
-  <div class="flex items-center justify-center text-primary/30 dark:text-neutral-600" style="grid-row:2; grid-column:3;">
-    <ArrowDown size={20} />
+  <div class="flex items-center justify-center" style={`grid-row:2; grid-column:3; ${arrowStyle}`}>
+    <ArrowDown size={22} strokeWidth={2} />
   </div>
 
   <!-- Row 3: card 4 · arrow-left · card 3 -->
-  <div class="p-6 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-700 m-2">
-    <div class="w-10 h-10 rounded-xl bg-primary text-white font-brand text-lg flex items-center justify-center mb-3">4</div>
-    <div class="w-10 h-10 mb-3" style="color: var(--color-primary-light)" set:html={icons[3]} />
-    <h3 class="text-base font-semibold text-neutral-800 dark:text-neutral-100 mb-1">{steps[3].title}</h3>
-    <p class="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">{steps[3].desc}</p>
+  <div class="p-5 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-700 m-1.5">
+    <div class="w-9 h-9 rounded-xl bg-primary text-white font-brand text-base flex items-center justify-center mb-2">4</div>
+    <div class="w-9 h-9 mb-2" style={arrowStyle} set:html={icons[3]} />
+    <h3 class="text-sm font-semibold text-neutral-800 dark:text-neutral-100 mb-1">{steps[3].title}</h3>
+    <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">{steps[3].desc}</p>
   </div>
 
-  <!-- Center column bottom: left arrow -->
-  <div class="flex items-center justify-center text-primary/30 dark:text-neutral-600" style="grid-row:3; grid-column:2;">
-    <ArrowLeft size={20} />
+  <div class="flex items-center justify-center" style={`grid-row:3; grid-column:2; ${arrowStyle}`}>
+    <ArrowLeft size={22} strokeWidth={2} />
   </div>
 
-  <div class="p-6 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-700 m-2">
-    <div class="w-10 h-10 rounded-xl bg-primary text-white font-brand text-lg flex items-center justify-center mb-3">3</div>
-    <div class="w-10 h-10 mb-3" style="color: var(--color-primary-light)" set:html={icons[2]} />
-    <h3 class="text-base font-semibold text-neutral-800 dark:text-neutral-100 mb-1">{steps[2].title}</h3>
-    <p class="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">{steps[2].desc}</p>
+  <div class="p-5 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-700 m-1.5">
+    <div class="w-9 h-9 rounded-xl bg-primary text-white font-brand text-base flex items-center justify-center mb-2">3</div>
+    <div class="w-9 h-9 mb-2" style={arrowStyle} set:html={icons[2]} />
+    <h3 class="text-sm font-semibold text-neutral-800 dark:text-neutral-100 mb-1">{steps[2].title}</h3>
+    <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">{steps[2].desc}</p>
   </div>
 </div>
