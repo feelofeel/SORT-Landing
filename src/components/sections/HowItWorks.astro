@@ -1,0 +1,143 @@
+---
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp } from "@lucide/astro";
+
+interface Step {
+	n: string;
+	title: string;
+	desc: string;
+}
+
+interface Props {
+	steps: Step[];
+}
+
+const { steps } = Astro.props;
+
+// Thin-line inline SVGs — stroke="currentColor" → works in light + dark mode
+const icons = [
+	// 1: Delivery truck — supply arrives in Poster
+	`<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <rect x="2" y="11" width="22" height="15" rx="2"/>
+    <path d="M24 16 h8 l4 10 v4 H24 V16z"/>
+    <circle cx="10" cy="29" r="3.5"/>
+    <circle cx="31" cy="29" r="3.5"/>
+    <line x1="14" y1="29" x2="20" y2="29"/>
+    <path d="M8 19.5 l2.5 2.5 l5-5"/>
+  </svg>`,
+
+	// 2: Shelving rack with batch tracking
+	`<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <line x1="3" y1="4" x2="3" y2="32"/>
+    <line x1="27" y1="4" x2="27" y2="32"/>
+    <line x1="2" y1="13" x2="28" y2="13"/>
+    <line x1="2" y1="23" x2="28" y2="23"/>
+    <line x1="2" y1="32" x2="28" y2="32"/>
+    <rect x="5"  y="5"  width="6" height="7" rx="1"/>
+    <rect x="13" y="5"  width="6" height="7" rx="1"/>
+    <rect x="21" y="5"  width="5" height="7" rx="1"/>
+    <rect x="5"  y="14" width="6" height="8" rx="1"/>
+    <rect x="13" y="15" width="6" height="7" rx="1"/>
+    <circle cx="32" cy="30" r="6"/>
+    <line  x1="36.2" y1="34.2" x2="39" y2="37"/>
+    <path d="M29.5 32 v-3 M32 32 v-4.5 M34.5 32 v-2"/>
+  </svg>`,
+
+	// 3: Clipboard + clock — transparent shift
+	`<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <rect x="6" y="6" width="22" height="28" rx="2"/>
+    <rect x="13" y="3" width="8" height="6" rx="1.5"/>
+    <path d="M11 17 l2.5 2.5 l5-4.5"/>
+    <path d="M11 24 l2.5 2.5 l5-4.5"/>
+    <circle cx="30" cy="31" r="7"/>
+    <path d="M30 27.5 v3.8 l2.5 1.8"/>
+  </svg>`,
+
+	// 4: Receipt/doc + check badge — write-off in one tap
+	`<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M7 4 h16 l7 7 v23 a2 2 0 01-2 2 H7 a2 2 0 01-2-2 V6 a2 2 0 012-2z"/>
+    <path d="M23 4 v7 h7"/>
+    <line x1="10" y1="17" x2="24" y2="17"/>
+    <line x1="10" y1="21.5" x2="20" y2="21.5"/>
+    <line x1="10" y1="26" x2="16" y2="26"/>
+    <circle cx="30" cy="30" r="7"/>
+    <path d="M26.5 30 l2.5 2.5 l5-5"/>
+  </svg>`,
+];
+---
+
+<!-- Mobile: single column, sequential -->
+<div class="md:hidden grid grid-cols-1 gap-4 mt-8 max-w-sm mx-auto">
+  {steps.map((s, i) => (
+    <div class="p-5 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-700">
+      <div class="flex items-start gap-4">
+        <div class="shrink-0 w-9 h-9 rounded-xl bg-primary text-white font-brand text-base flex items-center justify-center">
+          {s.n}
+        </div>
+        <div class="min-w-0">
+          <h3 class="text-sm font-semibold text-neutral-800 dark:text-neutral-100 mb-0.5">{s.title}</h3>
+          <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">{s.desc}</p>
+        </div>
+      </div>
+      {i < steps.length - 1 && (
+        <div class="flex justify-center mt-3 text-primary/30 dark:text-neutral-600">
+          <ArrowDown size={16} />
+        </div>
+      )}
+    </div>
+  ))}
+</div>
+
+<!-- Desktop: 2×2 grid with directional arrows in the gaps -->
+<div class="hidden md:grid mt-8 max-w-3xl mx-auto"
+     style="grid-template-columns: 1fr 48px 1fr; grid-template-rows: auto 48px auto; gap: 0;">
+
+  <!-- Row 1: card 1 · arrow-right · card 2 -->
+  <div class="p-6 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-700 m-2">
+    <div class="w-10 h-10 rounded-xl bg-primary text-white font-brand text-lg flex items-center justify-center mb-3">1</div>
+    <div class="w-10 h-10 mb-3" style="color: var(--color-primary-light)" set:html={icons[0]} />
+    <h3 class="text-base font-semibold text-neutral-800 dark:text-neutral-100 mb-1">{steps[0].title}</h3>
+    <p class="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">{steps[0].desc}</p>
+  </div>
+
+  <!-- Center column top: right arrow -->
+  <div class="flex items-center justify-center text-primary/30 dark:text-neutral-600" style="grid-row:1; grid-column:2;">
+    <ArrowRight size={20} />
+  </div>
+
+  <div class="p-6 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-700 m-2">
+    <div class="w-10 h-10 rounded-xl bg-primary text-white font-brand text-lg flex items-center justify-center mb-3">2</div>
+    <div class="w-10 h-10 mb-3" style="color: var(--color-primary-light)" set:html={icons[1]} />
+    <h3 class="text-base font-semibold text-neutral-800 dark:text-neutral-100 mb-1">{steps[1].title}</h3>
+    <p class="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">{steps[1].desc}</p>
+  </div>
+
+  <!-- Row 2: up arrow (left) · empty · down arrow (right) -->
+  <div class="flex items-center justify-center text-primary/30 dark:text-neutral-600" style="grid-row:2; grid-column:1;">
+    <ArrowUp size={20} />
+  </div>
+  <!-- center cell empty -->
+  <div style="grid-row:2; grid-column:2;"></div>
+  <div class="flex items-center justify-center text-primary/30 dark:text-neutral-600" style="grid-row:2; grid-column:3;">
+    <ArrowDown size={20} />
+  </div>
+
+  <!-- Row 3: card 4 · arrow-left · card 3 -->
+  <div class="p-6 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-700 m-2">
+    <div class="w-10 h-10 rounded-xl bg-primary text-white font-brand text-lg flex items-center justify-center mb-3">4</div>
+    <div class="w-10 h-10 mb-3" style="color: var(--color-primary-light)" set:html={icons[3]} />
+    <h3 class="text-base font-semibold text-neutral-800 dark:text-neutral-100 mb-1">{steps[3].title}</h3>
+    <p class="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">{steps[3].desc}</p>
+  </div>
+
+  <!-- Center column bottom: left arrow -->
+  <div class="flex items-center justify-center text-primary/30 dark:text-neutral-600" style="grid-row:3; grid-column:2;">
+    <ArrowLeft size={20} />
+  </div>
+
+  <div class="p-6 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-700 m-2">
+    <div class="w-10 h-10 rounded-xl bg-primary text-white font-brand text-lg flex items-center justify-center mb-3">3</div>
+    <div class="w-10 h-10 mb-3" style="color: var(--color-primary-light)" set:html={icons[2]} />
+    <h3 class="text-base font-semibold text-neutral-800 dark:text-neutral-100 mb-1">{steps[2].title}</h3>
+    <p class="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">{steps[2].desc}</p>
+  </div>
+</div>

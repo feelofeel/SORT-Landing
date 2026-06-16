@@ -1,6 +1,7 @@
 ---
 import SectionHeader from "@/components/elements/SectionHeader.astro";
 import FAQ from "@/components/sections/FAQ.astro";
+import HowItWorks from "@/components/sections/HowItWorks.astro";
 import Pricing from "@/components/sections/Pricing.astro";
 import Badge from "@/components/ui/Badge.astro";
 import BrowserFrame from "@/components/ui/BrowserFrame.astro";
@@ -90,15 +91,7 @@ const c = getContent(lang);
   <!-- 4. HOW IT WORKS -->
   <section id="how" class="py-16 md:py-24 site-container scroll-mt-24">
     <SectionHeader title={c.how.title} description={c.how.description} />
-    <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
-      {c.how.steps.map((s) => (
-        <div class="p-6 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-700">
-          <div class="w-10 h-10 rounded-xl bg-primary text-white font-brand text-lg flex items-center justify-center mb-3">{s.n}</div>
-          <h3 class="text-base font-semibold text-neutral-800 dark:text-neutral-100 mb-1">{s.title}</h3>
-          <p class="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">{s.desc}</p>
-        </div>
-      ))}
-    </div>
+    <HowItWorks steps={c.how.steps} />
   </section>
 
   <!-- 5. FEATURES -->
