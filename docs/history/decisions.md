@@ -3,7 +3,7 @@ title: Decision Index
 id: decisions
 role: log
 status: living
-doc_revision: 1
+doc_revision: 2
 app_version: 1.0.0
 updated: 2026-06-16
 source_of: []
@@ -26,3 +26,9 @@ A **thin, append-only, skill-only** breadcrumb trail of non-obvious choices. **O
 | 2026-06-16 | `public.leads` table lives in FEFO App Supabase project (not a landing-only DB) — obscurity/safety; service-role key stays server-side in CF Pages env only | CLAUDE.md sticky facts |
 | 2026-06-16 | Page copy spine: "knowledge exists but scattered/slow → SORT removes the extraction tax; sells expiring first; compounds ordering analytics; visibility layer on top of Poster" — kills old "staff guess/surprise" framing | landing-page-definition.md |
 | 2026-06-16 | FEEL installed via `node feel/tools/install.mjs` — portable core (feel-doc, feel-decision, feel-repeat, feel-session, feel-health); project-specific skills deferred until needed | CLAUDE.md §skill-family |
+
+## Internationalization (2026-06-16)
+
+| Date | Decision | Codified in |
+|---|---|---|
+| 2026-06-16 | English added via Astro **native** i18n (no lib); UA stays canonical at `/`, EN at `/en/`; SEO via hreflang (uk/en/x-default) not root-language; entry = manual switcher (localStorage wins) + one-time browser auto-detect redirect; same-URL swap rejected as cloaking; strings in typed `src/i18n/{uk,en}.ts`, shared `LandingPage.astro` | CLAUDE.md change-type router · CHANGELOG [Unreleased] |
