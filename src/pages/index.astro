@@ -280,18 +280,30 @@ const faqItems = [
           </p>
         </div>
 
-        <form id="lead-form" class="grid gap-3" action="/api/lead" method="post">
-          <input class="px-4 py-3 rounded-xl border border-primary/15 dark:border-neutral-700 bg-bg-primary/60 dark:bg-neutral-900/40 focus:outline-none focus:border-primary" name="name" required placeholder="Ваше ім'я" />
-          <input class="px-4 py-3 rounded-xl border border-primary/15 dark:border-neutral-700 bg-bg-primary/60 dark:bg-neutral-900/40 focus:outline-none focus:border-primary" name="cafe" required placeholder="Назва кафе" />
-          <input class="px-4 py-3 rounded-xl border border-primary/15 dark:border-neutral-700 bg-bg-primary/60 dark:bg-neutral-900/40 focus:outline-none focus:border-primary" name="poster" required placeholder="Субдомен Poster: yourcafe.joinposter.com" />
-          <input class="px-4 py-3 rounded-xl border border-primary/15 dark:border-neutral-700 bg-bg-primary/60 dark:bg-neutral-900/40 focus:outline-none focus:border-primary" name="contact" required placeholder="Telegram або email" />
-          <!-- honeypot -->
-          <input type="text" name="company_url" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
-          <button type="submit" class="flex justify-center items-center gap-1.5 px-6 py-3.5 rounded-xl bg-btn-primary text-neutral-50 font-medium text-base transition hover:bg-btn-primary-hover hover:-translate-y-[2px]">
-            Підключити свій Poster
-          </button>
-          <p id="lead-done" class="hidden text-sm text-emerald-700 dark:text-emerald-400">Дякуємо! Напишемо вам у Telegram протягом доби.</p>
-        </form>
+        <div id="lead-form-wrapper">
+          <form id="lead-form" class="grid gap-3" action="/api/lead" method="post">
+            <input class="px-4 py-3 rounded-xl border border-primary/15 dark:border-neutral-700 bg-bg-primary/60 dark:bg-neutral-900/40 focus:outline-none focus:border-primary" name="name" placeholder="Ваше ім'я (необов'язково)" />
+            <input class="px-4 py-3 rounded-xl border border-primary/15 dark:border-neutral-700 bg-bg-primary/60 dark:bg-neutral-900/40 focus:outline-none focus:border-primary" name="cafe" placeholder="Назва кафе (необов'язково)" />
+            <input class="px-4 py-3 rounded-xl border border-primary/15 dark:border-neutral-700 bg-bg-primary/60 dark:bg-neutral-900/40 focus:outline-none focus:border-primary" name="poster" placeholder="Субдомен Poster (необов'язково)" />
+            <div>
+              <input class="w-full px-4 py-3 rounded-xl border border-primary/15 dark:border-neutral-700 bg-bg-primary/60 dark:bg-neutral-900/40 focus:outline-none focus:border-primary" name="contact" required placeholder="@tg_handle або email@example.com" />
+              <p id="contact-hint" class="hidden mt-1.5 text-xs text-[#a8553f] dark:text-amber-400">Вкажіть @Telegram-нік (напр. @ivanka) або email</p>
+            </div>
+            <!-- honeypot -->
+            <input type="text" name="company_url" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+            <button type="submit" class="flex justify-center items-center gap-1.5 px-6 py-3.5 rounded-xl bg-btn-primary text-neutral-50 font-medium text-base transition hover:bg-btn-primary-hover hover:-translate-y-[2px]">
+              Підключити свій Poster
+            </button>
+            <p id="lead-done" class="hidden text-sm"></p>
+          </form>
+        </div>
+        <div id="lead-success" class="hidden flex flex-col items-center justify-center text-center py-10 gap-5">
+          <div class="w-14 h-14 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center text-xl font-bold text-emerald-700 dark:text-emerald-400">✓</div>
+          <div>
+            <p class="font-semibold text-neutral-800 dark:text-neutral-100 text-lg">Дякуємо!</p>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1.5">Напишемо вам протягом доби.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -300,15 +312,38 @@ const faqItems = [
 </Layout>
 
 <script>
-  // Progressive enhancement: POST the lead to the Pages Function (SCRUM-67) and show
-  // the thank-you state. Until SCRUM-63 env vars are set the function returns ok with
-  // persisted:false, so this flow already works end-to-end on the page.
   const form = document.getElementById("lead-form") as HTMLFormElement | null;
+  const formWrapper = document.getElementById("lead-form-wrapper");
+  const successEl = document.getElementById("lead-success");
+  const contactInput = form?.querySelector('input[name="contact"]') as HTMLInputElement | null;
+  const contactHint = document.getElementById("contact-hint");
   const done = document.getElementById("lead-done");
+
+  function isValidContact(v: string) {
+    return /^@[A-Za-z]\w{4,31}$/.test(v) || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+  }
+
+  contactInput?.addEventListener("input", () => {
+    const val = contactInput.value.trim();
+    if (val && !isValidContact(val)) {
+      contactHint?.classList.remove("hidden");
+    } else {
+      contactHint?.classList.add("hidden");
+    }
+  });
 
   form?.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const submitBtn = form.querySelector('button[type="submit"]');
+
+    const contact = contactInput?.value.trim() ?? "";
+    if (!isValidContact(contact)) {
+      contactHint?.classList.remove("hidden");
+      contactInput?.focus();
+      return;
+    }
+    contactHint?.classList.add("hidden");
+
+    const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
     submitBtn?.setAttribute("disabled", "true");
 
     // Carry UTM params into the lead so we know where it came from (spec §7.3).
@@ -333,13 +368,13 @@ const faqItems = [
       if (!res.ok || !data.ok) throw new Error("submit_failed");
       if (data.persisted === false) console.warn("SORT: lead accepted but not persisted — check SUPABASE env vars (SCRUM-63)");
       (window as any).plausible?.("form_submit");
-      done?.classList.remove("hidden");
-      form.querySelectorAll("input, button").forEach((el) => el.setAttribute("disabled", "true"));
+      formWrapper?.classList.add("hidden");
+      successEl?.classList.remove("hidden");
     } catch {
       submitBtn?.removeAttribute("disabled");
       if (done) {
         done.textContent = "Не вдалося надіслати. Напишіть нам у Telegram — посилання ліворуч.";
-        done.classList.remove("hidden", "text-emerald-700", "dark:text-emerald-400");
+        done.classList.remove("hidden");
         done.classList.add("text-[#a8553f]");
       }
     }

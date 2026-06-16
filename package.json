@@ -44,7 +44,9 @@
 		"build": "astro build",
 		"preview": "astro preview",
 		"astro": "astro",
-		"check": "biome check --apply-unsafe ."
+		"check": "biome check --apply-unsafe .",
+		"test": "vitest run",
+		"test:watch": "vitest"
 	},
 	"devDependencies": {
 		"@astrojs/check": "^0.9.9",
@@ -54,7 +56,8 @@
 		"postcss": "^8.4.31",
 		"tailwindcss": "^4.1.14",
 		"typescript": "^5.4.5",
-		"vite": "^7.3.3"
+		"vite": "^7.3.3",
+		"vitest": "^4.1.9"
 	},
 	"dependencies": {
 		"@astrojs/mdx": "^6.0.1",

@@ -24,6 +24,16 @@ const json = (data: unknown, status = 200) =>
     headers: { "content-type": "application/json; charset=utf-8" },
   });
 
+// TG handles: @[letter][4-31 word chars] = 5-32 chars username.
+// Email: standard loose check — the reply will bounce if wrong.
+export function validateContact(
+  contact: string,
+): { valid: true; type: "telegram" | "email" } | { valid: false } {
+  if (/^@[A-Za-z]\w{4,31}$/.test(contact)) return { valid: true, type: "telegram" };
+  if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact)) return { valid: true, type: "email" };
+  return { valid: false };
+}
+
 export const onRequestPost = async (context: { request: Request; env: Env }) => {
   const { request, env } = context;
 
@@ -45,9 +55,16 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
   const contact = get("contact");
   const message = get("message");
 
-  if (!name || !cafe || !poster || !contact) {
+  // Only contact is required; name/cafe/poster are helpful but not gated.
+  if (!contact) {
     return json({ ok: false, error: "missing_fields" }, 422);
   }
+
+  const contactResult = validateContact(contact);
+  if (!contactResult.valid) {
+    return json({ ok: false, error: "invalid_contact" }, 422);
+  }
+
   if (
     name.length > 200 ||
     cafe.length > 200 ||
@@ -59,10 +76,11 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
   }
 
   const lead = {
-    name,
-    cafe,
-    poster_subdomain: poster,
+    name: name || null,
+    cafe: cafe || null,
+    poster_subdomain: poster || null,
     contact,
+    contact_type: contactResult.type,
     message: message || null,
     utm_source: get("utm_source") || null,
     utm_medium: get("utm_medium") || null,
@@ -109,13 +127,13 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
         body: JSON.stringify({
           from: env.LEAD_FROM_EMAIL || "SORT Leads <onboarding@resend.dev>",
           to: [env.LEAD_NOTIFY_EMAIL],
-          subject: `Новий лід: ${cafe}`,
-          reply_to: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact) ? contact : undefined,
+          subject: `Новий лід: ${cafe || contact}`,
+          reply_to: contactResult.type === "email" ? contact : undefined,
           text:
-            `Ім'я: ${name}\n` +
-            `Заклад: ${cafe}\n` +
-            `Poster: ${poster}\n` +
-            `Контакт: ${contact}\n` +
+            `Ім'я: ${name || "—"}\n` +
+            `Заклад: ${cafe || "—"}\n` +
+            `Poster: ${poster || "—"}\n` +
+            `Контакт: ${contact} (${contactResult.type})\n` +
             `Повідомлення: ${message || "—"}\n\n` +
             `Звідки: ${lead.utm_source || "—"} / ${lead.referer || "—"}`,
         }),
@@ -133,7 +151,12 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
           chat_id: env.TELEGRAM_CHAT_ID,
-          text: `🟢 Новий лід SORT\nЗаклад: ${cafe}\nІм'я: ${name}\nPoster: ${poster}\nКонтакт: ${contact}`,
+          text:
+            `🟢 Новий лід SORT\n` +
+            `Заклад: ${cafe || "—"}\n` +
+            `Ім'я: ${name || "—"}\n` +
+            `Poster: ${poster || "—"}\n` +
+            `Контакт: ${contact} (${contactResult.type})`,
         }),
       });
     } catch (e) {
