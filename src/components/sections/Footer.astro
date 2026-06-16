@@ -32,7 +32,7 @@ const footerLinks = {
 
       <div class="grid grid-cols-2 gap-8 md:gap-16">
         <div>
-          <h4 class="text-sm font-semibold text-neutral-800 dark:text-neutral-200 mb-4">Продукт</h4>
+          <h3 class="text-sm font-semibold text-neutral-800 dark:text-neutral-200 mb-4">Продукт</h3>
           <ul class="space-y-3">
             {footerLinks.product.map((link) => (
               <li>
@@ -45,7 +45,7 @@ const footerLinks = {
         </div>
 
         <div>
-          <h4 class="text-sm font-semibold text-neutral-800 dark:text-neutral-200 mb-4">Контакт</h4>
+          <h3 class="text-sm font-semibold text-neutral-800 dark:text-neutral-200 mb-4">Контакт</h3>
           <ul class="space-y-3">
             {footerLinks.contact.map((link) => (
               <li>
@@ -60,7 +60,7 @@ const footerLinks = {
     </div>
 
     <div class="border-t border-dashed border-primary/10 dark:border-primary-dark/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <p class="text-sm text-neutral-400 dark:text-neutral-500">
+      <p class="text-sm text-neutral-600 dark:text-neutral-400">
         © {currentYear} {siteConfig.author}. Працює поверх Poster.
       </p>
       <span class="inline-flex justify-center space-x-4">
@@ -68,7 +68,7 @@ const footerLinks = {
           <a
             href={social.url}
             target="_blank"
-            class="footer-social-icon-link text-neutral-400 dark:text-neutral-500 hover:text-primary dark:hover:text-primary-light transition-colors duration-200"
+            class="footer-social-icon-link text-neutral-600 dark:text-neutral-400 hover:text-primary dark:hover:text-primary-light transition-colors duration-200"
             title={social.name}
           >
             <span class="sr-only">{social.name}</span>
