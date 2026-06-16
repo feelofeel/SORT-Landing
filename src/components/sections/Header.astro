@@ -38,8 +38,7 @@ import Logo from "@/components/ui/Logo.astro";
           class="flex items-center justify-center w-10 h-10 cursor-pointer rounded-full bg-gradient-to-b from-white to-[#edeefa] border-[0.5px] border-[#f3f3ff] dark:from-neutral-800 dark:to-neutral-600 dark:border-neutral-600 transition-transform duration-200 active:scale-95"
         >
           <div
-            class="flex justify-center items-center w-6 h-6 relative overflow-hidden rounded-full bg-[#7fa1ff]  bg-gradient-to-b from-[#85a6ff] to-[#2d6dc3] border-[0.5px] border-[#7fa1ff]"
-            style="box-shadow: 0px 2px 3px 0 rgba(55,52,209,0.21);"
+            class="theme-icon flex justify-center items-center w-6 h-6 relative overflow-hidden rounded-full bg-gradient-to-b from-[#ffd166] to-[#e8a000] border-[0.5px] border-[#ffd980] dark:from-[#1e2d52] dark:to-[#0d1a35] dark:border-[#2d3c5c]"
           >
             <SunMedium
               class="absolute hidden text-white w-4 h-4 transition duration-200 transform ease mobile-sun" />
@@ -161,8 +160,7 @@ import Logo from "@/components/ui/Logo.astro";
           class="flex items-center justify-center w-10 h-10 cursor-pointer rounded-full bg-gradient-to-b from-white to-[#edf1fa] border-[0.5px] border-[#f3f5ff] dark:from-neutral-800 dark:to-neutral-600 dark:border-neutral-600 transition-all duration-200 hover:shadow-md hover:scale-105 active:scale-95 mx-1"
         >
           <div
-            class="flex justify-center items-center flex-shrink-0 w-6 h-6 relative overflow-hidden rounded-full bg-gradient-to-b from-[#85a6ff] to-[#2d6dc3] border-[0.5px] border-[#7fa1ff]"
-            style="box-shadow: 0px 2px 3px 0 rgba(55,52,209,0.21);"
+            class="theme-icon flex justify-center items-center flex-shrink-0 w-6 h-6 relative overflow-hidden rounded-full bg-gradient-to-b from-[#ffd166] to-[#e8a000] border-[0.5px] border-[#ffd980] dark:from-[#1e2d52] dark:to-[#0d1a35] dark:border-[#2d3c5c]"
           >
             <SunMedium id="sun"
                class="absolute hidden text-white w-4 h-4 transition duration-200 transform ease" />
@@ -176,6 +174,14 @@ import Logo from "@/components/ui/Logo.astro";
 </header>
 
 <style>
+  /* Theme toggle icon — shadow adapts to light/dark state */
+  .theme-icon {
+    box-shadow: 0px 2px 3px 0 rgba(200,130,0,0.28);
+  }
+  :global(.dark) .theme-icon {
+    box-shadow: 0px 2px 3px 0 rgba(10,15,40,0.5);
+  }
+
   /* Header container spacing optimization */
   #header {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);

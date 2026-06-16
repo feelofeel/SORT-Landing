@@ -10,15 +10,13 @@ import Schema from "@/components/widgets/Schema.astro";
 import { siteConfig } from "@/config/site";
 import { Send, ArrowRight } from "@lucide/astro";
 
-// Manual ceremonies SORT replaces — the knowledge exists, it's just scattered and slow
-// to extract. The middle column is the *time/scatter tax*, not "staff forgot/guessed".
-const ceremonies = [
-  { ritual: "Стікери з датами, терміни «в голові»", error: "стікер відклеївся, ротацію не дотримали — прострочене на вітрині", sort: "партія з терміном створюється сама, FEFO-порядок + пуш на зміні" },
-  { ritual: "Фото вітрини, щоб оцінити стан", error: "на фото не видно кількостей і термінів; кожен трактує по-своєму", sort: "полиця повторює реальну вітрину — позиції, залишок і термін поруч" },
-  { ritual: "Шукати точний термін у чаті групи чи іншій системі", error: "знання є — але дістати його довго; гортаєш чат на зміні", sort: "усі терміни в одному місці, видно за секунди" },
-  { ritual: "Записати «скільки молока / випічки лишилось»", error: "застаріло до замовлення, загубилось, нерозбірливо", sort: "приблизний залишок на кожній картці" },
-  { ritual: "Менеджер збирає списання з нотаток і чату", error: "довго, вручну, наприкінці дня — легко щось пропустити", sort: "списання в один дотик, залишок підставлено, запис у Poster" },
-  { ritual: "Вирішити, що замовити, з фото й нотаток", error: "замовляєш те, що знову зіпсується; немає зв'язку зі списаннями", sort: "аналітика підказує, що списується найчастіше — і чого не брати" },
+// Manual vs SORT comparison — 2-column: current approach vs what SORT provides
+const comparison = [
+  { manual: "Терміни — у стікерах, нотатках або повідомленнях чату", sort: "Кожна партія отримує термін автоматично з постачання Poster — без ручного вводу" },
+  { manual: "Щоб дізнатись точний термін, треба шукати в чаті чи іншій системі", sort: "Усі терміни в одному місці — видно за секунди, без пошуку" },
+  { manual: "Залишки й стан вітрини фіксують окремо — в нотатках або на фото", sort: "Полиця SORT відтворює реальний склад: позиції, приблизний залишок і терміни разом" },
+  { manual: "Списання збирають і записують наприкінці зміни", sort: "Одне натискання «Списати» — кількість підставлено, запис іде в Poster" },
+  { manual: "Незрозуміло, що списується найчастіше і чому", sort: "Аналітика показує, що купувати менше і чого краще не замовляти знову" },
 ];
 
 // How it works
@@ -40,23 +38,8 @@ const features = [
 ];
 
 // Trust chips
-const chips = ["📶 Працює офлайн", "🇺🇦 Українською", "📒 Poster — джерело правди", "↩️ Все оборотне в Poster"];
+const chips = ["📶 Працює офлайн", "🇺🇦 Українською", "📒 Poster — джерело правди"];
 
-// Before / after
-const before = [
-  "Стікери з датами, нотатки, повідомлення в групі",
-  "Гортаєш чат чи іншу систему, щоб знайти точний термін",
-  "Фото вітрини й записи «скільки лишилось»",
-  "Менеджер збирає списання з нотаток і чату наприкінці дня",
-  "Списання фіксуються, але без системи, що оптимізує процес",
-];
-const after = [
-  "Партія з терміном з'являється сама з постачання Poster",
-  "Усі терміни в одному місці — видно за секунди, без пошуку",
-  "Полиця показує склад вітрини і приблизний залишок — без фото",
-  "Одне натискання «Списати» протягом дня → запис у Poster",
-  "Аналітика підказує, що продати першим і чого не замовляти знову",
-];
 
 // FAQ
 const faqItems = [
@@ -124,58 +107,33 @@ const faqItems = [
     </div>
   </section>
 
-  <!-- 2. PROBLEM / ERROR SURFACES -->
+  <!-- 2. PROBLEM + REFRAME (combined) -->
   <section id="problem" class="py-16 md:py-24 site-container scroll-mt-24">
     <SectionHeader
-      title="Зараз терміни тримаються на пам'яті й удачі"
-      description="Ранок. Гість замовляє — а ви розумієте, що молоко скисло вчора. Більшість кафе тримає терміни й залишки на ручних ритуалах. Ось де вони ламаються:"
+      title="Сьогодні терміни тримаються на пам'яті й удачі"
+      description="Замініть ручний контроль на систему, якій можна довіряти"
     />
-    <div class="mt-8 max-w-5xl mx-auto overflow-x-auto rounded-2xl border border-primary/10 dark:border-neutral-700 bg-bg-secondary dark:bg-bg-secondary-dark">
-      <table class="w-full border-collapse text-left text-sm min-w-[640px]">
+    <div class="mt-8 max-w-4xl mx-auto overflow-x-auto rounded-2xl border border-primary/10 dark:border-neutral-700 bg-bg-secondary dark:bg-bg-secondary-dark">
+      <table class="w-full border-collapse text-left text-sm min-w-[560px]">
         <thead>
-          <tr class="text-xs uppercase tracking-wider text-primary">
-            <th class="px-4 py-3 font-semibold">Ручний ритуал</th>
-            <th class="px-4 py-3 font-semibold">Чого це коштує</th>
-            <th class="px-4 py-3 font-semibold">Із SORT</th>
+          <tr>
+            <th class="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-[#a8553f] dark:text-amber-400/80 w-1/2 border-b border-primary/10 dark:border-neutral-700">Ручний підхід</th>
+            <th class="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 w-1/2 border-b border-primary/10 dark:border-neutral-700">Із SORT</th>
           </tr>
         </thead>
         <tbody>
-          {ceremonies.map((row) => (
+          {comparison.map((row) => (
             <tr class="border-t border-primary/10 dark:border-neutral-700 align-top">
-              <td class="px-4 py-3 text-neutral-700 dark:text-neutral-200">{row.ritual}</td>
-              <td class="px-4 py-3 text-[#a8553f] dark:text-amber-400/80">{row.error}</td>
-              <td class="px-4 py-3 text-emerald-700 dark:text-emerald-400">{row.sort}</td>
+              <td class="px-4 py-3 text-neutral-600 dark:text-neutral-400 bg-[#fbf3ee]/60 dark:bg-transparent">{row.manual}</td>
+              <td class="px-4 py-3 text-neutral-700 dark:text-neutral-200">{row.sort}</td>
             </tr>
           ))}
         </tbody>
       </table>
     </div>
-    <p class="text-center text-xs text-neutral-600 dark:text-neutral-400 mt-4 max-w-2xl mx-auto">
+    <p class="text-center text-xs text-neutral-500 dark:text-neutral-400 mt-4 max-w-2xl mx-auto">
       Рішення про замовлення лишається за менеджером у Poster — SORT лише робить вхідні дані видимими.
     </p>
-  </section>
-
-  <!-- 3. BEFORE / AFTER -->
-  <section class="py-8 md:py-12 site-container">
-    <SectionHeader title="Від ручного контролю — до системи, якій можна довіряти" />
-    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-      <div class="rounded-2xl border border-primary/10 dark:border-neutral-700 bg-[#fbf3ee] dark:bg-bg-secondary-dark p-6">
-        <h3 class="text-sm font-semibold uppercase tracking-wider text-[#a8553f] mb-4">Раніше · вручну</h3>
-        <ul class="space-y-3">
-          {before.map((b) => (
-            <li class="text-sm text-neutral-600 dark:text-neutral-300 border-t border-dashed border-neutral-200 dark:border-neutral-700 pt-3 first:border-0 first:pt-0">{b}</li>
-          ))}
-        </ul>
-      </div>
-      <div class="rounded-2xl border border-emerald-500/20 bg-[#f1f7f3] dark:bg-bg-secondary-dark p-6">
-        <h3 class="text-sm font-semibold uppercase tracking-wider text-emerald-700 mb-4">Із SORT · система</h3>
-        <ul class="space-y-3">
-          {after.map((a) => (
-            <li class="text-sm text-neutral-600 dark:text-neutral-300 border-t border-dashed border-emerald-200/60 dark:border-neutral-700 pt-3 first:border-0 first:pt-0">{a}</li>
-          ))}
-        </ul>
-      </div>
-    </div>
   </section>
 
   <!-- 4. HOW IT WORKS -->
