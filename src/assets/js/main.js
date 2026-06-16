@@ -87,7 +87,7 @@ window.evaluateHeaderPosition = () => {
 	}
 };
 
-document.getElementById("darkToggle").addEventListener("click", () => {
+document.getElementById("darkToggle")?.addEventListener("click", () => {
 	document.documentElement.classList.add("duration-300");
 
 	if (document.documentElement.classList.contains("dark")) {
@@ -112,9 +112,6 @@ function showDay(animate) {
 	}
 
 	setTimeout(() => {
-		document.getElementById("dayText").classList.remove("hidden");
-		document.getElementById("nightText").classList.add("hidden");
-
 		document.getElementById("moon").classList.add("hidden");
 		document.getElementById("sun").classList.remove("hidden");
 
@@ -138,9 +135,6 @@ function showNight(animate) {
 	}
 
 	setTimeout(() => {
-		document.getElementById("nightText").classList.remove("hidden");
-		document.getElementById("dayText").classList.add("hidden");
-
 		document.getElementById("sun").classList.add("hidden");
 		document.getElementById("moon").classList.remove("hidden");
 
@@ -191,3 +185,44 @@ window.closeMobileMenu = () => {
 	document.getElementById("menu").classList.add("hidden");
 	document.getElementById("mobileMenuBackground").classList.add("hidden");
 };
+
+// ─── Analytics events (Plausible) ──────────────────────────────────────
+// The funnel from spec §7.2. `window.plausible` is a queue stub from TrackGa,
+// so these are no-ops until PUBLIC_PLAUSIBLE_DOMAIN is set — safe to ship now.
+function track(name) {
+	if (typeof window.plausible === "function") window.plausible(name);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+	// Hero CTA → contact
+	document.querySelectorAll(".evt-cta-hero").forEach((el) => {
+		el.addEventListener("click", () => track("cta_click_hero"));
+	});
+
+	// Any Telegram link
+	document.querySelectorAll('a[href*="t.me"]').forEach((el) => {
+		el.addEventListener("click", () => track("telegram_click"));
+	});
+
+	// FAQ accordion — only count expands, not collapses
+	document.querySelectorAll(".accordion-trigger").forEach((el) => {
+		el.addEventListener("click", () => {
+			// aria-expanded is still the pre-click value at this point
+			if (el.getAttribute("aria-expanded") !== "true") track("faq_expand");
+		});
+	});
+
+	// Lead form entered the viewport (fire once)
+	const form = document.getElementById("lead-form");
+	if (form && "IntersectionObserver" in window) {
+		const io = new IntersectionObserver((entries) => {
+			entries.forEach((entry) => {
+				if (entry.isIntersecting) {
+					track("form_view");
+					io.disconnect();
+				}
+			});
+		}, { threshold: 0.4 });
+		io.observe(form);
+	}
+});

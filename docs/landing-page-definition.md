@@ -1,13 +1,13 @@
 ---
 title: Landing Page Definition — SORT marketing site
 id: landing-page-definition
-role: research
-status: working
+role: spec
+status: draft
 doc_revision: 1
-app_version: 1.35.2
+app_version: 1.0.0
 updated: 2026-06-15
 source_of: []
-derived_from: [pricing-and-gtm, competitor-research-brief, app-user-stories, decomposition]
+derived_from: []
 ---
 
 # SORT — Landing Page Definition (for validation)

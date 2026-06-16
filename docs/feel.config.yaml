@@ -1,0 +1,163 @@
+# feel.config.yaml — FEEL documentation network for SORT Landing
+#
+# This file has two layers:
+#
+#   FRAMEWORK SCHEMA (portable) — ceremony levels, head_count thresholds,
+#     routine registry shape. These sections work in any FEEL project.
+#
+#   PROJECT DATA (SORT Landing-specific) — audiences, docs, relations,
+#     comparison groups. Replace when adopting FEEL in a new project.
+#
+# Updated: 2026-06-16  app_version: 1.0.0
+# Maintained by: feel-repeat (validation), feel-doc (catalog sync)
+# -------------------------------------------------------------------
+
+
+# ══════════════════════════════════════════════════════════════════
+# PROJECT DATA — SORT Landing-specific (replace when adopting FEEL elsewhere)
+# ══════════════════════════════════════════════════════════════════
+
+# ── External planning tracker ─────────────────────────────────────
+external_tracker:
+  type: jira
+  project_key: SCRUM
+  url: https://feelofeel.atlassian.net/browse/SCRUM
+  cloud_id: 130fd2a9-4ddd-4769-b3fa-95e7fb137aaf
+  doc_link_convention: "tracker: SCRUM-NNN in doc head (optional convenience link)"
+
+# ── Audience taxonomy ─────────────────────────────────────────────
+audiences:
+  - id: architect
+    description: Dee / future builder — design rationale and structure decisions
+  - id: developer
+    description: Day-to-day coder — specs, conventions, how-to
+
+# ── Doc registry ──────────────────────────────────────────────────
+docs:
+  - id: super-index
+    path: CLAUDE.md
+    audience: [developer, architect]
+    guards: always-loaded super-index; change-type router; behavioral rules; sticky facts
+
+  - id: landing-page-definition
+    path: docs/landing-page-definition.md
+    audience: [architect, developer]
+    guards: full page spec — section copy, layout, lead form, SEO, analytics
+    head_count_exempt: true   # comprehensive spec by design
+
+  - id: feel
+    path: docs/conventions/feel.md
+    audience: [developer, architect]
+    guards: the FEEL doc convention itself; spec for all heads and skills
+
+  - id: decisions
+    path: docs/history/decisions.md
+    audience: [architect, developer]
+    guards: append-only rolling window of non-obvious decisions (skill-only)
+
+  - id: index
+    path: docs/index.md
+    audience: [developer]
+    guards: public GitHub entry point — pointer to CLAUDE.md super-index
+
+
+# ── Relation registry ─────────────────────────────────────────────
+# No derived docs yet. Add entries here when a doc is authored FROM another.
+relations: []
+
+
+# ── Comparison groups ─────────────────────────────────────────────
+# No overlap groups needed for a single-spec repo.
+comparison_groups: []
+
+
+# ── Roles (work modes) ────────────────────────────────────────────
+roles:
+  - name: landing-content
+    label: Copy / layout / lead-form work
+    required_docs: [landing-page-definition]
+    required_code: ["src/pages/index.astro", "functions/api/lead.ts"]
+    session_recommendation: any
+
+  - name: doc-maintenance
+    label: Docs / FEEL upkeep
+    required_docs: [feel]
+    required_skills: [feel-doc, feel-repeat]
+    session_recommendation: light
+
+
+# ══════════════════════════════════════════════════════════════════
+# FRAMEWORK SCHEMA — portable (keep when adopting FEEL elsewhere)
+# ══════════════════════════════════════════════════════════════════
+
+# ── Ceremony levels ───────────────────────────────────────────────
+ceremony_levels:
+  safety:
+    includes: [cf_pages_env, supabase_keys, prod_ops]
+    requires: [governing_docs, load_bearing_doc_update, decision_log_if_non_obvious, verification]
+  normal:
+    includes: [lead_form, analytics, meaningful_copy_change, operator_workflow]
+    requires: [spec_or_doc_sync, changelog_if_behaviour_changed]
+  light:
+    includes: [copy_tweaks, css, visual_polish, internal_refactors]
+    requires: [nearby_context, risk_based_tests]
+    skips_by_default: [changelog, version_bump, doc_head_churn]
+  emergency_skip:
+    explicit_phrases: ["skip ceremony", "no ceremony", "skip the skills", "quick one"]
+    skips_by_default: [changelog, doc_sync, routine_skill_invocation]
+    never_skips: [safety]
+
+# ── Head-count thresholds ─────────────────────────────────────────
+head_count:
+  heading_warning: 12
+  heading_split: 18
+  char_warning: 8000
+  char_split: 15000
+  split_action: >
+    Identify the 3-5 most coherent heading clusters in this doc, extract
+    them into a new derived doc with `derived_from` pointing at the original,
+    and reduce the original to a router + summary pointing at the derived docs.
+    Run /feel-doc on both the original and each new derived doc.
+
+# ── Plan-doc staleness ────────────────────────────────────────────
+plan_staleness:
+  stale_after_releases: 3
+  action: >
+    Recommend migrating still-live items to external_tracker, then reduce
+    the doc to a pointer stub (or delete it). The human confirms which
+    items are still live. Run /feel-doc after restructuring.
+
+# ── Routine registry ──────────────────────────────────────────────
+routines:
+  - name: feel-doc
+    skill: feel-doc
+    trigger: normal/safety ceremony for any meaningful doc edit
+    scope: the edited doc and its derived docs
+    what_it_does: >
+      Refreshes the FEEL head (doc_revision, app_version, updated), enforces
+      source_of/derived_from symmetry, and refreshes the CLAUDE.md catalog.
+
+  - name: feel-decision
+    skill: feel-decision
+    trigger: a non-obvious architectural or product decision is made
+    scope: docs/history/decisions.md
+    what_it_does: >
+      Appends a dated row. The substance goes in the codified-in doc first.
+      Prune-audit mode removes rows that have been absorbed — human-approved.
+
+  - name: feel-repeat
+    skill: feel-repeat
+    trigger: >
+      After any doc change (run --diff mode); or periodically as a health check.
+    scope: comparison_groups; declared relations; head-count thresholds; plan_staleness
+    what_it_does: >
+      Detects missing relation declarations, staleness, within-doc duplication,
+      and docs past head-count thresholds. Reports findings; never auto-edits.
+
+  - name: feel-session
+    skill: feel-session
+    trigger: on demand — start of a session when orientation is needed
+    scope: git log, CHANGELOG.md [Unreleased], planning pointer
+    what_it_does: >
+      Produces a ~10-line session brief: last change, open unreleased work,
+      and a sensible focus recommendation.

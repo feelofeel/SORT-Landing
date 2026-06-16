@@ -151,10 +151,11 @@ import Logo from "@/components/ui/Logo.astro";
 
         <span class="separator-line  hidden sm:inline-block bg-[rgba(183,202,255,0.5)] mt-[20px] -translate-y-1/2 w-px h-[20px]"></span>
 
-        <!-- Dark Mode Toggle (Desktop) -->
+        <!-- Dark Mode Toggle (Desktop) — icon only -->
         <div
           id="darkToggle"
-          class="relative flex items-center h-9 px-2 gap-1.5 font-medium cursor-pointer rounded-full bg-gradient-to-b from-white to-[#edf1fa] border-[0.5px] border-[#f3f5ff] dark:from-neutral-800 dark:to-neutral-600 dark:border-neutral-600 transition-all duration-200 hover:shadow-md hover:scale-105 active:scale-95 mx-1"
+          aria-label="Перемкнути тему"
+          class="flex items-center justify-center w-10 h-10 cursor-pointer rounded-full bg-gradient-to-b from-white to-[#edf1fa] border-[0.5px] border-[#f3f5ff] dark:from-neutral-800 dark:to-neutral-600 dark:border-neutral-600 transition-all duration-200 hover:shadow-md hover:scale-105 active:scale-95 mx-1"
         >
           <div
             class="flex justify-center items-center flex-shrink-0 w-6 h-6 relative overflow-hidden rounded-full bg-gradient-to-b from-[#85a6ff] to-[#2d6dc3] border-[0.5px] border-[#7fa1ff]"
@@ -165,10 +166,6 @@ import Logo from "@/components/ui/Logo.astro";
             <Moon class="absolute hidden text-white w-4 h-4 transition duration-200 transform ease"
               id="moon" />
           </div>
-          <span class="hidden sm:inline-block whitespace-nowrap">
-            <span id="dayText" class="flex-shrink-0 text-sm text-left text-[#6f6c8f] dark:text-neutral-400">Light</span>
-            <span id="nightText" class="hidden flex-shrink-0 text-sm text-left text-[#6f6c8f] dark:text-neutral-400">Dark</span>
-          </span>
         </div>
       </div>
     </nav>
@@ -429,13 +426,9 @@ import Logo from "@/components/ui/Logo.astro";
     if (isDark) {
       moonIcons.forEach(icon => icon.classList.remove('hidden'));
       sunIcons.forEach(icon => icon.classList.add('hidden'));
-      document.getElementById('dayText')?.classList.add('hidden');
-      document.getElementById('nightText')?.classList.remove('hidden');
     } else {
       sunIcons.forEach(icon => icon.classList.remove('hidden'));
       moonIcons.forEach(icon => icon.classList.add('hidden'));
-      document.getElementById('dayText')?.classList.remove('hidden');
-      document.getElementById('nightText')?.classList.add('hidden');
     }
   }
 

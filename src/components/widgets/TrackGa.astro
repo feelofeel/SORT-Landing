@@ -1,12 +1,19 @@
 ---
+// Plausible is the primary analytics for the landing (privacy-friendly, ~1KB, no cookie
+// banner, deferred so it doesn't hurt INP). GA4/Umami kept as optional alternates.
+const PLAUSIBLE_DOMAIN = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN;
 const GAID = import.meta.env.PUBLIC_GA4_ID;
 const UMAMIId = import.meta.env.PUBLIC_UMAMI_ID;
-// const GAID = '';
-
-if (!GAID) {
-    // console.error("Google Analytics ID (PUBLIC_GA4_ID) is missing!");
-}
 ---
+
+<!-- Plausible -->
+{PLAUSIBLE_DOMAIN && (
+    <script defer is:inline data-domain={PLAUSIBLE_DOMAIN} src="https://plausible.io/js/script.tagged-events.js"></script>
+)}
+<!-- Event queue stub: lets custom events fire before/without the script (no-op if unconfigured) -->
+<script is:inline>
+    window.plausible = window.plausible || function () { (window.plausible.q = window.plausible.q || []).push(arguments) };
+</script>
 
 <!-- GA4 跟踪代码 -->
 {GAID && (

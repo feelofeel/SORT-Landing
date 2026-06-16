@@ -1,6 +1,7 @@
 [
-	{ "name": "Можливості", "url": "/#features" },
+	{ "name": "Проблема", "url": "/#problem" },
 	{ "name": "Як працює", "url": "/#how" },
+	{ "name": "Можливості", "url": "/#features" },
 	{ "name": "Ціни", "url": "/#pricing" },
 	{ "name": "Питання", "url": "/#faq" }
 ]
