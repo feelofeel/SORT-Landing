@@ -38,6 +38,11 @@ npm run preview  # serve the built dist/
 - **`public/og.jpg`** is still the template's image — replace + add JSON-LD/CWV pass → [SCRUM-68](https://feelofeel.atlassian.net/browse/SCRUM-68).
 - **Domain:** set `PUBLIC_SITE_URL` on Cloudflare Pages once chosen → [SCRUM-69](https://feelofeel.atlassian.net/browse/SCRUM-69).
 
+## Attributions
+
+- Base template: [ricoui-saas-template](https://github.com/ricocc/ricoui-saas-template) — MIT
+- Icons in How It Works section: Vectors and icons by <a href="https://www.svgrepo.com" target="_blank">SVG Repo</a> — MIT
+
 ## Notes
 
 - `build` runs `astro build` (the template's `astro check` was dropped for iteration speed —

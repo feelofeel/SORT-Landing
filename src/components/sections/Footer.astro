@@ -64,7 +64,7 @@ const footerLinks = {
 
     <div class="border-t border-dashed border-primary/10 dark:border-primary-dark/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
       <p class="text-sm text-neutral-600 dark:text-neutral-400">
-        © {currentYear} {siteConfig.author}. {c.footer.rights}
+        © {currentYear} {siteConfig.author}{c.footer.rights ? `. ${c.footer.rights}` : "."}
       </p>
       <span class="inline-flex justify-center space-x-4">
         {socialLinks.map((social) => (

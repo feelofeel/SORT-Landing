@@ -279,7 +279,7 @@ export const en: Content = {
 
 	footer: {
 		tagline:
-			"An expiry-awareness layer on top of Poster. Not inventory, not a POS replacement, not HACCP — just expiry decisions, on time and in one tap.",
+			"An expiry-awareness layer on top of Poster. Make write-off and reorder decisions on time, in one tap.",
 		productHeading: "Product",
 		contactHeading: "Contact",
 		productLinks: [
@@ -297,7 +297,7 @@ export const en: Content = {
 			{ name: "Connect your café", url: "/#contact", external: false },
 			{ name: "Log in", url: "https://app.getsort.app/today", external: true },
 		],
-		rights: "Works on top of Poster.",
+		rights: "",
 	},
 
 	schema: {

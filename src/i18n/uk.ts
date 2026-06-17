@@ -281,7 +281,7 @@ export const uk = {
 
 	footer: {
 		tagline:
-			"Шар обізнаності про терміни придатності поверх Poster. Не інвентаризація, не заміна POS, не HACCP — лише рішення про терміни, вчасно й в один дотик.",
+			"Шар обізнаності про терміни придатності поверх Poster. Приймайте рішення про списання чи замовлення вчасно й в один дотик.",
 		productHeading: "Продукт",
 		contactHeading: "Контакт",
 		productLinks: [
@@ -299,7 +299,7 @@ export const uk = {
 			{ name: "Підключити заклад", url: "/#contact", external: false },
 			{ name: "Вхід", url: "https://app.getsort.app/today", external: true },
 		],
-		rights: "Працює поверх Poster.",
+		rights: "",
 	},
 
 	schema: {
