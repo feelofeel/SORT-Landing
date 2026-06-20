@@ -100,10 +100,16 @@ const c = getContent(lang);
     <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {c.features.items.map((f) => (
         <div class="h-full rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-700 overflow-hidden hover:shadow-md hover:-translate-y-1 transition-all duration-300">
-          <div class="h-36 flex flex-col items-center justify-center gap-1 border-b border-dashed border-primary/15 dark:border-neutral-700 bg-bg-primary/40 dark:bg-neutral-900/30 text-center px-4">
-            <span class="text-3xl">{f.ico}</span>
-            <span class="text-[11px] uppercase tracking-wider text-neutral-500 dark:text-neutral-400">{f.shot}</span>
-          </div>
+          {f.img ? (
+            <div class="h-44 overflow-hidden border-b border-primary/10 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-900">
+              <img src={f.img} alt={f.shot} loading="lazy" class="w-full h-full object-cover object-top" />
+            </div>
+          ) : (
+            <div class="h-36 flex flex-col items-center justify-center gap-1 border-b border-dashed border-primary/15 dark:border-neutral-700 bg-bg-primary/40 dark:bg-neutral-900/30 text-center px-4">
+              <span class="text-3xl">{f.ico}</span>
+              <span class="text-[11px] uppercase tracking-wider text-neutral-500 dark:text-neutral-400">{f.shot}</span>
+            </div>
+          )}
           <div class="p-6">
             <h3 class="text-lg font-semibold text-neutral-800 dark:text-neutral-100 mb-1">{f.title}</h3>
             <p class="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">{f.desc}</p>
