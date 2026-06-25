@@ -77,6 +77,7 @@ Docs run on **[FEEL](docs/conventions/feel.md)** — this file is the super-inde
 
 ## Sticky facts
 
+- **FEEL:** v1.1 (pinned 2026-06-25 · [framework repo](https://github.com/feelofeel/feel)) · note: local copy is pre-split monolith; current FEEL v1.1 has feel.md + feel-adoption.md separate
 - **Jira epic:** SCRUM-62 (children: 63 infra/accounts, 64 Astro build DONE, 65 UA copy, 66 screenshots Dee, 67 lead form+analytics DONE, 68 SEO/CWV DONE, 69 domain Dee)
 - **Supabase project:** `demlkcxujqtdbtppqmvl` (FEFO App prod — `public.leads` table, RLS on, no policies yet)
 - **CF Pages env vars needed:** `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `RESEND_API_KEY`, `LEAD_NOTIFY_EMAIL`, `PUBLIC_PLAUSIBLE_DOMAIN`, `PUBLIC_SITE_URL`

@@ -26,6 +26,10 @@ toc:
   - "§14 Quick-reference card"
 ---
 
+<!-- Synced from github.com/feelofeel/feel v1.1 on 2026-06-25.
+     Note: this copy is a pre-split monolith (spec + adoption guide merged); current FEEL v1.1
+     separates these into feel.md + feel-adoption.md. Upgrade when convenient. -->
+
 # FEEL — a documentation operating system
 
 **FEEL** is how docs work in a feelofeel project. Git versions code; **FEEL versions docs**. The goal is to *feel light*: quick lookups, few tokens, no soreness from re-reading thousands of lines to find one fact.
