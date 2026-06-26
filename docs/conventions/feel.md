@@ -3,11 +3,10 @@ title: FEEL — Documentation Operating System
 id: feel
 role: convention
 status: canonical
-doc_revision: 10
+doc_revision: 11
 feel_version: "1.1"
-app_version: 1.35.2
-updated: 2026-06-15
-source_of: [concurrent-workstreams]
+updated: 2026-06-26
+source_of: [feel-adoption]
 derived_from: []
 toc:
   - "§1 The frontmatter head"
@@ -18,17 +17,13 @@ toc:
   - "§6 Governance"
   - "§7 Ceremony levels"
   - "§8 The skill family"
-  - "§9 Adopting FEEL in a new project"
-  - "§10 Scope — what FEEL heads are for"
-  - "§11 Layers — adopt in stages"
-  - "§12 Agent bindings"
-  - "§13 Scale envelope"
-  - "§14 Quick-reference card"
+  - "§9 Scope — what FEEL heads are for"
+  - "§10 Quick-reference card"
 ---
 
-<!-- Synced from github.com/feelofeel/feel v1.1 on 2026-06-25.
-     Note: this copy is a pre-split monolith (spec + adoption guide merged); current FEEL v1.1
-     separates these into feel.md + feel-adoption.md. Upgrade when convenient. -->
+<!-- Synced from github.com/feelofeel/feel docs/conventions/feel.md v1.1 (dr:11) on 2026-06-26.
+     Split adopted: feel.md = operating spec; feel-adoption.md = layers, adoption, agent bindings, scale.
+     Adaptation: app_version omitted (SORT Landing has no release train); source_of scoped to this project. -->
 
 # FEEL — a documentation operating system
 
@@ -41,7 +36,7 @@ It rests on four pillars:
 - **E — Evolve with proportional ceremony.** Docs carry `doc_revision` + `app_version` + `updated`, but the process scales with risk: safety work gets full ceremony; light polish does not.
 - **L — Light by default.** One super-index (`CLAUDE.md`) routes every task. The **catalog routes; the heads version.** Read the smallest bucket that answers the question.
 
-This file is the spec. It is also the seed of the boilerplate: copy `docs/conventions/feel.md` + the `feel-*` skills + a `CLAUDE.md` skeleton into a new repo and you have FEEL.
+This file is the operating spec — what you run every session. **Adopting FEEL in a new project, choosing how deep to go, agent bindings, and scaling past the tested envelope live in the companion [feel-adoption](feel-adoption.md).** The seed of the boilerplate: copy both files + the `feel-*` skills + a `CLAUDE.md` skeleton into a new repo and you have FEEL.
 
 ---
 
@@ -56,7 +51,7 @@ id: feature-specs                           # kebab-case, unique, stable — the
 role: spec                                  # see §2
 status: canonical                           # see §2
 doc_revision: 7                              # integer, bumped on each meaningful content change
-app_version: 1.35.2
+app_version: 1.47.0
 updated: 2026-05-30                         # YYYY-MM-DD of last meaningful content change
 validated_prod_version: 1.10.0              # optional: prod app version observed during validation
 validated_dev_version: 1.10.0               # optional: dev app version observed during validation
@@ -68,29 +63,16 @@ derived_from: []                            # docs this one is authored FROM (id
 
 `id` is the stable machine handle. It answers "which doc is this?" Filenames can move (a doc relocating to `conventions/` keeps its `id`); links and relations reference the `id`, so nothing downstream breaks on a move.
 
-**Derived docs inherit `app_version` from their source** and declare the back-link:
-
-```yaml
----
-title: User Guide
-id: user-guide
-role: guide
-status: canonical
-app_version: 1.35.2
-updated: 2026-05-30
-derived_from: [feature-specs]
-source_of: []
----
-```
+**A derived doc** (one authored from another) carries the same fields but inherits `app_version` from its source and declares the back-link: `derived_from: [feature-specs]`, `source_of: []`.
 
 Optional fields, used only when they earn their place:
 
-- `related: [ids]` — non-authoring cross-links worth surfacing in the graph
-- `supersedes` / `superseded_by: <id>` — for replaced docs
-- `tracker: <external-id-or-url>` — optional back-link to the external work-tracker item (issue/ticket) currently driving this doc's changes. For docs maintained against a live plan in an external tracker. It is a convenience link, **not** part of the authoring graph: no symmetry is enforced, `feel-doc` does not validate it, and it should be removed when the work closes. *Which* tracker a project uses is declared in project data (`feel.config.yaml`), never hard-coded in this spec.
-- `validated_prod_version`, `validated_dev_version`, `validated_at` — evidence that a visually or operationally sensitive doc was checked against live environments. Use them for UI, runbook, and environment docs where real deployment state matters; omit them for ordinary conceptual/spec edits.
-- `toc: ["§1 Title", "§2 Title", …]` — H2-level section index, for docs with 4+ sections. Lets an AI reader understand the doc's full structure from the head alone and issue a targeted section read instead of loading the body. Generated and maintained by `feel-doc`.
-- `head_lines: <int>` — line count of the navigational zone (YAML head + any post-YAML summary block). Tells a reader `Read(limit=N)` to get the full navigational picture. Only useful for docs that carry a post-YAML summary between `---` and the first `##`; omit otherwise.
+- `related: [ids]` — non-authoring cross-links worth surfacing in the graph.
+- `supersedes` / `superseded_by: <id>` — for replaced docs.
+- `tracker: <external-id-or-url>` — convenience back-link to the external work-tracker item driving this doc's changes. **Not** part of the authoring graph: no symmetry, `feel-doc` doesn't validate it, remove it when the work closes. Which tracker a project uses is declared in `feel.config.yaml`, never in this spec.
+- `validated_prod_version` / `validated_dev_version` / `validated_at` — evidence a visually or operationally sensitive doc was checked against live environments. For UI, runbook, and environment docs; omit for ordinary conceptual edits.
+- `toc: ["§1 Title", …]` — H2-level section index, for docs with 4+ sections. Lets a reader grasp structure from the head alone and issue a targeted section read instead of loading the body. Maintained by `feel-doc`.
+- `head_lines: <int>` — line count of the navigational zone (head + any post-YAML summary block), so a reader can `Read(limit=N)`. Only for docs carrying a post-YAML summary; omit otherwise.
 
 ---
 
@@ -138,13 +120,11 @@ Two stamps are required everywhere; a third binds docs to a **version stream** w
 | Monorepo | one stream field per package; a doc carries the stream of the package it describes | each package's manifest |
 | Docs-only / no release train | **omit the stream field** | `doc_revision` + `updated` carry versioning alone |
 
-A repo without a release train is a first-class FEEL citizen, not an exception — the stream field is required only where a stream exists (Layer 4, §11). Docs describing FEEL itself carry `feel_version` instead (the version of this spec they conform to).
+A repo without a release train is a first-class FEEL citizen, not an exception — the stream field is required only where a stream exists (L4, see [feel-adoption](feel-adoption.md) §1). Docs describing FEEL itself carry `feel_version` instead (the version of this spec they conform to).
 
-Optional validation stamps answer a narrower question: *which deployed app versions were actually observed when this doc was checked?* Use `validated_prod_version`, `validated_dev_version`, and `validated_at` when the doc's truth depends on seeing prod/dev reality, such as UX conventions, environment maps, and operational runbooks. Do not encode prod/dev versions in `doc_revision`; one doc edit can be conceptual, pre-release, post-release, or inherited from another doc.
+Optional validation stamps answer a narrower question: *which deployed app versions were observed when this doc was checked?* Use them when the doc's truth depends on seeing prod/dev reality (UX conventions, environment maps, runbooks). Do not encode prod/dev versions in `doc_revision`; one doc edit can be conceptual, pre-release, post-release, or inherited.
 
-**Inheritance ("or their groups/parents").** A derived doc (`derived_from` set) inherits its source's `app_version` — the guides move when the spec moves, not on their own clock. Group docs that share a parent can share a version this way instead of each carrying its own.
-
-**Baseline (FEEL adoption, 2026-05-30).** At rollout every doc is seeded `doc_revision: 1`; `updated` = its known last-content date (from any prior "Last updated" line) or the adoption date; `app_version` = the semver current at that date. Thereafter `feel-doc` maintains all three.
+**Inheritance.** A derived doc (`derived_from` set) inherits its source's `app_version` — the guides move when the spec moves, not on their own clock. Group docs that share a parent can share a version this way.
 
 ---
 
@@ -191,10 +171,8 @@ CLAUDE.md (always loaded)
 ```
 
 **Traversal rules:**
-- Source is authority — on conflict, update source first; `feel-doc` syncs derived docs.
-- Check the gap — before treating a derived doc as current, compare its `app_version` to the source's.
+- Source is authority — on conflict, update source first; `feel-doc` syncs derived docs. Read a source/derived pair as source head → relevant source section → derived head, opening the derived body only for role-specific content the source lacks.
 - Body links ≠ authoring relations — `[see architecture §4]` is navigation; only `source_of`/`derived_from` is the graph.
-- Source + derived pair: read source head → relevant source section → derived head. Read derived body only for role-specific content the source doesn't carry.
 - **Staleness rule (standing):** before acting on any doc's content, glance at `app_version`; if it predates the feature you're touching, update body + `/feel-doc` before relying on it.
 
 ---
@@ -212,13 +190,13 @@ A decision "graduates" out of the log once it's incorporated elsewhere. The log 
 
 ### Authoring with AI assistance
 
-Three rules that apply whenever a human edits a FEEL-managed doc directly — in a text editor, via a chat UI, or by pasting into a file:
+Three rules whenever a human edits a FEEL-managed doc directly (editor, chat UI, or paste):
 
-1. **Match the doc type before writing.** Every CLAUDE.md section should answer: *is this an invariant (must be true every session) or a tactic (how to execute one kind of task)?* Invariants — hard rules, non-negotiable guardrails, always-true workflow steps — belong in the super-index. Tactics — execution style, "when doing X do Y this time", plan-mode behaviour — belong in a decision-log entry, a guide, or said in-session. A tactic in CLAUDE.md adds permanent token cost with session-bounded value; it will be ignored once the model's in-context reasoning supersedes it.
+1. **Match the doc type before writing.** Every CLAUDE.md section should answer: *invariant (must be true every session) or tactic (how to execute one kind of task)?* Invariants — hard rules, guardrails, always-true workflow steps — belong in the super-index. Tactics — execution style, "this time do X", plan-mode behaviour — belong in a decision-log entry, a guide, or said in-session. A tactic in CLAUDE.md adds permanent token cost with session-bounded value.
 
-2. **Manual edits need `/feel-doc` to close.** Edit freely; the skill is the hygiene step, not the authoring step. After any free-form addition, run `/feel-doc` to resync `doc_revision`, `updated`, and relations. A doc edited without closing the loop has a stale head — it will read as older than it is and may lose relation symmetry.
+2. **Manual edits need `/feel-doc` to close.** Edit freely; the skill is the hygiene step, not the authoring step. After any free-form addition, run `/feel-doc` to resync `doc_revision`, `updated`, and relations. A doc edited without closing the loop has a stale head and may lose relation symmetry.
 
-3. **Project adaptations live in CLAUDE.md fences, not in the spec.** Changes to `feel.md` propagate to every future FEEL adoption (the `feel_version` field tracks which spec revision a copy derives from). Project-specific rules — custom ceremony levels, domain guardrails, project-specific skill triggers — belong in `CLAUDE.md` behind `<!-- project rules -->` fences or in `feel.config.yaml` PROJECT DATA sections. If you genuinely want to evolve the spec itself, do it intentionally: bump `feel_version` and treat it as a FEEL release.
+3. **Project adaptations live in CLAUDE.md fences, not in the spec.** Changes to `feel.md` propagate to every future FEEL adoption (`feel_version` tracks which spec revision a copy derives from). Project-specific rules — custom ceremony levels, domain guardrails, skill triggers — belong in `CLAUDE.md` behind `<!-- project rules -->` fences or `feel.config.yaml` PROJECT DATA. To evolve the spec itself, do it intentionally: bump `feel_version` and treat it as a FEEL release.
 
 ---
 
@@ -246,42 +224,20 @@ FEEL ships as skills (`.claude/commands/`). The naming line is the reusability b
 - **`feel-*` — framework-generic, portable to any project.** The active core is five skills:
   - `feel-doc` — create or update a doc to the FEEL standard: write/refresh the head, bump `doc_revision`, stamp `app_version` + `updated`, enforce relation symmetry, refresh the `CLAUDE.md` catalog.
   - `feel-decision` — the sole writer of `decisions.md` (append + prune-audit, §6).
-  - `feel-repeat` — doc network health check: detects cross-doc staleness, missing relation declarations, within-doc concept duplication, and docs that have grown past the head-count thresholds defined in `docs/feel.config.yaml`. Run after any doc edit (`--diff`) or periodically as a full-graph scan.
-  - `feel-session` — session-opening brief: reads git state, open changelog work, and the local planning pointer into a ≤20-line orient. Use at session start, not frequently.
-  - `feel-health` — the **success gauge**: doc/skill token-footprint dashboard over `tools/feel/health.mjs` (session floor, per-role budgets, outlier docs). Together with `feel-repeat` it answers "is FEEL set up right and still working here?" — `feel-repeat` audits structural honesty (relations, staleness, duplication), `feel-health` audits weight (is the system still light?). A green pass on both is the objective "yes."
-- **`<project>-*` — project-specific, stay with the project:** e.g. `<project>-changelog`, `<project>-migration`. These handle project-specific workflows (versioning, schema changes, API integration scripts).
+  - `feel-repeat` — doc **and skill** network health check: detects cross-doc staleness, missing relation declarations, within-doc concept duplication, docs that have grown past the head-count thresholds defined in `docs/feel.config.yaml`, and skill-layer drift (active/archived duplicates, dangling references, missing contracts, `feel-*` portability leaks, orphans). Run after any doc edit (`--diff`) or periodically as a full-graph scan.
+  - `feel-session` — session-opening brief: git state, open changelog work, and the planning pointer into a ≤20-line orient. Session start, not frequent.
+  - `feel-health` — the **success gauge**: doc/skill token-footprint dashboard over `tools/feel/health.mjs`. With `feel-repeat` it answers "is FEEL set up right and still light?" — `feel-repeat` audits structural honesty (relations, staleness, duplication — across docs *and* the skill family), `feel-health` audits weight. A green pass on both is the objective "yes."
+- **`<project>-*` — project-specific, stay with the project:** e.g. `<project>-changelog`, `<project>-migration` (versioning, schema changes, API integration).
 
-**The extended set is archived, not deleted.** Eight further `feel-*` skills (`feel-ghost`, `feel-trace`, `feel-shrink`, `feel-contract`, `feel-mistake`, `feel-sibling`, `feel-seed`, `feel-diff`) live in `feel/skills/` — copy one back into `.claude/commands/` to reactivate it. They cover deferred-work queues, vertical feature tracing, doc compression, skill contracts, mistake/sibling analysis, session seeds, and diff extraction; useful at scale, but each adds per-session skill-text cost, so they stay out of the active set until a project earns them.
+**The extended set is archived, not deleted.** Eight further `feel-*` skills (`feel-ghost`, `feel-trace`, `feel-shrink`, `feel-contract`, `feel-mistake`, `feel-sibling`, `feel-seed`, `feel-diff`) live in `feel/skills/` — copy one back into `.claude/commands/` to reactivate. Useful at scale, but each adds per-session skill-text cost, so they stay out of the active set until a project earns them.
 
-**Contracts.** Skills that carry a `## Contract` section (`requires / guarantees / never`) are chainable and auditable — the `never` clauses constrain what a skill will do in the hands of an AI that might otherwise hallucinate an action. New skills should always include a contract.
+**Contracts.** Skills carrying a `## Contract` section (`requires / guarantees / never`) are chainable and auditable — the `never` clauses constrain an AI that might otherwise hallucinate an action. New skills should always include one. Skill shape: YAML `description` (triggers) → a first visible line stating what the skill does → numbered steps → `## Argument`. The first line matters in the Claude Code UI.
 
-Skill files follow one shape: YAML frontmatter (`description` with triggers) → a first visible line that says what the skill does → numbered workflow steps → a final `## Argument` section. The first line matters in Claude Code UI; make it useful before adding detail.
-
----
-
-## 9. Adopting FEEL in a new project
-
-Adoption is **layered** — decide how deep to go with §11 first; every step below past step 1 is optional at the shallower layers.
-
-The full seed:
-
-1. Copy this file to `docs/conventions/feel.md`. Keep its `feel_version` — that records which FEEL spec your copy derives from, so when FEEL itself moves you can see the drift. Project-coupled adaptations of the spec belong in your project docs, not edits to the copy; if you fork the spec anyway, keep the original `feel_version` so the divergence point stays visible.
-2. Copy the `feel-*` skills into `.claude/commands/`. At minimum: `feel-doc` and `feel-decision`; the recommended core adds `feel-repeat`, `feel-session`, and `feel-health` (§8). The extended set lives in `feel/skills/`.
-3. Copy `feel.config.yaml` and replace the **PROJECT DATA** sections (audiences, docs, relations, comparison_groups) with your project's equivalents. Keep the **FRAMEWORK SCHEMA** sections (ceremony_levels, head_count, routine shape) as-is.
-4. Start `CLAUDE.md` from the skeleton: **Identity · SUPER-INDEX (catalog + router) · Behavioral guidelines · Project excellency · Sticky facts**. Use `<!-- FEEL framework rules -->` / `<!-- project rules -->` fences to mark which sections are portable.
-5. Create `docs/index.md` (public pointer) and `docs/history/decisions.md` (empty log with the skill-only header).
-6. Give every doc a FEEL head from day one. The catalog grows itself.
-7. Create your own `<project>-*` skills for project-specific workflows (changelog, migrations, API integration scripts). Don't put project-specific logic in `feel-*` skills.
-
-That's the whole framework: heads that self-describe, one index that routes, a log that prunes itself, skills that keep it honest, and a config file with clear framework/project layering.
-
-**Portability constraint.** FEEL is framework-generic — its design decisions, skill contracts, and naming conventions must not depend on any host project's domain, schema, or workflow. The host project may appear as a concrete example (allowed, useful), but never as the reason a FEEL rule exists. When designing a new `feel-*` skill or changing the convention, ask: _does this make sense in a project that has never heard of this codebase's domain?_ If not, it belongs in `<project>-*` or the project's own docs, not here.
-
-**Config layering.** `feel.config.yaml` has two clearly marked layers: **FRAMEWORK SCHEMA** (ceremony levels, head_count thresholds, routine shape — portable) and **PROJECT DATA** (audiences, docs, relations, comparison groups — project-specific). When adopting FEEL, keep the framework sections and replace the project sections.
+**The skill family is subject to the same honesty audits as docs.** Skills accrete and drift exactly like documentation — stale duplicates linger after a rename, references dangle when a skill is archived, contracts go missing, and a portable `feel-*` skill picks up a host-project term. `feel-repeat` therefore scans the skill directories (active + archived) alongside the doc graph; a clean skill layer is part of "FEEL is set up right," not a separate concern.
 
 ---
 
-## 10. Scope — what FEEL heads are *for*
+## 9. Scope — what FEEL heads are *for*
 
 FEEL heads solve one specific problem: **the described thing can drift from the describing thing.** A doc describes a feature; the feature changes; the doc doesn't know. `app_version` bridges that gap. `source_of`/`derived_from` make the authoring graph explicit because it isn't structurally enforced anywhere else.
 
@@ -297,47 +253,7 @@ For code→doc traceability, prefer a central router (CLAUDE.md's change-type ta
 
 ---
 
-## 11. Layers — adopt in stages
-
-FEEL is four layers, not one religion. Each layer is independently useful, names what it costs, and requires only the layers below it. **Stopping at any layer is a valid adoption, not a partial one.**
-
-| Layer | What it is | What you get | What it costs |
-|---|---|---|---|
-| **L1 — Heads** | YAML frontmatter (§1–2) + two-way relations (§4) on every doc | Docs self-describe; staleness and lineage visible from 12 lines; graph checkable | A head per doc; symmetry upkeep on relation changes |
-| **L2 — Index** | The super-index file (§5): catalog + change-type router | Any task routes from one map; agents stop exploratory reading | Keeping the catalog and router current as docs/anchors move |
-| **L3 — Ceremony** | Proportional process (§7), decision log (§6), the core skills (§8) | Docs stay *true*, not just structured; decisions don't evaporate | ~A few skill runs per working session (measured low single-digit % of session tokens in the host project) |
-| **L4 — Release machinery** | Version streams (§3), release-cut sweeps, changelog discipline, worktree protocol | Docs anchored to shipped reality; "does this doc predate the feature?" answerable at a glance | A release-cut routine; only meaningful where a release train exists |
-
-Typical mappings: a docs-only or library repo stops at L2; a maintained product takes L3; a shipping app with releases takes L4. The layers also name the sales boundary: L1–L2 are the portable artifact anyone can fork; L3–L4 are the practice.
-
----
-
-## 12. Agent bindings
-
-The heads/index/relations core (L1–L2) is plain Markdown and YAML — **agent-agnostic by construction**. Only two things bind to a specific tool, and both have cheap equivalents:
-
-- **The super-index file.** `CLAUDE.md` is the Claude Code binding. The cross-agent convention is `AGENTS.md` (read by Codex, Cursor, Copilot, and others). Pick **one canonical file** for the content and make the other a one-line pointer at it — never maintain two divergent copies (that breaks "one map", §5). Claude-first repos (like this one) keep `CLAUDE.md` canonical with `AGENTS.md` pointing in; agent-mixed or public repos should author `AGENTS.md` as canonical and point `CLAUDE.md` at it.
-- **Skills.** `.claude/commands/` is Claude Code's slash-command binding. A skill file is just a Markdown prompt with a contract — in any other agent it degrades gracefully to a **runbook**: reference it from the index, paste it, or wire it into that agent's equivalent (Cursor rules, Copilot prompt files). The `## Contract` section is what makes a skill auditable anywhere; the slash command is convenience, not substance.
-
-Everything else — heads, relations, the router table, the decision log, ceremony levels — is tool-free text. An agent that can read files can run FEEL.
-
----
-
-## 13. Scale envelope
-
-Honesty about what's tested versus designed:
-
-**Tested envelope (the host project): ~25 docs, one operator, one agent.** Inside it, one super-index routes everything and head upkeep is background noise. Beyond it, the following is **design guidance, not proven practice** — it says how FEEL is built to stretch, pending evidence:
-
-- **Many docs (~50+).** Split the catalog by domain: the root index keeps the change-type router and a short catalog *of sub-indexes*; each domain gets its own `index`-role doc. "One map" means **one root**, not one flat list — depth is allowed, divergence is not. Keep any single router table under ~15 rows; past that, rows stop being scannable and the router needs a domain split.
-- **Multiple operators.** The conflict surfaces are known and mostly mechanical: `doc_revision` collisions resolve as *take max + 1* (it's an ordering counter, not meaning); `updated` takes the later date; relation edits conflict like any code merge. Two rules prevent the painful cases: **version-stream sweeps are single-owner** (one person cuts the release; nobody else bumps stream fields mid-flight — already the law in §7), and **the decision log stays skill-only**, which serializes its writes.
-- **Multiple agents / mixed tools.** Covered by §12 — bindings differ, the text layer is shared.
-
-When a project crosses the envelope, treat the first month as an experiment and feed what breaks back into this section.
-
----
-
-## 14. Quick-reference card
+## 10. Quick-reference card
 
 ```
 Starting a change?           → CLAUDE.md change-type router first

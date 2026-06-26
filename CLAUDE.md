@@ -25,7 +25,7 @@ Docs run on **[FEEL](docs/conventions/feel.md)** — this file is the super-inde
 ### Doc catalog
 
 - **Specs:** [landing-page-definition](docs/landing-page-definition.md) — full page definition, section-by-section copy + layout spec; source for all copy changes
-- **Conventions:** [feel](docs/conventions/feel.md) — how docs work; FEEL spec v1.1
+- **Conventions:** [feel](docs/conventions/feel.md) — operating spec; FEEL v1.1 · [feel-adoption](docs/conventions/feel-adoption.md) — layers, adoption steps, agent bindings, scale
 - **Planning & history:** [decisions](docs/history/decisions.md) *(log — skill-only)*
 - **Indexes:** [index](docs/index.md) *(public GitHub entry)* · this file *(super-index)*
 
@@ -40,7 +40,7 @@ Docs run on **[FEEL](docs/conventions/feel.md)** — this file is the super-inde
 | Nav / menu / language switch | — | `nav` in `src/i18n/{uk,en}.ts` · `src/components/ui/LangSwitcher.astro` (`menu.json` now unused) |
 | Layout / design / CSS | — | `src/layouts/Layout.astro` · `src/styles/` |
 | Env vars / secrets | — | `.env.example` |
-| FEEL docs / CLAUDE.md | [feel](docs/conventions/feel.md) | — |
+| FEEL docs / CLAUDE.md | [feel](docs/conventions/feel.md) · [feel-adoption](docs/conventions/feel-adoption.md) | — |
 
 ---
 
@@ -77,7 +77,7 @@ Docs run on **[FEEL](docs/conventions/feel.md)** — this file is the super-inde
 
 ## Sticky facts
 
-- **FEEL:** v1.1 (pinned 2026-06-25 · [framework repo](https://github.com/feelofeel/feel)) · note: local copy is pre-split monolith; current FEEL v1.1 has feel.md + feel-adoption.md separate
+- **FEEL:** v1.1 (synced 2026-06-26 · [framework repo](https://github.com/feelofeel/feel)) · split adopted: feel.md (operating spec, dr:11) + feel-adoption.md (layers/adoption/scale, dr:1)
 - **Jira epic:** SCRUM-62 (children: 63 infra/accounts, 64 Astro build DONE, 65 UA copy, 66 screenshots Dee, 67 lead form+analytics DONE, 68 SEO/CWV DONE, 69 domain Dee)
 - **Supabase project:** `demlkcxujqtdbtppqmvl` (FEFO App prod — `public.leads` table, RLS on, no policies yet)
 - **CF Pages env vars needed:** `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `RESEND_API_KEY`, `LEAD_NOTIFY_EMAIL`, `PUBLIC_PLAUSIBLE_DOMAIN`, `PUBLIC_SITE_URL`
