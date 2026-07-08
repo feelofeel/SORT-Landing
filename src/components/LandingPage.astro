@@ -50,13 +50,24 @@ const c = getContent(lang);
 
       <div class="w-full md:w-1/2">
         <BrowserFrame url={c.hero.frame.url} className="w-full">
-          <div class="h-[320px] md:h-[380px] flex items-center justify-center p-6 text-center bg-[repeating-linear-gradient(135deg,transparent,transparent_10px,rgba(111,78,55,0.04)_10px,rgba(111,78,55,0.04)_20px)]">
-            <div>
-              <div class="text-4xl mb-3">📱</div>
-              <p class="text-sm font-semibold text-neutral-700 dark:text-neutral-200">{c.hero.frame.title}</p>
-              <p class="text-xs text-neutral-400 dark:text-neutral-500 mt-1 max-w-xs mx-auto">{c.hero.frame.desc}</p>
+          {c.hero.frame.img ? (
+            <div class="h-[320px] md:h-[380px] bg-neutral-50 dark:bg-neutral-950">
+              <img
+                src={c.hero.frame.img}
+                alt={c.hero.frame.alt}
+                loading="eager"
+                class="h-full w-full object-contain object-top p-3 md:p-4"
+              />
             </div>
-          </div>
+          ) : (
+            <div class="h-[320px] md:h-[380px] flex items-center justify-center p-6 text-center bg-[repeating-linear-gradient(135deg,transparent,transparent_10px,rgba(111,78,55,0.04)_10px,rgba(111,78,55,0.04)_20px)]">
+              <div>
+                <div class="text-4xl mb-3">📱</div>
+                <p class="text-sm font-semibold text-neutral-700 dark:text-neutral-200">{c.hero.frame.title}</p>
+                <p class="text-xs text-neutral-400 dark:text-neutral-500 mt-1 max-w-xs mx-auto">{c.hero.frame.desc}</p>
+              </div>
+            </div>
+          )}
         </BrowserFrame>
       </div>
     </div>
@@ -101,11 +112,11 @@ const c = getContent(lang);
       {c.features.items.map((f) => (
         <div class="h-full rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-700 overflow-hidden hover:shadow-md hover:-translate-y-1 transition-all duration-300">
           {f.img ? (
-            <div class="h-44 overflow-hidden border-b border-primary/10 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-900">
-              <img src={f.img} alt={f.shot} loading="lazy" class="w-full h-full object-cover object-top" />
+            <div class="h-52 overflow-hidden border-b border-primary/10 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-950">
+              <img src={f.img} alt={f.alt} loading="lazy" class="w-full h-full object-contain object-top p-3" />
             </div>
           ) : (
-            <div class="h-36 flex flex-col items-center justify-center gap-1 border-b border-dashed border-primary/15 dark:border-neutral-700 bg-bg-primary/40 dark:bg-neutral-900/30 text-center px-4">
+            <div class="h-52 flex flex-col items-center justify-center gap-2 border-b border-dashed border-primary/15 dark:border-neutral-700 bg-bg-primary/40 dark:bg-neutral-900/30 text-center px-4">
               <span class="text-3xl">{f.ico}</span>
               <span class="text-[11px] uppercase tracking-wider text-neutral-500 dark:text-neutral-400">{f.shot}</span>
             </div>
@@ -128,13 +139,24 @@ const c = getContent(lang);
   <section class="py-16 md:py-24 site-container">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center max-w-5xl mx-auto">
       <BrowserFrame url={c.shelf.frame.url} className="w-full">
-        <div class="h-[300px] md:h-[340px] flex items-center justify-center p-6 text-center bg-[repeating-linear-gradient(135deg,transparent,transparent_10px,rgba(111,78,55,0.04)_10px,rgba(111,78,55,0.04)_20px)]">
-          <div>
-            <div class="text-4xl mb-3">🧱</div>
-            <p class="text-sm font-semibold text-neutral-700 dark:text-neutral-200">{c.shelf.frame.title}</p>
-            <p class="text-xs text-neutral-400 dark:text-neutral-500 mt-1 max-w-xs mx-auto">{c.shelf.frame.desc}</p>
+        {c.shelf.frame.img ? (
+          <div class="h-[300px] md:h-[340px] bg-neutral-50 dark:bg-neutral-950">
+            <img
+              src={c.shelf.frame.img}
+              alt={c.shelf.frame.alt}
+              loading="lazy"
+              class="h-full w-full object-contain object-top p-3 md:p-4"
+            />
           </div>
-        </div>
+        ) : (
+          <div class="h-[300px] md:h-[340px] flex items-center justify-center p-6 text-center bg-[repeating-linear-gradient(135deg,transparent,transparent_10px,rgba(111,78,55,0.04)_10px,rgba(111,78,55,0.04)_20px)]">
+            <div>
+              <div class="text-4xl mb-3">🧱</div>
+              <p class="text-sm font-semibold text-neutral-700 dark:text-neutral-200">{c.shelf.frame.title}</p>
+              <p class="text-xs text-neutral-400 dark:text-neutral-500 mt-1 max-w-xs mx-auto">{c.shelf.frame.desc}</p>
+            </div>
+          </div>
+        )}
       </BrowserFrame>
       <div>
         <Badge variant="accent">{c.shelf.badge}</Badge>

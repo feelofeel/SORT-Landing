@@ -3,9 +3,9 @@ title: Landing Page Definition — SORT marketing site
 id: landing-page-definition
 role: spec
 status: draft
-doc_revision: 1
+doc_revision: 2
 app_version: 1.0.0
-updated: 2026-06-15
+updated: 2026-07-08
 source_of: []
 derived_from: []
 ---
@@ -166,7 +166,7 @@ Order follows the high-converting B2B pattern (web research §1): hero → probl
 - **Visual:** a **horizontal 4-step flow diagram** (Poster icon → batch card → push bell → trash/Poster), arrows left-to-right. Clean, branded. This is the only "diagram" on the page; everything else is real UI.
 - **Alt text:** "Схема роботи SORT у чотири кроки: постачання, підтвердження, пуш на зміні, списання в Poster."
 
-### 4.5 Feature showcase — the 5 that matter (detail in §5? no — §4.6 cards)
+### 4.5 Feature showcase — the value points that matter (detail in §5? no — §4.6 cards)
 Covered as its own block below (§5 of *the page*); see **doc §5… actually feature detail is §4.6**.
 
 ### 4.6 Feature cards (the important/cool ones)
@@ -174,12 +174,12 @@ A grid of cards, each **pain → mechanism → outcome + one visual**. Selection
 
 | # | Feature (UA card title) | Pain → Mechanism → Outcome (English direction) | Source feature | Demo-surface? |
 |---|---|---|---|---|
-| F1 | **Пуш на початку зміни** *(Shift-start alert)* | "You learn at the till" → SORT pushes at shift open/close per your schedule → "barista is ready before the first guest." **The core promise.** | [Feature 1 & 12](../product/app-user-stories.md) | core |
-| F2 | **Екран «Сьогодні»** *(Today, one prioritized screen)* | "Scattered checks" → one screen: overdue (red) / today (amber) / new to confirm → "nothing slips at shift start." | Feature 1 | core |
-| F3 | **Списання в один дотик** *(One-tap write-off → Poster)* | "Leaving the bar for Poster's form" → tap «Списати», quantity pre-filled from sales, undo window → "waste recorded in Poster in one tap." | Feature 4 | core |
-| F4 | **Нуль ручного вводу** *(Zero data entry)* | "Typing products & dates" → batches appear from Poster supplies, barista just confirms → "no data entry, no training." | Feature 2 & 27 | core |
-| F5 | **Аналітика списань** *(Waste analytics)* | "Month-end mystery number" → write-offs grouped by reason over 7/30/90 days → "see *why* money was binned — expiry vs damage." | Feature 25 | yes |
-| F6 | **Візуалізація залишку** *(Visual stock cards — the "cool" one)* | "Reading numbers at arm's length" → carafe/bar/tray fill-level cards, color = urgency → "remaining volume readable across the bar." | Feature 20 | optional |
+| F1 | **Ризики до відкриття** *(Risk before opening)* | "You learn at the till" → SORT shows expired / expiring-today batches at shift start → "the team is ready before the first guest." **The core promise.** | [Feature 1 & 12](../product/app-user-stories.md) | core |
+| F2 | **Пріоритетний екран «Сьогодні»** *(Today, one prioritized screen)* | "Scattered checks" → one screen: overdue (red) / today (amber) / new to confirm → "barista sees the next action order." | Feature 1 | core |
+| F3 | **Списання без подвійної роботи** *(Write-off without double work → Poster)* | "Leaving the bar for Poster's form / guessing later" → tap «Списати», quantity pre-filled from sales, reason chosen on the spot → "waste recorded in Poster while context is fresh." | Feature 4 | core |
+| F4 | **Партії без ручного вводу** *(Batches without manual entry)* | "Typing products & dates" → batches appear from Poster supplies, barista just confirms → "no data entry, no training-heavy process." | Feature 2 & 27 | core |
+| F5 | **Аналітика причин втрат** *(Loss reason analytics)* | "Month-end mystery number" → write-offs grouped by reason over 7/30/90 days → "manager sees where money burns and can adjust purchasing." | Feature 25 | yes |
+| F6 | **Полиця без фото в чаті** *(Shelf without chat photos)* | "Manager asks / barista photographs / note goes stale" → shelf shows item, approximate remaining, expiry together → "fewer shift interruptions and better order inputs." | Feature 14 & 20 | optional |
 
 **Trust strip under the cards (small, 4 chips, no images):** «Працює офлайн» *(works offline, Feature 26)* · «Українською» *(Ukrainian-only UI)* · «Poster — джерело правди» *(Poster stays the record)* · «Все оборотне в Poster» *(every write-off reversible).*
 
@@ -189,7 +189,7 @@ A grid of cards, each **pain → mechanism → outcome + one visual**. Selection
 - **F3:** a single batch card mid-write-off — quantity stepper showing «Списати 1 з 3» and the «списано · Скасувати» undo toast. Annotate the "одне натискання" point.
 - **F4:** the «Нові партії» row with a «Підтвердити ✓» card — show that there's *no form*, just confirm.
 - **F5:** the «Аналітика списань» table grouped by reason (Прострочка / Пошкодження / Без причини) with quantities. Use the demo seed so numbers look real.
-- **F6:** a batch card with the vertical carafe fill (filter coffee) + a slotted-tray card (croissants) side by side.
+- **F6:** shelf/composition view with item, approximate remaining, and expiry visible together. The value claim is *fewer photos, fewer notes, fewer manager interruptions*; the visual fill itself is supporting proof, not the headline value.
 - **Alt text:** each describes the screen in Ukrainian, naming the SORT screen shown (per SEO §6.4).
 
 > **Screenshot sourcing:** capture all of these on **`dev.fefo.pages.dev`** with the demo seed ([SCRUM-18](https://feelofeel.atlassian.net/browse/SCRUM-18) seed-dev / demo-environment) so state is clean and realistic. Dee edits/annotates afterward. *(Per CLAUDE.md, inspecting dev UX is standing-permitted; capturing screenshots is Dee's job.)*
@@ -220,13 +220,14 @@ A grid of cards, each **pain → mechanism → outcome + one visual**. Selection
 - **Alt text:** n/a.
 
 ### 4.10 FAQ (schema-enabled — see SEO §6.5)
-4–6 questions, operator-framed:
+6–8 questions, operator-framed:
 1. «Чи замінює SORT Poster?» — Ні, працює поверх нього; Poster лишається обліком.
 2. «Скільки навчати баристу?» — Майже не треба: одна дія, українською.
-3. «Що потрібно для підключення?» — Доступ до вашого Poster; решту робимо ми.
-4. «Чи можна скасувати списання?» — Так, усе оборотне в Poster.
-5. «Працює, якщо впав інтернет?» — Так, дані з кешу, дії синхронізуються потім.
-6. «Скільки коштує?» — Є безкоштовний тариф; платний — від ₴… за заклад.
+3. «Чи додасть SORT роботи баристам?» — Ні: SORT може бути manager-only. Якщо бариста долучаються, це один-два дотики, не новий облік; часто економить час на фото, чатах і питаннях менеджеру.
+4. «Що потрібно для підключення?» — Доступ до вашого Poster; решту робимо ми.
+5. «Чи можна скасувати списання?» — Так, усе оборотне в Poster.
+6. «Працює, якщо впав інтернет?» — Так, дані з кешу, дії синхронізуються потім.
+7. «Скільки коштує?» — Є безкоштовний тариф; платний — від ₴… за заклад.
 - **Visual:** none (accordion). Each Q/A also emitted as `FAQPage` JSON-LD.
 
 ### 4.11 Final CTA (pre-footer)
@@ -397,7 +398,7 @@ The product *is* the proof; show the actual Ukrainian UI (dev seed). The decompo
 | F3 one-tap write-off | Feature 4 | FEFO leftover pre-fill + undo |
 | F4 zero data entry | Features 2, 27 | Confirm + Poster import |
 | F5 waste analytics | Feature 25 | "see why" ROI proof |
-| F6 visual stock cards | Feature 20 | The "cool" visual |
+| F6 shelf without chat photos | Feature 14 & 20 | Secondary manager-value proof; visual stock cards support the value |
 | Trust strip | Features 26, 4; invariants | Offline, reversible, Poster-record |
 | Objection block | competitor-brief §8.1 | Altitude line |
 | Onboarding flow | onboarding-tenant guide; SCRUM-11/35 | Manual now → self-serve later |
