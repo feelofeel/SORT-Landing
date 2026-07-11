@@ -187,7 +187,30 @@ const c = getContent(lang);
     </p>
   </section>
 
-  <!-- 8. PRICING -->
+  <!-- 8. GUIDES -->
+  <section id="guides" class="py-16 md:py-24 site-container scroll-mt-24">
+    <SectionHeader title={c.docs.title} description={c.docs.description} />
+    <div class="mt-8 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-5">
+      {c.docs.items.map((guide, index) => (
+        <a
+          href={guide.url}
+          class="group rounded-2xl border border-primary/10 dark:border-neutral-700 bg-bg-secondary dark:bg-bg-secondary-dark p-6 md:p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-primary/30"
+        >
+          <div class="flex items-center justify-between gap-4 mb-8">
+            <span class="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-xl" aria-hidden="true">{index === 0 ? "✓" : "◌"}</span>
+            <span class="text-xs font-medium tracking-wide text-neutral-500 dark:text-neutral-400">{guide.label}</span>
+          </div>
+          <h3 class="text-xl font-semibold text-neutral-800 dark:text-neutral-100 mb-2">{guide.title}</h3>
+          <p class="text-sm leading-relaxed text-neutral-500 dark:text-neutral-400">{guide.description}</p>
+          <span class="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-primary group-hover:gap-2.5 transition-all">
+            {c.docs.allGuides} <ArrowRight size={16} />
+          </span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- 9. PRICING -->
   <div id="pricing" class="scroll-mt-24"></div>
   <Pricing content={c.pricing} />
 

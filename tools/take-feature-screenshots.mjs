@@ -8,7 +8,7 @@
  * Usage:
  *   node tools/take-feature-screenshots.mjs
  *
- * Output: public/screenshots/f1-push.jpg … f6-visualization.jpg
+ * Output: .local/screenshots/f1-push.jpg … f6-visualization.jpg
  *
  * HOW AUTH WORKS:
  *   This script borrows your Chrome profile (which has a live Supabase session
@@ -23,7 +23,7 @@ import { fileURLToPath } from "url";
 import os from "os";
 
 const __dir = dirname(fileURLToPath(import.meta.url));
-const OUT = join(__dir, "..", "public", "screenshots");
+const OUT = join(__dir, "..", ".local", "screenshots");
 mkdirSync(OUT, { recursive: true });
 
 const BASE = "https://dev.fefo.pages.dev";
@@ -34,10 +34,8 @@ const CHROME_USER_DATA = join(
   "AppData", "Local", "Google", "Chrome", "User Data"
 );
 
-const CHROME_EXE = join(
-  os.homedir(),
-  "AppData", "Local", "Google", "Chrome", "Application", "chrome.exe"
-);
+const CHROME_EXE =
+  "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
 
 async function delay(ms) {
   return new Promise((r) => setTimeout(r, ms));
@@ -197,7 +195,7 @@ async function run() {
   }
 
   await browser.close();
-  console.log("All 6 screenshots saved to public/screenshots/");
+  console.log("All 6 screenshots saved to .local/screenshots/");
   console.log("Run: pnpm build  — to verify the landing page renders them correctly.");
 }
 

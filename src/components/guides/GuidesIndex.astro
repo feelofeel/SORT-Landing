@@ -1,0 +1,81 @@
+---
+import { getGuideIndex, type GuideKey } from "@/data/guides";
+import { type Lang, localizePath } from "@/i18n";
+import Layout from "@/layouts/Layout.astro";
+import { ArrowRight, BookOpen, CheckCircle2, ClipboardList } from "@lucide/astro";
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const content = getGuideIndex(lang);
+const icons: Record<GuideKey, typeof CheckCircle2> = {
+	firstSteps: CheckCircle2,
+	manager: ClipboardList,
+};
+const home = localizePath("/", lang);
+const contact = localizePath("/#contact", lang);
+---
+
+<Layout
+  lang={lang}
+  title={`${content.title} — SORT`}
+  description={content.description}
+  keywords="SORT guides, Poster, expiry dates, café manager, onboarding"
+  currentPath={lang === "en" ? "/en/guides/" : "/guides/"}
+>
+  <section class="site-container pt-12 md:pt-20 pb-8 md:pb-12">
+    <a href={home} class="inline-flex items-center gap-2 text-sm text-neutral-500 dark:text-neutral-400 hover:text-primary transition-colors">
+      <span aria-hidden="true">←</span> SORT
+    </a>
+    <div class="max-w-3xl mt-10 md:mt-16">
+      <div class="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-bg-secondary/80 dark:bg-bg-secondary-dark px-3 py-1.5 text-xs font-medium tracking-wide text-primary">
+        <BookOpen size={14} /> {content.kicker}
+      </div>
+      <h1 class="font-brand text-5xl leading-[0.96] md:text-6xl mt-5">{content.title}</h1>
+      <p class="mt-5 max-w-2xl text-lg leading-relaxed text-neutral-600 dark:text-neutral-300">{content.description}</p>
+    </div>
+  </section>
+
+  <section class="site-container pb-16 md:pb-24">
+    <p class="mb-5 text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500 dark:text-neutral-400">{content.featured}</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-5xl">
+      {content.cards.map((card) => {
+        const Icon = icons[card.key];
+        return (
+          <a
+            href={localizePath(`/guides/${card.key === "firstSteps" ? "first-steps" : "manager"}/`, lang)}
+            class="group relative overflow-hidden rounded-3xl border border-primary/10 dark:border-neutral-700 bg-bg-secondary dark:bg-bg-secondary-dark p-7 md:p-8 transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-xl"
+          >
+            <div class="absolute right-0 top-0 h-28 w-28 rounded-bl-[5rem] bg-primary/[0.045] dark:bg-primary/[0.12]"></div>
+            <div class="relative flex items-start justify-between gap-5">
+              <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary text-white shadow-sm">
+                <Icon size={22} stroke-width={1.8} />
+              </span>
+              <span class="text-xs font-medium text-neutral-500 dark:text-neutral-400">{card.meta}</span>
+            </div>
+            <div class="relative mt-10">
+              <p class="text-xs font-semibold uppercase tracking-[0.14em] text-primary">{card.label}</p>
+              <h2 class="mt-3 text-2xl font-semibold leading-snug text-neutral-800 dark:text-neutral-100">{card.title}</h2>
+              <p class="mt-3 text-sm leading-relaxed text-neutral-500 dark:text-neutral-400">{card.description}</p>
+              <span class="mt-7 inline-flex items-center gap-1.5 text-sm font-semibold text-primary group-hover:gap-2.5 transition-all">
+                {lang === "uk" ? "Відкрити посібник" : "Open guide"} <ArrowRight size={16} />
+              </span>
+            </div>
+          </a>
+        );
+      })}
+    </div>
+
+    <div class="mt-8 max-w-5xl rounded-3xl border border-primary/10 bg-primary/[0.045] dark:bg-primary/[0.11] p-7 md:flex md:items-center md:justify-between md:gap-8 md:p-8">
+      <div>
+        <h2 class="text-xl font-semibold text-neutral-800 dark:text-neutral-100">{content.help.title}</h2>
+        <p class="mt-2 max-w-2xl text-sm leading-relaxed text-neutral-600 dark:text-neutral-300">{content.help.body}</p>
+      </div>
+      <a href={contact} class="mt-5 inline-flex shrink-0 items-center gap-2 rounded-xl bg-btn-primary px-5 py-3 text-sm font-medium text-white transition hover:bg-btn-primary-hover md:mt-0">
+        {content.help.action} <ArrowRight size={16} />
+      </a>
+    </div>
+  </section>
+</Layout>

@@ -10,9 +10,10 @@ interface Props {
 	title?: string | undefined;
 	description?: string | undefined;
 	keywords?: string | undefined;
+	currentPath?: string | undefined;
 }
 
-const { lang = "uk", title, description, keywords } = Astro.props;
+const { lang = "uk", title, description, keywords, currentPath } = Astro.props;
 
 import "../styles/global.css";
 import "aos/dist/aos.css";
@@ -71,7 +72,7 @@ import "../styles/article-enhancements.css";
   </head>
   <body class="antialiased bg-bg-primary dark:bg-bg-primary-dark max-w-full overflow-x-hidden">
     <TopBg />
-    <Header lang={lang} />
+    <Header lang={lang} currentPath={currentPath ?? Astro.url.pathname} />
     <main>
       <slot />
     </main>

@@ -1,6 +1,6 @@
 /**
  * Tiny HTTP server that receives base64 screenshot POSTs from the browser
- * and saves them to public/screenshots/.
+ * and saves them to .local/screenshots/.
  *
  * Run: node tools/screenshot-server.mjs
  * Then run the browser bookmarklet to trigger capture.
@@ -12,7 +12,7 @@ import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 
 const __dir = dirname(fileURLToPath(import.meta.url));
-const OUT = join(__dir, "..", "public", "screenshots");
+const OUT = join(__dir, "..", ".local", "screenshots");
 mkdirSync(OUT, { recursive: true });
 
 const PORT = 7824;

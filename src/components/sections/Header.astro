@@ -7,8 +7,9 @@ import { ChevronRight, Menu, Moon, SunMedium, X } from "@lucide/astro";
 
 interface Props {
 	lang?: Lang;
+	currentPath?: string;
 }
-const { lang = "uk" } = Astro.props;
+const { lang = "uk", currentPath = "/" } = Astro.props;
 const c = getContent(lang);
 const menus = c.nav.map((m) => ({ ...m, url: localizePath(m.url, lang) }));
 const contactHref = localizePath("/#contact", lang);
@@ -124,14 +125,14 @@ const contactHref = localizePath("/#contact", lang);
 
         <!-- Language switcher (Mobile) -->
         <div class="relative z-10 w-full px-5 mt-3 flex justify-center sm:hidden">
-          <LangSwitcher lang={lang} ariaLabel={c.header.langAria} />
+          <LangSwitcher lang={lang} ariaLabel={c.header.langAria} path={currentPath} />
         </div>
       </div>
 
       <!-- Desktop Actions -->
       <div class="relative hidden sm:flex items-center gap-2 ml-4 lg:ml-6">
         <!-- Language switcher (Desktop) -->
-        <LangSwitcher lang={lang} ariaLabel={c.header.langAria} />
+        <LangSwitcher lang={lang} ariaLabel={c.header.langAria} path={currentPath} />
 
         <!-- CTA Button (Desktop) -->
         <Button url={contactHref} type="fill" className="md:flex mx-1">

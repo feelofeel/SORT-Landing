@@ -26,6 +26,63 @@ const json = (data: unknown, status = 200) =>
     headers: { "content-type": "application/json; charset=utf-8" },
   });
 
+const rateLimitJson = (retryAfterSeconds: number) =>
+  new Response(JSON.stringify({ ok: false, error: "rate_limited" }), {
+    status: 429,
+    headers: {
+      "content-type": "application/json; charset=utf-8",
+      "retry-after": String(retryAfterSeconds),
+    },
+  });
+
+type RateBucket = { count: number; resetAt: number };
+
+const IP_WINDOW_MS = 10 * 60 * 1000;
+const IP_MAX_REQUESTS = 5;
+const CONTACT_WINDOW_MS = 60 * 60 * 1000;
+const CONTACT_MAX_REQUESTS = 3;
+const rateBuckets = new Map<string, RateBucket>();
+
+function checkRateLimit(
+  key: string,
+  limit: number,
+  windowMs: number,
+  now = Date.now(),
+): { allowed: true } | { allowed: false; retryAfterSeconds: number } {
+  const bucket = rateBuckets.get(key);
+  if (!bucket || bucket.resetAt <= now) {
+    rateBuckets.set(key, { count: 1, resetAt: now + windowMs });
+    return { allowed: true };
+  }
+
+  if (bucket.count >= limit) {
+    return {
+      allowed: false,
+      retryAfterSeconds: Math.max(1, Math.ceil((bucket.resetAt - now) / 1000)),
+    };
+  }
+
+  bucket.count += 1;
+  return { allowed: true };
+}
+
+function getClientIp(request: Request) {
+  return (
+    request.headers.get("cf-connecting-ip") ||
+    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    "unknown"
+  );
+}
+
+function safeErrorMessage(error: unknown) {
+  if (error instanceof Error) return error.message;
+  return String(error);
+}
+
+export function resetRateLimitsForTest() {
+  rateBuckets.clear();
+}
+
 // TG handles: @[letter][4-31 word chars] = 5-32 chars username.
 // Email: standard loose check — the reply will bounce if wrong.
 export function validateContact(
@@ -65,6 +122,16 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
   if (!contactResult.valid) {
     return json({ ok: false, error: "invalid_contact" }, 422);
   }
+
+  const ipLimit = checkRateLimit(`ip:${getClientIp(request)}`, IP_MAX_REQUESTS, IP_WINDOW_MS);
+  if (!ipLimit.allowed) return rateLimitJson(ipLimit.retryAfterSeconds);
+
+  const contactLimit = checkRateLimit(
+    `contact:${contact.toLowerCase()}`,
+    CONTACT_MAX_REQUESTS,
+    CONTACT_WINDOW_MS,
+  );
+  if (!contactLimit.allowed) return rateLimitJson(contactLimit.retryAfterSeconds);
 
   if (
     name.length > 200 ||
@@ -107,12 +174,14 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
       body: JSON.stringify(lead),
     });
     if (!res.ok) {
-      const body = await res.text();
-      console.error("supabase insert failed", res.status, body);
+      console.error("supabase insert failed", {
+        status: res.status,
+        statusText: res.statusText,
+      });
       return json({ ok: false, error: "store_failed" }, 502);
     }
   } catch (e) {
-    console.error("supabase insert error", e);
+    console.error("supabase insert error", safeErrorMessage(e));
     return json({ ok: false, error: "store_failed" }, 502);
   }
 

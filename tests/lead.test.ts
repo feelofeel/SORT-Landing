@@ -1,5 +1,9 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
-import { validateContact, onRequestPost } from "../functions/api/lead.js";
+import {
+  validateContact,
+  onRequestPost,
+  resetRateLimitsForTest,
+} from "../functions/api/lead.js";
 
 // ── validateContact ────────────────────────────────────────────────────────────
 
@@ -31,10 +35,10 @@ describe("validateContact", () => {
 
 // ── onRequestPost ──────────────────────────────────────────────────────────────
 
-function makeRequest(fields: Record<string, string>) {
+function makeRequest(fields: Record<string, string>, headers?: HeadersInit) {
   const form = new FormData();
   for (const [k, v] of Object.entries(fields)) form.append(k, v);
-  return new Request("http://localhost/api/lead", { method: "POST", body: form });
+  return new Request("http://localhost/api/lead", { method: "POST", body: form, headers });
 }
 
 const emptyEnv = {};
@@ -43,7 +47,11 @@ const withEnv = {
   SUPABASE_SERVICE_ROLE_KEY: "test-service-key",
 };
 
-afterEach(() => vi.unstubAllGlobals());
+afterEach(() => {
+  vi.unstubAllGlobals();
+  vi.restoreAllMocks();
+  resetRateLimitsForTest();
+});
 
 describe("onRequestPost — validation", () => {
   it("honeypot filled → 200 ok, persisted:false (silent drop)", async () => {
@@ -154,5 +162,91 @@ describe("onRequestPost — persistence", () => {
     });
     expect(res.status).toBe(502);
     expect((await res.json()).error).toBe("store_failed");
+  });
+});
+
+describe("onRequestPost - abuse controls and logging", () => {
+  it("rate-limits repeated valid submissions before Supabase insert", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(new Response(null, { status: 201 })),
+    );
+
+    for (let i = 0; i < 5; i += 1) {
+      const res = await onRequestPost({
+        request: makeRequest(
+          { contact: `owner${i}@cafe.ua` },
+          { "cf-connecting-ip": "203.0.113.10" },
+        ),
+        env: withEnv,
+      });
+      expect(res.status).toBe(200);
+    }
+
+    const blocked = await onRequestPost({
+      request: makeRequest(
+        { contact: "owner5@cafe.ua" },
+        { "cf-connecting-ip": "203.0.113.10" },
+      ),
+      env: withEnv,
+    });
+
+    expect(blocked.status).toBe(429);
+    expect(blocked.headers.get("retry-after")).toBeTruthy();
+    expect(vi.mocked(fetch)).toHaveBeenCalledTimes(5);
+  });
+
+  it("rate-limits repeated valid submissions for the same contact", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(new Response(null, { status: 201 })),
+    );
+
+    for (let i = 0; i < 3; i += 1) {
+      const res = await onRequestPost({
+        request: makeRequest(
+          { contact: "repeat@cafe.ua" },
+          { "cf-connecting-ip": `203.0.113.${i}` },
+        ),
+        env: withEnv,
+      });
+      expect(res.status).toBe(200);
+    }
+
+    const blocked = await onRequestPost({
+      request: makeRequest(
+        { contact: "repeat@cafe.ua" },
+        { "cf-connecting-ip": "203.0.113.99" },
+      ),
+      env: withEnv,
+    });
+
+    expect(blocked.status).toBe(429);
+    expect(vi.mocked(fetch)).toHaveBeenCalledTimes(3);
+  });
+
+  it("does not log the Supabase response body on insert failure", async () => {
+    const consoleError = vi.spyOn(console, "error").mockImplementation(() => {});
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(
+        new Response("owner@cafe.ua name=Private Cafe", {
+          status: 500,
+          statusText: "Internal Server Error",
+        }),
+      ),
+    );
+
+    const res = await onRequestPost({
+      request: makeRequest(
+        { contact: "owner@cafe.ua", name: "Private Cafe" },
+        { "cf-connecting-ip": "203.0.113.20" },
+      ),
+      env: withEnv,
+    });
+
+    expect(res.status).toBe(502);
+    expect(JSON.stringify(consoleError.mock.calls)).not.toContain("owner@cafe.ua");
+    expect(JSON.stringify(consoleError.mock.calls)).not.toContain("Private Cafe");
   });
 });

@@ -1,12 +1,15 @@
 ---
-import { type Lang, homePath, languages } from "@/i18n";
+import { type Lang, languages } from "@/i18n";
 
 interface Props {
 	lang: Lang;
 	ariaLabel: string;
+	path?: string;
 }
 
-const { lang, ariaLabel } = Astro.props;
+const { lang, ariaLabel, path = "/" } = Astro.props;
+const ukPath = path.replace(/^\/en(?=\/|$)/, "") || "/";
+const languagePath = (code: Lang) => (code === "en" ? `/en${ukPath === "/" ? "/" : ukPath}` : ukPath);
 ---
 
 <div
@@ -16,7 +19,7 @@ const { lang, ariaLabel } = Astro.props;
 >
   {languages.map(({ code, label }) => (
     <a
-      href={homePath(code)}
+      href={languagePath(code)}
       data-lang={code}
       aria-current={code === lang ? "true" : undefined}
       class:list={[

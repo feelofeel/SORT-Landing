@@ -191,6 +191,29 @@ export const en: Content = {
 		note: "SORT doesn't replace Poster — it makes your existing Poster data visible where and when you need it.",
 	},
 
+	docs: {
+		title: "Guides for everyday work",
+		description:
+			"Short, clear guides with no technical detours: prepare your café, set the rhythm and keep expiry under control.",
+		allGuides: "All guides",
+		items: [
+			{
+				label: "Getting started · 10 min",
+				title: "Prepare SORT for the first shift",
+				description:
+					"What to check in Poster, how to sign in, and how to set up products, shelves and notifications.",
+				url: "/guides/first-steps/",
+			},
+			{
+				label: "For managers · 12 min",
+				title: "Manage expiry without manual checks",
+				description:
+					"Your daily rhythm, manager decisions, write-offs and reports — everything needed to work with confidence.",
+				url: "/guides/manager/",
+			},
+		],
+	},
+
 	pricing: {
 		title: "Costs less than what you throw out in a week",
 		description:
@@ -308,6 +331,7 @@ export const en: Content = {
 		productLinks: [
 			{ name: "Features", url: "/#features" },
 			{ name: "How it works", url: "/#how" },
+			{ name: "Guides", url: "/guides/" },
 			{ name: "Pricing", url: "/#pricing" },
 			{ name: "FAQ", url: "/#faq" },
 		],

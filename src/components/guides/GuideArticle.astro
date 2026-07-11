@@ -1,0 +1,117 @@
+---
+import { getGuide, type GuideKey } from "@/data/guides";
+import { type Lang, localizePath } from "@/i18n";
+import Layout from "@/layouts/Layout.astro";
+import { ArrowRight, Check, CircleAlert, Clock3, FileText, Sparkles } from "@lucide/astro";
+
+interface Props {
+	lang: Lang;
+	guideKey: GuideKey;
+}
+
+const { lang, guideKey } = Astro.props;
+const guide = getGuide(lang, guideKey);
+const home = localizePath("/", lang);
+const guides = localizePath("/guides/", lang);
+const contact = localizePath("/#contact", lang);
+const sectionId = (index: number) => `section-${index + 1}`;
+---
+
+<Layout
+  lang={lang}
+  title={`${guide.title} — SORT`}
+  description={guide.description}
+  keywords="SORT guide, Poster, café expiry dates, manager guide"
+  currentPath={lang === "en" ? `/en/guides/${guideKey === "firstSteps" ? "first-steps" : "manager"}/` : `/guides/${guideKey === "firstSteps" ? "first-steps" : "manager"}/`}
+>
+  <section class="site-container pt-12 md:pt-20">
+    <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-sm text-neutral-500 dark:text-neutral-400">
+      <a href={home} class="hover:text-primary transition-colors">SORT</a>
+      <span aria-hidden="true">/</span>
+      <a href={guides} class="hover:text-primary transition-colors">{lang === "uk" ? "Посібники" : "Guides"}</a>
+    </nav>
+
+    <div class="mt-9 max-w-4xl rounded-[2rem] border border-primary/10 bg-bg-secondary/80 p-7 shadow-sm dark:bg-bg-secondary-dark md:mt-12 md:p-11">
+      <div class="flex flex-wrap items-center gap-2 text-xs font-medium">
+        <span class="inline-flex items-center gap-1.5 rounded-full bg-primary px-3 py-1.5 text-white"><Sparkles size={13} /> {guide.kicker}</span>
+        <span class="inline-flex items-center gap-1.5 rounded-full border border-primary/10 px-3 py-1.5 text-neutral-500 dark:border-neutral-700 dark:text-neutral-400"><Clock3 size={13} /> {guide.readTime}</span>
+      </div>
+      <h1 class="font-brand mt-6 max-w-3xl text-5xl leading-[0.96] md:text-6xl">{guide.title}</h1>
+      <p class="mt-5 max-w-2xl text-lg leading-relaxed text-neutral-600 dark:text-neutral-300">{guide.description}</p>
+      <p class="mt-7 text-xs text-neutral-500 dark:text-neutral-400">{guide.updated}</p>
+    </div>
+  </section>
+
+  <section class="site-container pb-16 pt-10 md:pb-24 md:pt-14">
+    <div class="grid grid-cols-1 gap-10 lg:grid-cols-[220px_minmax(0,720px)] lg:gap-16">
+      <aside class="lg:sticky lg:top-28 lg:self-start">
+        <p class="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500 dark:text-neutral-400">{lang === "uk" ? "У цьому посібнику" : "In this guide"}</p>
+        <ol class="space-y-1 border-l border-primary/15 dark:border-neutral-700">
+          {guide.sections.map((section, index) => (
+            <li>
+              <a href={`#${sectionId(index)}`} class="block py-2 pl-4 text-sm leading-snug text-neutral-500 transition-colors hover:text-primary dark:text-neutral-400">
+                {section.title.replace(/^\d+\.\s*/, "")}
+              </a>
+            </li>
+          ))}
+          {guide.rhythm && (
+            <li><a href="#rhythm" class="block py-2 pl-4 text-sm leading-snug text-neutral-500 transition-colors hover:text-primary dark:text-neutral-400">{guide.rhythm.title}</a></li>
+          )}
+        </ol>
+      </aside>
+
+      <article class="min-w-0">
+        {guide.sections.map((section, index) => (
+          <section id={sectionId(index)} class="scroll-mt-28 border-b border-dashed border-primary/15 py-10 first:pt-0 dark:border-neutral-700 md:py-12">
+            <div class="flex gap-4">
+              <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">{index + 1}</span>
+              <div>
+                <h2 class="text-2xl font-semibold leading-snug md:text-3xl">{section.title.replace(/^\d+\.\s*/, "")}</h2>
+                {section.intro && <p class="mt-3 text-base leading-relaxed text-neutral-600 dark:text-neutral-300">{section.intro}</p>}
+                <ul class="mt-6 space-y-4">
+                  {section.items.map((item) => (
+                    <li class="flex gap-3 text-[15px] leading-relaxed text-neutral-600 dark:text-neutral-300">
+                      <Check class="mt-1 h-4 w-4 shrink-0 text-primary" stroke-width={2.5} />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                {section.callout && (
+                  <p class="mt-7 flex gap-3 rounded-2xl border border-primary/15 bg-primary/[0.055] p-4 text-sm leading-relaxed text-neutral-700 dark:border-primary/25 dark:bg-primary/[0.12] dark:text-neutral-200">
+                    <CircleAlert class="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                    <span>{section.callout}</span>
+                  </p>
+                )}
+              </div>
+            </div>
+          </section>
+        ))}
+
+        {guide.rhythm && (
+          <section id="rhythm" class="scroll-mt-28 py-10 md:py-12">
+            <div class="flex items-center gap-3">
+              <FileText class="h-5 w-5 text-primary" />
+              <h2 class="text-2xl font-semibold md:text-3xl">{guide.rhythm.title}</h2>
+            </div>
+            <div class="mt-6 overflow-hidden rounded-2xl border border-primary/10 dark:border-neutral-700">
+              {guide.rhythm.items.map((item) => (
+                <div class="grid gap-1 border-b border-primary/10 p-4 last:border-b-0 dark:border-neutral-700 sm:grid-cols-[150px_1fr] sm:gap-5">
+                  <p class="text-sm font-semibold text-primary">{item.label}</p>
+                  <p class="text-sm leading-relaxed text-neutral-600 dark:text-neutral-300">{item.text}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        <section class="mt-4 rounded-3xl bg-primary px-7 py-8 text-white md:p-9">
+          <h2 class="text-2xl font-semibold">{guide.cta.title}</h2>
+          <p class="mt-3 max-w-xl text-sm leading-relaxed text-white/80">{guide.cta.body}</p>
+          <a href={contact} class="mt-6 inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-semibold text-primary transition hover:bg-neutral-100">
+            {guide.cta.action} <ArrowRight size={16} />
+          </a>
+        </section>
+      </article>
+    </div>
+  </section>
+</Layout>
