@@ -1,5 +1,10 @@
 ---
+import { getCollection } from "astro:content";
 import GuidesIndex from "@/components/guides/GuidesIndex.astro";
+import { validateGuideCollection } from "@/lib/guides";
+
+const guides = await getCollection("guides");
+validateGuideCollection(guides);
 ---
 
-<GuidesIndex lang="uk" />
+<GuidesIndex lang="uk" guides={guides} />

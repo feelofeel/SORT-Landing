@@ -1,81 +1,125 @@
 ---
-import { getGuideIndex, type GuideKey } from "@/data/guides";
+import type { CollectionEntry } from "astro:content";
 import { type Lang, localizePath } from "@/i18n";
 import Layout from "@/layouts/Layout.astro";
-import { ArrowRight, BookOpen, CheckCircle2, ClipboardList } from "@lucide/astro";
+import { guidePath, guidesIndexPath, sortGuides } from "@/lib/guides";
+import { ArrowRight, BookOpen, Users } from "@lucide/astro";
 
 interface Props {
 	lang: Lang;
+	guides: CollectionEntry<"guides">[];
 }
 
-const { lang } = Astro.props;
-const content = getGuideIndex(lang);
-const icons: Record<GuideKey, typeof CheckCircle2> = {
-	firstSteps: CheckCircle2,
-	manager: ClipboardList,
-};
+const { lang, guides } = Astro.props;
+const localizedGuides = sortGuides(
+	guides.filter((guide) => guide.data.locale === lang),
+);
 const home = localizePath("/", lang);
 const contact = localizePath("/#contact", lang);
+const currentPath = guidesIndexPath(lang);
+const alternatePaths = { uk: "/guides/", en: "/en/guides/" };
+const audienceOrder = ["manager", "barista", "team"] as const;
+
+const content =
+	lang === "uk"
+		? {
+				kicker: "База знань SORT",
+				title: "Посібники для спокійної зміни",
+				description:
+					"Оберіть свою роль і знайдіть одну конкретну відповідь: від першого запуску до щоденних рішень і списань.",
+				manager: "Для менеджера",
+				barista: "Для баристи",
+				team: "Для команди",
+				open: "Відкрити матеріал",
+				landing: "Огляд",
+				tutorial: "Навчальний посібник",
+				"how-to": "Практична інструкція",
+				reference: "Довідка",
+				explanation: "Пояснення",
+				helpTitle: "Потрібна допомога з запуском?",
+				helpBody:
+					"Підключаємо перші заклади особисто й допомагаємо налаштувати SORT під ваші процеси.",
+				helpAction: "Написати в Telegram",
+			}
+		: {
+				kicker: "SORT knowledge base",
+				title: "Guides for a calmer shift",
+				description:
+					"Choose your role and find one focused answer, from first setup to everyday decisions and write-offs.",
+				manager: "For managers",
+				barista: "For baristas",
+				team: "For the team",
+				open: "Open guide",
+				landing: "Overview",
+				tutorial: "Tutorial",
+				"how-to": "How-to guide",
+				reference: "Reference",
+				explanation: "Explanation",
+				helpTitle: "Need a hand getting started?",
+				helpBody:
+					"We personally connect the first cafés and help shape SORT around your workflow.",
+				helpAction: "Write on Telegram",
+			};
 ---
 
 <Layout
-  lang={lang}
-  title={`${content.title} — SORT`}
-  description={content.description}
-  keywords="SORT guides, Poster, expiry dates, café manager, onboarding"
-  currentPath={lang === "en" ? "/en/guides/" : "/guides/"}
+	lang={lang}
+	title={`${content.title} — SORT`}
+	description={content.description}
+	keywords="SORT guides, Poster, expiry dates, café manager, barista, onboarding"
+	currentPath={currentPath}
+	alternatePaths={alternatePaths}
 >
-  <section class="site-container pt-12 md:pt-20 pb-8 md:pb-12">
-    <a href={home} class="inline-flex items-center gap-2 text-sm text-neutral-500 dark:text-neutral-400 hover:text-primary transition-colors">
-      <span aria-hidden="true">←</span> SORT
-    </a>
-    <div class="max-w-3xl mt-10 md:mt-16">
-      <div class="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-bg-secondary/80 dark:bg-bg-secondary-dark px-3 py-1.5 text-xs font-medium tracking-wide text-primary">
-        <BookOpen size={14} /> {content.kicker}
-      </div>
-      <h1 class="font-brand text-5xl leading-[0.96] md:text-6xl mt-5">{content.title}</h1>
-      <p class="mt-5 max-w-2xl text-lg leading-relaxed text-neutral-600 dark:text-neutral-300">{content.description}</p>
-    </div>
-  </section>
+	<section class="site-container pb-8 pt-12 md:pb-12 md:pt-20">
+		<a href={home} class="inline-flex items-center gap-2 text-sm text-neutral-500 transition-colors hover:text-primary dark:text-neutral-400">
+			<span aria-hidden="true">←</span> SORT
+		</a>
+		<div class="mt-10 max-w-3xl md:mt-16">
+			<div class="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-bg-secondary/80 px-3 py-1.5 text-xs font-medium tracking-wide text-primary dark:bg-bg-secondary-dark">
+				<BookOpen size={14} /> {content.kicker}
+			</div>
+			<h1 class="font-brand mt-5 text-5xl leading-[0.96] md:text-6xl">{content.title}</h1>
+			<p class="mt-5 max-w-2xl text-lg leading-relaxed text-neutral-600 dark:text-neutral-300">{content.description}</p>
+		</div>
+	</section>
 
-  <section class="site-container pb-16 md:pb-24">
-    <p class="mb-5 text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500 dark:text-neutral-400">{content.featured}</p>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-5xl">
-      {content.cards.map((card) => {
-        const Icon = icons[card.key];
-        return (
-          <a
-            href={localizePath(`/guides/${card.key === "firstSteps" ? "first-steps" : "manager"}/`, lang)}
-            class="group relative overflow-hidden rounded-3xl border border-primary/10 dark:border-neutral-700 bg-bg-secondary dark:bg-bg-secondary-dark p-7 md:p-8 transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-xl"
-          >
-            <div class="absolute right-0 top-0 h-28 w-28 rounded-bl-[5rem] bg-primary/[0.045] dark:bg-primary/[0.12]"></div>
-            <div class="relative flex items-start justify-between gap-5">
-              <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary text-white shadow-sm">
-                <Icon size={22} stroke-width={1.8} />
-              </span>
-              <span class="text-xs font-medium text-neutral-500 dark:text-neutral-400">{card.meta}</span>
-            </div>
-            <div class="relative mt-10">
-              <p class="text-xs font-semibold uppercase tracking-[0.14em] text-primary">{card.label}</p>
-              <h2 class="mt-3 text-2xl font-semibold leading-snug text-neutral-800 dark:text-neutral-100">{card.title}</h2>
-              <p class="mt-3 text-sm leading-relaxed text-neutral-500 dark:text-neutral-400">{card.description}</p>
-              <span class="mt-7 inline-flex items-center gap-1.5 text-sm font-semibold text-primary group-hover:gap-2.5 transition-all">
-                {lang === "uk" ? "Відкрити посібник" : "Open guide"} <ArrowRight size={16} />
-              </span>
-            </div>
-          </a>
-        );
-      })}
-    </div>
+	<section class="site-container pb-16 md:pb-24">
+		<div class="max-w-5xl space-y-12">
+			{audienceOrder.map((audience) => {
+				const audienceGuides = localizedGuides.filter((guide) => guide.data.audience === audience);
+				if (audienceGuides.length === 0) return null;
+				return (
+					<section id={audience} class="scroll-mt-28">
+						<div class="mb-5 flex items-center gap-3">
+							<span class="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10 text-primary"><Users size={18} /></span>
+							<h2 class="text-2xl font-semibold text-neutral-800 dark:text-neutral-100">{content[audience]}</h2>
+						</div>
+						<div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+							{audienceGuides.map((guide) => (
+								<a href={guidePath(lang, guide.data.slug)} class="group relative overflow-hidden rounded-3xl border border-primary/10 bg-bg-secondary p-7 transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-xl dark:border-neutral-700 dark:bg-bg-secondary-dark md:p-8">
+									<div class="absolute right-0 top-0 h-28 w-28 rounded-bl-[5rem] bg-primary/[0.045] dark:bg-primary/[0.12]"></div>
+									<div class="relative">
+										<p class="text-xs font-semibold uppercase tracking-[0.14em] text-primary">{guide.data.diataxis ? content[guide.data.diataxis] : content.landing}</p>
+										<h3 class="mt-3 text-2xl font-semibold leading-snug text-neutral-800 dark:text-neutral-100">{guide.data.title}</h3>
+										<p class="mt-3 text-sm leading-relaxed text-neutral-500 dark:text-neutral-400">{guide.data.summary}</p>
+										<span class="mt-7 inline-flex items-center gap-1.5 text-sm font-semibold text-primary transition-all group-hover:gap-2.5">{content.open} <ArrowRight size={16} /></span>
+									</div>
+								</a>
+							))}
+						</div>
+					</section>
+				);
+			})}
+		</div>
 
-    <div class="mt-8 max-w-5xl rounded-3xl border border-primary/10 bg-primary/[0.045] dark:bg-primary/[0.11] p-7 md:flex md:items-center md:justify-between md:gap-8 md:p-8">
-      <div>
-        <h2 class="text-xl font-semibold text-neutral-800 dark:text-neutral-100">{content.help.title}</h2>
-        <p class="mt-2 max-w-2xl text-sm leading-relaxed text-neutral-600 dark:text-neutral-300">{content.help.body}</p>
-      </div>
-      <a href={contact} class="mt-5 inline-flex shrink-0 items-center gap-2 rounded-xl bg-btn-primary px-5 py-3 text-sm font-medium text-white transition hover:bg-btn-primary-hover md:mt-0">
-        {content.help.action} <ArrowRight size={16} />
-      </a>
-    </div>
-  </section>
+		<div class="mt-12 max-w-5xl rounded-3xl border border-primary/10 bg-primary/[0.045] p-7 dark:bg-primary/[0.11] md:flex md:items-center md:justify-between md:gap-8 md:p-8">
+			<div>
+				<h2 class="text-xl font-semibold text-neutral-800 dark:text-neutral-100">{content.helpTitle}</h2>
+				<p class="mt-2 max-w-2xl text-sm leading-relaxed text-neutral-600 dark:text-neutral-300">{content.helpBody}</p>
+			</div>
+			<a href={contact} class="mt-5 inline-flex shrink-0 items-center gap-2 rounded-xl bg-btn-primary px-5 py-3 text-sm font-medium text-white transition hover:bg-btn-primary-hover md:mt-0">
+				{content.helpAction} <ArrowRight size={16} />
+			</a>
+		</div>
+	</section>
 </Layout>

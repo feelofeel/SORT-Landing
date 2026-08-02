@@ -11,9 +11,17 @@ interface Props {
 	description?: string | undefined;
 	keywords?: string | undefined;
 	currentPath?: string | undefined;
+	alternatePaths?: Partial<Record<Lang, string>>;
 }
 
-const { lang = "uk", title, description, keywords, currentPath } = Astro.props;
+const {
+	lang = "uk",
+	title,
+	description,
+	keywords,
+	currentPath,
+	alternatePaths,
+} = Astro.props;
 
 import "../styles/global.css";
 import "aos/dist/aos.css";
@@ -30,6 +38,7 @@ import "../styles/article-enhancements.css";
       title = {title}
       description = {description}
       keywords = {keywords}
+	  alternatePaths = {alternatePaths}
     />
     <TrackGa />
     <!-- Language auto-routing: on first visit (no manual choice stored), send a

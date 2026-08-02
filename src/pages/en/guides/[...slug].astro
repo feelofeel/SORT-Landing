@@ -1,0 +1,24 @@
+---
+import { getCollection } from "astro:content";
+import GuideArticle from "@/components/guides/GuideArticle.astro";
+import { validateGuideCollection } from "@/lib/guides";
+
+export async function getStaticPaths() {
+	const guides = await getCollection("guides");
+	validateGuideCollection(guides);
+	return guides
+		.filter((guide) => guide.data.locale === "en")
+		.map((guide) => ({ params: { slug: guide.data.slug } }));
+}
+
+const guides = await getCollection("guides");
+validateGuideCollection(guides);
+const guide = guides.find(
+	(candidate) =>
+		candidate.data.locale === "en" && candidate.data.slug === Astro.params.slug,
+);
+if (!guide)
+	throw new Error(`Missing English guide for /en/guides/${Astro.params.slug}/`);
+---
+
+<GuideArticle guide={guide} allGuides={guides} />
