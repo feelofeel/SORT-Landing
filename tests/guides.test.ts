@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { guideSchema } from "../src/lib/guide-schema";
 import {
 	type GuideRecord,
 	alternateGuidePaths,
@@ -77,5 +78,50 @@ describe("guide collection validation", () => {
 				guide("uk", { translationKey: "other" }),
 			]),
 		).toThrow("Duplicate guide route");
+	});
+});
+
+describe("guide page-kind schema", () => {
+	const article = {
+		id: "public-first-steps-en",
+		title: "Prepare SORT for the first shift",
+		summary: "A guided first run.",
+		locale: "en",
+		translationKey: "first-steps",
+		translationRevision: 1,
+		slug: "first-steps",
+		audience: "manager",
+		updated: "2026-08-02",
+		sourceRevision: 1,
+		order: 10,
+		pageKind: "article",
+	} as const;
+
+	it("requires one Diátaxis mode for an article", () => {
+		expect(() => guideSchema.parse(article)).toThrow(
+			"Article pages must declare one primary Diátaxis mode",
+		);
+	});
+
+	it("accepts an article with one Diátaxis mode", () => {
+		expect(() =>
+			guideSchema.parse({ ...article, diataxis: "tutorial" }),
+		).not.toThrow();
+	});
+
+	it("rejects a Diátaxis mode on a landing page", () => {
+		expect(() =>
+			guideSchema.parse({
+				...article,
+				pageKind: "landing",
+				diataxis: "tutorial",
+			}),
+		).toThrow("Landing pages must omit Diátaxis mode");
+	});
+
+	it("accepts a landing page without a Diátaxis mode", () => {
+		expect(() =>
+			guideSchema.parse({ ...article, pageKind: "landing" }),
+		).not.toThrow();
 	});
 });

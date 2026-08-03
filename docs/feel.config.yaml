@@ -8,7 +8,7 @@
 #   PROJECT DATA (SORT Landing-specific) — audiences, docs, relations,
 #     comparison groups. Replace when adopting FEEL in a new project.
 #
-# Updated: 2026-06-16  app_version: 1.0.0
+# Updated: 2026-08-03  app_version: 1.0.0  feel_version: 1.5
 # Maintained by: feel-repeat (validation), feel-doc (catalog sync)
 # -------------------------------------------------------------------
 
@@ -34,6 +34,11 @@ audiences:
 
 # ── Doc registry ──────────────────────────────────────────────────
 docs:
+  - id: readme
+    path: README.md
+    audience: [developer]
+    guards: public repository entry point; canonical guide ownership and verification commands
+
   - id: super-index
     path: CLAUDE.md
     audience: [developer, architect]
@@ -70,6 +75,12 @@ relations: []
 # No overlap groups needed for a single-spec repo.
 comparison_groups: []
 
+# Active commands are framework-maintained. Optional project prompts, if added,
+# live outside this path so repeat audits can distinguish them.
+skill_paths:
+  active: [.claude/commands]
+  archive: [.claude/skills-archive]
+
 
 # ── Roles (work modes) ────────────────────────────────────────────
 roles:
@@ -91,13 +102,29 @@ roles:
 # ══════════════════════════════════════════════════════════════════
 
 # ── Ceremony levels ───────────────────────────────────────────────
+vocabularies:
+  roles: [index, spec, reference, convention, guide, rationale, log, plan, research]
+  statuses: [living, canonical, draft, working, plan, deprecated]
+  diataxis: [tutorial, how-to, reference, explanation]
+  page_kinds: [article, landing]
+
+# Generated guides use Astro frontmatter rather than FEEL heads. The Astro
+# schema below is therefore the configured publication validator.
+publications:
+  - target: getsort.app
+    source_root: src/content/guides
+    validator: pnpm test
+    requires: [id, title, summary, locale, translationKey, translationRevision, slug, audience, updated, sourceRevision, order, pageKind]
+    article_requires: [diataxis]
+    landing_omits: [diataxis]
+
 ceremony_levels:
   safety:
     includes: [cf_pages_env, supabase_keys, prod_ops]
     requires: [governing_docs, load_bearing_doc_update, decision_log_if_non_obvious, verification]
   normal:
     includes: [lead_form, analytics, meaningful_copy_change, operator_workflow]
-    requires: [spec_or_doc_sync, changelog_if_behaviour_changed]
+    requires: [spec_or_doc_sync, changelog_if_behaviour_changed, release_record_if_configured]
   light:
     includes: [copy_tweaks, css, visual_polish, internal_refactors]
     requires: [nearby_context, risk_based_tests]
@@ -134,8 +161,10 @@ routines:
     trigger: normal/safety ceremony for any meaningful doc edit
     scope: the edited doc and its derived docs
     what_it_does: >
-      Refreshes the FEEL head (doc_revision, app_version, updated), enforces
-      source_of/derived_from symmetry, and refreshes the CLAUDE.md catalog.
+      Refreshes the FEEL head (doc_revision, updated, optional stream stamp), enforces
+      source_of/derived_from symmetry, preserves optional metadata, classifies
+      practitioner content through the Diátaxis compass, refreshes toc/head_lines,
+      refreshes the CLAUDE.md catalog, and runs configured publication validators.
 
   - name: feel-decision
     skill: feel-decision
@@ -149,10 +178,11 @@ routines:
     skill: feel-repeat
     trigger: >
       After any doc change (run --diff mode); or periodically as a health check.
-    scope: comparison_groups; declared relations; head-count thresholds; plan_staleness
+    scope: complete heads; vocabularies; publication rules; relations; skill paths; plan_staleness
     what_it_does: >
-      Detects missing relation declarations, staleness, within-doc duplication,
-      and docs past head-count thresholds. Reports findings; never auto-edits.
+      Audits complete frontmatter, configured metadata and publication contracts,
+      relation symmetry, active/archive skill paths, duplication, staleness, and
+      docs past head-count thresholds. Reports findings; never auto-edits.
 
   - name: feel-session
     skill: feel-session
@@ -161,3 +191,11 @@ routines:
     what_it_does: >
       Produces a ~10-line session brief: last change, open unreleased work,
       and a sensible focus recommendation.
+
+  - name: feel-health
+    skill: feel-health
+    trigger: on demand, or after framework/configuration changes
+    scope: repository session signals and documentation heads
+    what_it_does: >
+      Reports session health plus complete-head lines/tokens, malformed delimiters,
+      configured metadata errors, and oversized-head outliers.

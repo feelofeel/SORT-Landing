@@ -3,9 +3,9 @@ title: SORT Landing — Engineering Brief & Super-Index
 id: super-index
 role: index
 status: living
-doc_revision: 1
+doc_revision: 2
 app_version: 1.0.0
-updated: 2026-06-16
+updated: 2026-08-03
 source_of: []
 derived_from: []
 ---
@@ -20,12 +20,12 @@ Docs run on **[FEEL](docs/conventions/feel.md)** — this file is the super-inde
 
 ## Super-index
 
-**The catalog routes; each doc's head versions.** For a doc's freshness or lineage, read its ~12-line YAML head — not its body. To route a task, scan the change-type table below.
+**The catalog routes; each doc's head versions.** For freshness or lineage, read YAML from the opening `---` through its closing `---`; if `head_lines` exists, continue through that declared navigation zone. Use `audience`, `diataxis`, relations, and `toc` to decide whether a body is relevant. To route a task, scan the change-type table below.
 
 ### Doc catalog
 
 - **Specs:** [landing-page-definition](docs/landing-page-definition.md) — full page definition, section-by-section copy + layout spec; source for all copy changes
-- **Conventions:** [feel](docs/conventions/feel.md) — operating spec; FEEL v1.1 · [feel-adoption](docs/conventions/feel-adoption.md) — layers, adoption steps, agent bindings, scale
+- **Conventions:** [feel](docs/conventions/feel.md) — operating spec; FEEL v1.5 · [feel-adoption](docs/conventions/feel-adoption.md) — layers, adoption steps, agent bindings, scale
 - **Planning & history:** [decisions](docs/history/decisions.md) *(log — skill-only)*
 - **Indexes:** [index](docs/index.md) *(public GitHub entry)* · this file *(super-index)*
 
@@ -34,6 +34,8 @@ Docs run on **[FEEL](docs/conventions/feel.md)** — this file is the super-inde
 | Changing… | Read first | Code anchor |
 |---|---|---|
 | Page copy / UA + EN text | [landing-page-definition](docs/landing-page-definition.md) | `src/i18n/{uk,en}.ts` (strings) · `src/components/LandingPage.astro` (markup) |
+| Public guide source / classification | FEFO/SORT `docs/public/{uk,en}` plus its super-index | Generated mirror: `src/content/guides/{uk,en}` — never edit directly · exporter lives in FEFO/SORT `tools/docs/export-public.mjs` |
+| Guide routes / rendering / schema | [feel](docs/conventions/feel.md) §5 | `src/content.config.js` · `src/lib/guides.ts` · `src/pages/{guides,en/guides}` |
 | Lead form / API | [landing-page-definition](docs/landing-page-definition.md) §lead-form | `functions/api/lead.ts` · form markup+script in `src/components/LandingPage.astro` |
 | SEO / meta / JSON-LD / i18n | [landing-page-definition](docs/landing-page-definition.md) §SEO | `src/layouts/Meta.astro` (hreflang/og) · `src/components/widgets/Schema.astro` · `astro.config.mjs` i18n |
 | Analytics / Plausible | [landing-page-definition](docs/landing-page-definition.md) §analytics | `src/components/widgets/TrackGa.astro` · `src/assets/js/main.js` |
@@ -59,13 +61,14 @@ Docs run on **[FEEL](docs/conventions/feel.md)** — this file is the super-inde
 2. **Choose ceremony by risk.** Copy / CSS / visual polish → light (no changelog churn). Form / analytics / env → normal (note in CHANGELOG.md [Unreleased]). CF Pages env / Supabase / prod ops → safety (full guardrails, verify before prod impact).
 3. **Give every new `.md` doc a FEEL head.** Run `/feel-doc` after creating or meaningfully editing a doc.
 4. **Log non-obvious decisions with `/feel-decision`.** The substance goes in the "codified in" doc first.
-5. **This is a static Astro build.** `pnpm build` is the only required CI step. No migrations, no app DB — the `leads` table lives in the FEFO App Supabase project (see sticky facts).
+5. **This is a static Astro build.** Run `pnpm test` and `pnpm build` for guide or schema changes. No migrations, no app DB — the `leads` table lives in the FEFO App Supabase project (see sticky facts).
 
 ---
 
 ## Project excellency
 
 - **FEEL docs self-describe and route cheaply.** Every doc under `docs/` carries a FEEL head. The catalog here is the one map — don't add a doc without updating it.
+- **Public guides are generated.** FEFO/SORT is canonical; never edit `src/content/guides` directly. Diátaxis labels describe the reader's need, while audience groups and landing pages route readers through the corpus.
 - **The decision log is append-only and skill-only.** `/feel-decision` appends; rows are pruned once absorbed elsewhere; git is the archive.
 - **Ceremony is proportional.** Safety work (CF Pages env, Supabase keys) gets full ceremony. Light polish (copy tweaks, CSS) skips changelog/version churn.
 - **Ukrainian text safety.** File writes on Ukrainian content must use UTF-8 (Bash/Write tool). Never PowerShell `Set-Content`.
@@ -77,7 +80,8 @@ Docs run on **[FEEL](docs/conventions/feel.md)** — this file is the super-inde
 
 ## Sticky facts
 
-- **FEEL:** v1.1 (synced 2026-06-26 · [framework repo](https://github.com/feelofeel/feel)) · split adopted: feel.md (operating spec, dr:11) + feel-adoption.md (layers/adoption/scale, dr:1)
+- **FEEL:** v1.5 (synced 2026-08-03 · [framework repo](https://github.com/feelofeel/feel)) · delimiter-aware heads and selective Diátaxis publication contracts
+- **Guide corpus:** FEFO/SORT is canonical; this repository builds 18 generated files (9 Ukrainian/English pairs) beneath `/guides/` and `/en/guides/`.
 - **Jira epic:** SCRUM-62 (children: 63 infra/accounts, 64 Astro build DONE, 65 UA copy, 66 screenshots Dee, 67 lead form+analytics DONE, 68 SEO/CWV DONE, 69 domain Dee)
 - **Supabase project:** `demlkcxujqtdbtppqmvl` (FEFO App prod — `public.leads` table, RLS on, no policies yet)
 - **CF Pages env vars needed:** `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `RESEND_API_KEY`, `LEAD_NOTIFY_EMAIL`, `PUBLIC_PLAUSIBLE_DOMAIN`, `PUBLIC_SITE_URL`

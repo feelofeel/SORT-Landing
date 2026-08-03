@@ -1,0 +1,13 @@
+# .feel/feel.lock — FEEL framework version pin
+# Tracks which FEEL spec version this project is running.
+# Do not hand-edit. Update when syncing from github.com/feelofeel/feel.
+
+feel_version: "1.5"
+feel_repo: "https://github.com/feelofeel/feel"
+pinned_date: "2026-08-03"
+last_synced: "2026-08-03"
+# FEEL 1.5 adds delimiter-aware heads, selective Diátaxis metadata, and
+# configured publication contracts.
+
+# To upgrade: copy feel.md, feel-adoption.md, .claude/commands/feel-*.md,
+# and tools/feel/health.mjs from FEEL; then run /feel-repeat and /feel-health.
