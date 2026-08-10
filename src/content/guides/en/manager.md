@@ -13,7 +13,6 @@ order: 10
 pageKind: "landing"
 ---
 
-
 SORT helps the team see what expires today and gives managers a place to configure rules and resolve exceptions. Poster remains the system of record for quantities, supplies, and write-offs.
 
 ## Start here
