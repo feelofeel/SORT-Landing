@@ -4,16 +4,15 @@ title: "Configure product shelf life and shelves"
 summary: "Create physical shelves, choose what SORT tracks, and give each product an expiry rule."
 locale: "en"
 translationKey: "configure-products-and-shelves"
-translationRevision: 1
+translationRevision: 3
 slug: "configure-products-and-shelves"
 diataxis: "how-to"
 audience: "manager"
-updated: "2026-08-02"
-sourceRevision: 1
+updated: "2026-08-05"
+sourceRevision: 3
 order: 40
 pageKind: "article"
 ---
-
 
 ## Create storage locations
 
@@ -33,3 +32,9 @@ A shelf describes a physical location. Shelf life belongs to the product, not th
 5. Save, then maintain the rule under **Product registry**.
 
 SORT uses the stock unit from Poster and never converts it. If an item or packaging is modelled incorrectly, fix Poster first. When configuration is complete, create a test supply and [confirm the new batch](/en/guides/confirm-or-correct-batch/).
+
+## Configure linked write-offs only where needed
+
+Under **Product registry → More → Written off with the batch**, add ingredients that Poster does not consume through its own recipe. Mark each barista-choice row explicitly as **Required** or **Optional**. A required row needs a canonical unit and a non-empty source shelf whose items use one compatible unit. Its suggested amount may be blank; in that case the barista must enter the actual amount.
+
+For `Фільтр_прихід`, choose **at confirmation**: beans are a required shelf choice, the paper filter is fixed at `1 pcs`, and extra blend rows are optional. SORT then blocks an incomplete brew before any state change or Poster call.

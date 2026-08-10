@@ -14,7 +14,6 @@ order: 30
 pageKind: "article"
 ---
 
-
 SORT shows what needs attention today. Poster still records sales and quantities. Practise three habits during the first shift.
 
 ## At the start

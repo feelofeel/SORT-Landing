@@ -14,7 +14,6 @@ order: 20
 pageKind: "article"
 ---
 
-
 By the end of this walkthrough, a test supply from Poster will appear in SORT with the correct name, quantity, shelf, and expiry.
 
 ## 1. Check the foundation in Poster
