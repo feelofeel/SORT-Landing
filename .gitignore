@@ -4,4 +4,7 @@ dist/
 .env
 .env.local
 .local/
-public/screenshots/
+public/Screenshots/*
+!public/Screenshots/F1-push.png
+!public/Screenshots/F6-shelf.png
+!public/Screenshots/F6-shelf-card.png
