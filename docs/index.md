@@ -3,9 +3,9 @@ title: SORT Landing — Documentation Index
 id: index
 role: index
 status: living
-doc_revision: 2
+doc_revision: 3
 app_version: 1.0.0
-updated: 2026-08-03
+updated: 2026-08-21
 source_of: []
 derived_from: []
 ---
@@ -22,4 +22,10 @@ FEFO/SORT is the canonical source for the public guide corpus. The 18 files unde
 
 - [`landing-page-definition.md`](landing-page-definition.md) — full page spec: section-by-section copy, layout, lead form, SEO, analytics
 - [`conventions/feel.md`](conventions/feel.md) — the documentation operating system (FEEL v1.5)
+- [`conventions/feel-adoption.md`](conventions/feel-adoption.md) — FEEL adoption layers, agent bindings, and scale guidance
 - [`history/decisions.md`](history/decisions.md) — append-only decision log (skill-only; see FEEL §6)
+
+## Releases
+
+- [`../CHANGELOG.md`](../CHANGELOG.md) records every deployable Cloudflare Pages commit.
+- [`../.claude/commands/sort-release.md`](../.claude/commands/sort-release.md) is the project deployment workflow; the package `prebuild` hook enforces its changelog requirement.

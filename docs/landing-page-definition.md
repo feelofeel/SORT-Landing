@@ -2,30 +2,43 @@
 title: Landing Page Definition — SORT marketing site
 id: landing-page-definition
 role: spec
-status: draft
-doc_revision: 2
+status: canonical
+doc_revision: 3
 app_version: 1.0.0
-updated: 2026-07-08
+updated: 2026-08-21
 source_of: []
 derived_from: []
+toc:
+  - "§0 How to read and maintain this doc"
+  - "§1 Product charter"
+  - "§2 Audience"
+  - "§3 Message hierarchy and copy"
+  - "§4 Page structure"
+  - "§5 CTA and onboarding"
+  - "§6 SEO"
+  - "§7 Marketing instrumentation"
+  - "§8 Tech and infrastructure"
+  - "§9 Resolved implementation decisions"
+  - "§10 Maintenance checklist"
+  - "Appendices — traceability and exclusions"
 ---
 
-# SORT — Landing Page Definition (for validation)
+# SORT — Landing Page Definition
 
-> **Status: working draft for Dee's point-by-point validation.** This is a *definition* doc, not a build spec — every numbered point is meant to be confirmed, edited, or rejected before any code or copy is finalized. Copy drafts are in **Ukrainian (primary audience language)** with an English gloss in *(italics)*. Screenshots are captured by Dee in following sessions; this doc says **what** each visual must show.
+> **Status: canonical product-intent and page-structure spec.** Ukrainian is primary; English mirrors the accepted meaning. Exact shipped strings live in `src/i18n/{uk,en}.ts`, but copy and visual-direction changes start here so implementation and rationale do not drift.
 >
-> Grounding: product features from [app-user-stories](../product/app-user-stories.md), positioning from [competitor-research-brief](competitor-research-brief.md), price/GTM from [pricing-and-gtm](pricing-and-gtm.md), core-vs-satellite from [decomposition](../product/decomposition.md), onboarding plan from Jira [SCRUM-11](https://feelofeel.atlassian.net/browse/SCRUM-11) / [SCRUM-35](https://feelofeel.atlassian.net/browse/SCRUM-35). Web best-practice research (2025–2026) folded into §6–§8.
+> Grounding: the FEFO/SORT repository owns [app user stories](https://github.com/feelofeel/fefo/blob/main/docs/product/app-user-stories.md), [positioning research](https://github.com/feelofeel/fefo/blob/main/docs/research/competitor-research-brief.md), [pricing/GTM](https://github.com/feelofeel/fefo/blob/main/docs/research/pricing-and-gtm.md), [feature decomposition](https://github.com/feelofeel/fefo/blob/main/docs/product/decomposition.md), and the [tenant-onboarding guide](https://github.com/feelofeel/fefo/blob/main/docs/guides/onboarding-tenant.md). Jira [SCRUM-11](https://feelofeel.atlassian.net/browse/SCRUM-11) / [SCRUM-35](https://feelofeel.atlassian.net/browse/SCRUM-35) track self-serve onboarding.
 
 ---
 
-## 0. How to read & validate this doc
+## 0. How to read and maintain this doc
 
-Each section is a validation surface. The fastest way to react: reply with the point number and `keep / cut / change`. The four things most worth your judgment are flagged up front:
+Use the numbered sections to review intent and acceptance criteria. When a shipped behavior changes, update the relevant section first, update both localized dictionaries/markup, then close the doc through `/feel-doc` and the deployment through `/sort-release`.
 
-- **§9.1 Page language** — Ukrainian-only vs UA+EN now.
-- **§9.2 CTA mechanism** — contact form + Telegram vs calendar booking.
-- **§9.3 Domain/brand** — the app is `fefo.pages.dev`; the product is **SORT**; the landing needs its own home.
-- **§9.4 Tech approach** — separate Astro static site vs a route inside the existing PWA.
+- **§9.1 Page language** — Ukrainian default plus English at `/en/`.
+- **§9.2 CTA mechanism** — short lead form plus Telegram.
+- **§9.3 Domain/brand** — landing at `getsort.app`, application at `app.getsort.app`.
+- **§9.4 Tech approach** — separate Astro 7 site on Cloudflare Pages.
 
 Everything else has a recommended default already baked in.
 
@@ -70,7 +83,7 @@ The CTA is unchanged (§5). The calibration Dee asked about is *where the second
 ## 2. Audience & the single job
 
 ### 2.1 Primary visitor
-The **owner/manager of an independent coffee shop (1–3 locations) already on Poster**, in Lviv / wider Ukraine first ([pricing-and-gtm](pricing-and-gtm.md) §7.1). Operator, **not technical** — speaks "shift / barista / write-off / waste", not "SKU / webhook / batch ID".
+The **owner/manager of an independent coffee shop (1–3 locations) already on Poster**, in Lviv / wider Ukraine first ([pricing-and-GTM research](https://github.com/feelofeel/fefo/blob/main/docs/research/pricing-and-gtm.md) §7.1). Operator, **not technical** — speaks "shift / barista / write-off / waste", not "SKU / webhook / batch ID".
 
 ### 2.2 Their job-to-be-done on this page
 "Show me, in 30 seconds, that this stops me throwing money away and won't be a hassle to run — then tell me how to get it." The page's only job is to earn **one action: contact us to connect your Poster** (§5).
@@ -121,13 +134,13 @@ Microcopy under it: «Перші заклади під'єднуємо особи
 
 Order follows the high-converting B2B pattern (web research §1): hero → problem → reframe → how-it-works → features → objection → trust → pricing → FAQ → final CTA → footer. **Single primary CTA**, repeated; no competing buttons.
 
-> For each section: **Purpose · Copy direction · Visual spec · Alt text.** "Visual spec" is what Dee captures/builds next session.
+> For each section: **Purpose · Copy direction · Visual state · Alt text.** Visual entries distinguish what is deployed from what remains a placeholder.
 
 ### 4.1 Hero
 - **Purpose:** 5-second clarity + the one CTA.
 - **Copy:** headline §3.2(A) · subhead §3.3 · CTA §3.4. One trust line of microproof beneath ("Працює поверх Poster. Нічого не змінює у вашому обліку." *— Runs on top of Poster. Changes nothing in your accounting.*)
-- **Visual:** a **tablet in landscape showing the «Сьогодні» screen** with a red «Прострочено» section (2 cards) and an amber «Знижка сьогодні» section (1 card) — the product's money shot. Slight device frame, clean background. Optionally a small phone to its side showing the **shift-start push** on a lock screen.
-- **Alt text:** "Планшет із екраном «Сьогодні» застосунку SORT: червона секція прострочених партій і бурштинова секція позицій, що псуються сьогодні."
+- **Visual state:** the hero currently shows an honest branded **“video coming soon”** panel inside the browser frame. It is ready for a privacy-enhanced YouTube embed (`youtube-nocookie.com`) once `youtubeId` is populated; do not restore an untracked screenshot placeholder.
+- **Accessible text:** localized title, description, and status explain the upcoming video without relying on imagery.
 
 ### 4.2 Problem — the manual ceremonies SORT replaces (the error surfaces)
 - **Purpose:** make the visitor feel the orchestration tax — and *name the exact manual rituals* their café runs today, so the page thesis ("replaces manually orchestrated processes") is concrete, not abstract.
@@ -170,11 +183,11 @@ Order follows the high-converting B2B pattern (web research §1): hero → probl
 Covered as its own block below (§5 of *the page*); see **doc §5… actually feature detail is §4.6**.
 
 ### 4.6 Feature cards (the important/cool ones)
-A grid of cards, each **pain → mechanism → outcome + one visual**. Selection follows [decomposition](../product/decomposition.md): lead with **core loop** features; show one or two "cool" satellites; keep niche satellites (sub-batches, concurrent rotation, thermal) off the first pitch.
+A grid of cards, each **pain → mechanism → outcome + one visual**. Selection follows the FEFO/SORT [feature decomposition](https://github.com/feelofeel/fefo/blob/main/docs/product/decomposition.md): lead with **core loop** features; show one or two "cool" satellites; keep niche satellites (sub-batches, concurrent rotation, thermal) off the first pitch.
 
 | # | Feature (UA card title) | Pain → Mechanism → Outcome (English direction) | Source feature | Demo-surface? |
 |---|---|---|---|---|
-| F1 | **Ризики до відкриття** *(Risk before opening)* | "You learn at the till" → SORT shows expired / expiring-today batches at shift start → "the team is ready before the first guest." **The core promise.** | [Feature 1 & 12](../product/app-user-stories.md) | core |
+| F1 | **Ризики до відкриття** *(Risk before opening)* | "You learn at the till" → SORT shows expired / expiring-today batches at shift start → "the team is ready before the first guest." **The core promise.** | [Feature 1 & 12](https://github.com/feelofeel/fefo/blob/main/docs/product/app-user-stories.md) | core |
 | F2 | **Пріоритетний екран «Сьогодні»** *(Today, one prioritized screen)* | "Scattered checks" → one screen: overdue (red) / today (amber) / new to confirm → "barista sees the next action order." | Feature 1 | core |
 | F3 | **Списання без подвійної роботи** *(Write-off without double work → Poster)* | "Leaving the bar for Poster's form / guessing later" → tap «Списати», quantity pre-filled from sales, reason chosen on the spot → "waste recorded in Poster while context is fresh." | Feature 4 | core |
 | F4 | **Партії без ручного вводу** *(Batches without manual entry)* | "Typing products & dates" → batches appear from Poster supplies, barista just confirms → "no data entry, no training-heavy process." | Feature 2 & 27 | core |
@@ -183,26 +196,26 @@ A grid of cards, each **pain → mechanism → outcome + one visual**. Selection
 
 **Trust strip under the cards (small, 4 chips, no images):** «Працює офлайн» *(works offline, Feature 26)* · «Українською» *(Ukrainian-only UI)* · «Poster — джерело правди» *(Poster stays the record)* · «Все оборотне в Poster» *(every write-off reversible).*
 
-**Visual spec per card:**
-- **F1:** phone lock-screen with a Ukrainian push: «⚠ SORT: 3 партії прострочені, 2 псуються сьогодні». Captured as a mock notification.
-- **F2:** the «Сьогодні» tablet screenshot (can reuse a cropped hero variant) showing the three labelled sections.
-- **F3:** a single batch card mid-write-off — quantity stepper showing «Списати 1 з 3» and the «списано · Скасувати» undo toast. Annotate the "одне натискання" point.
-- **F4:** the «Нові партії» row with a «Підтвердити ✓» card — show that there's *no form*, just confirm.
-- **F5:** the «Аналітика списань» table grouped by reason (Прострочка / Пошкодження / Без причини) with quantities. Use the demo seed so numbers look real.
-- **F6:** shelf/composition view with item, approximate remaining, and expiry visible together. The value claim is *fewer photos, fewer notes, fewer manager interruptions*; the visual fill itself is supporting proof, not the headline value.
+**Deployed visual per card:**
+- **F1:** curated phone lock-screen push mock at `public/Screenshots/F1-push.png`.
+- **F2:** «Сьогодні» priority screen at `public/Screenshots/F2-centered.png`.
+- **F3:** write-off card at `public/Screenshots/F3.png`.
+- **F4:** «Нові партії» confirmation state at `public/Screenshots/F4.png`.
+- **F5:** loss-reason analytics at `public/Screenshots/F5.png`.
+- **F6:** card crop at `public/Screenshots/F6-shelf-card.png`; the full shelf view is reused in §4.6.1.
 - **Alt text:** each describes the screen in Ukrainian, naming the SORT screen shown (per SEO §6.4).
 
-> **Screenshot sourcing:** capture all of these on **`dev.fefo.pages.dev`** with the demo seed ([SCRUM-18](https://feelofeel.atlassian.net/browse/SCRUM-18) seed-dev / demo-environment) so state is clean and realistic. Dee edits/annotates afterward. *(Per CLAUDE.md, inspecting dev UX is standing-permitted; capturing screenshots is Dee's job.)*
+> **Screenshot maintenance:** recapture from **`dev.fefo.pages.dev`** with the demo seed ([SCRUM-18](https://feelofeel.atlassian.net/browse/SCRUM-18)), curate/annotate locally, and commit only the assets intentionally published by `.gitignore`.
 
 ### 4.6.1 Secondary-thread block — «Полиця, як у житті» (the shelf that mirrors your café)
 - **Purpose:** carry the second value thread (§1.6) — the shelf board + visual cards mean *less manual inventory ceremony* and a tool that's **pleasant to use** (QoL). Placed *after* the core feature cards so expiry stays the headline (value hierarchy §1.8).
 - **Copy:** title «Полиця, як у житті» *(A shelf like real life)*. Two lines: *"Полиці в SORT відтворюють реальний склад вашого закладу — видно, що стоїть, скільки приблизно лишилось і коли псується. Менше фото холодильника, менше нотаток, менше «скільки лишилось?» на зміні."* + the QoL line «Зроблено, щоб користуватись було приємно.»
-- **Visual:** the **shelf board** (Feature 14) with emoji-tagged shelves plus a couple of **visual fill cards** (carafe milk, slotted-tray bakery) — the screenshot that most resembles the physical café. Capture on the dev seed.
+- **Visual:** deployed full shelf board at `public/Screenshots/F6-shelf.png`, with the card crop at `public/Screenshots/F6-shelf-card.png`.
 - **Alt text:** "Екран «Полиця» SORT: партії згруповані за реальними полицями кафе з візуалізацією залишку."
 - **Honesty caveat (not printed):** remaining is an estimate (FEFO attribution); frame as convenience/time-saved, never a precise stock count (§1.7).
 
 ### 4.7 Objection handler — "Doesn't Poster already do this?"
-- **Purpose:** the single biggest deal-killer ([competitor brief](competitor-research-brief.md) §8.1). Address it head-on.
+- **Purpose:** the single biggest deal-killer ([competitor brief](https://github.com/feelofeel/fefo/blob/main/docs/research/competitor-research-brief.md) §8.1). Address it head-on.
 - **Copy:** title «Хіба Poster цього вже не вміє?» + the altitude line §1.4. Two short sentences: *Poster знає залишок і собівартість. SORT створює фізичну партію, штовхає баристу на зміні й готує списання в один дотик — те, чого модуль складу не робить.*
 - **Visual:** a **tiny two-row contrast** — "Poster: кількість на складі" vs "SORT: рішення в потрібний момент". Text/icon, no screenshot.
 - **Alt text:** n/a.
@@ -215,7 +228,7 @@ A grid of cards, each **pain → mechanism → outcome + one visual**. Selection
 
 ### 4.9 Pricing teaser (honest, light) — recommended to include
 - **Purpose:** operators distrust "contact for pricing" black boxes; a light, honest frame converts better than hiding it.
-- **Copy direction (from [pricing-and-gtm](pricing-and-gtm.md) §3):** "Коштує менше, ніж ви викидаєте за тиждень." A **Free tier to try** (capped) + a **single paid tier per location** (band ~$9–13 / ₴400–520, shown as "від ₴…/міс за заклад"). One line: "Перші заклади запускаємо особисто — пишіть нам." Do **not** print final numbers if not decided; show the band + the ROI line.
+- **Copy direction (from [pricing-and-GTM research](https://github.com/feelofeel/fefo/blob/main/docs/research/pricing-and-gtm.md) §3):** "Коштує менше, ніж ви викидаєте за тиждень." A **Free tier to try** (capped) + a **single paid tier per location** (band ~$9–13 / ₴400–520, shown as "від ₴…/міс за заклад"). One line: "Перші заклади запускаємо особисто — пишіть нам." Do **not** print final numbers if not decided; show the band + the ROI line.
 - **Visual:** a simple **2-column plan card** (Безкоштовно / Pro) — not 4 tiers (§3 says resist laddering). Optional; can be a single ROI line if pricing isn't ready to show.
 - **Alt text:** n/a.
 
@@ -235,7 +248,7 @@ A grid of cards, each **pain → mechanism → outcome + one visual**. Selection
 - **Visual:** none, or a calm repeat of the hero device at small size.
 
 ### 4.12 Footer
-Wordmark, one-line "SORT — шар обізнаності про терміни поверх Poster", contact (email + Telegram), © feelofeel, links: Privacy (needed once you collect leads), Poster. Keep minimal.
+The deployed footer contains the wordmark/tagline, product navigation, Telegram contact, onboarding CTA, and application login. **Open gap:** publish and link a privacy notice because the site collects lead contact data.
 
 ---
 
@@ -244,14 +257,12 @@ Wordmark, one-line "SORT — шар обізнаності про терміни
 ### 5.1 The CTA goal
 One conversion: **prospect asks feelofeel/Dee to connect their Poster account.** Not self-serve signup — by design, because the first ~10 cafés are onboarded **100% manually** (white-glove).
 
-### 5.2 What the form captures (lead form, ≤5 fields — web research §4)
-1. Ім'я *(name)* — required
-2. Заклад / Café name — required
-3. Субдомен Poster *(e.g. `yourcafe.joinposter.com`)* — required, this is the one "technical" field and it qualifies + speeds onboarding
-4. Контакт: Telegram або email — required
-5. (optional) Коротко про заклад / повідомлення
+### 5.2 What the form captures (three visible fields)
+1. Ім'я *(name)* — optional
+2. URL / subdomain Poster *(e.g. `yourcafe.joinposter.com`)* — optional but useful for qualification and onboarding
+3. Контакт: Telegram username або email — required and format-validated
 
-No reCAPTCHA at this volume (moderate by hand). Button reads «Підключити свій Poster», not "Submit".
+The form carries UTM/referrer context, includes a hidden `company_url` honeypot, and the endpoint applies IP/contact rate limits. No reCAPTCHA at this volume. Button reads «Підключити свій Poster», not "Submit".
 
 ### 5.3 What happens after submit (the manual playbook, framed as a benefit)
 On the page: thank-you state + "ми напишемо вам у Telegram протягом доби". Behind it, Dee's onboarding playbook (existing tooling):
@@ -261,7 +272,7 @@ On the page: thank-you state + "ми напишемо вам у Telegram про�
 4. Set the **shift schedule** (Feature 12), invite the manager (magic-link, role from Poster).
 5. Verify first push → hand off.
 
-This is the [onboarding-tenant](../guides/onboarding-tenant.md) guide in practice; the landing just feeds it leads.
+This feeds the FEFO/SORT [tenant-onboarding guide](https://github.com/feelofeel/fefo/blob/main/docs/guides/onboarding-tenant.md); the landing only captures the lead.
 
 ### 5.4 The automatic future (so the page is built to swap)
 The same CTA component is designed to **swap later** from "contact us" to "self-install" once:
@@ -275,7 +286,7 @@ The same CTA component is designed to **swap later** from "contact us" to "self-
 ## 6. SEO spec (on-page, for a brand-new domain)
 
 ### 6.1 Realistic expectation
-A new domain with no backlinks ranks for **branded + long-tail UA terms** in 3–6 months; SEO is a slow compounding channel. The **real early channels are Telegram/Instagram/community + the Poster ecosystem** ([pricing-and-gtm](pricing-and-gtm.md) §7) — SEO is hygiene, not the growth engine. Do it right, don't over-invest.
+A new domain with no backlinks ranks for **branded + long-tail UA terms** in 3–6 months; SEO is a slow compounding channel. The **real early channels are Telegram/Instagram/community + the Poster ecosystem** ([pricing-and-GTM research](https://github.com/feelofeel/fefo/blob/main/docs/research/pricing-and-gtm.md) §7) — SEO is hygiene, not the growth engine. Do it right, don't over-invest.
 
 ### 6.2 Title & meta (UA primary)
 - **Title (≤60 chars):** «SORT — контроль термінів придатності поверх Poster»
@@ -293,7 +304,7 @@ Every screenshot gets descriptive Ukrainian alt naming the SORT screen (drafts i
 - `FAQPage` (the §4.10 Q/A) — best SERP ROI for a single page.
 
 ### 6.6 Social & crawl
-- Open Graph + Twitter `summary_large_image` (the hero device shot as `og-image`, 1200×630).
+- Open Graph + Twitter `summary_large_image` use the curated `public/og.jpg` (1200×630), including explicit secure URL, type, dimensions, and localized alt metadata.
 - `sitemap.xml`, `robots.txt`, `canonical`.
 - **hreflang** ready for `uk` now and `ru`/`en` later (matches the GTM localization sequence §7.7).
 
@@ -324,10 +335,10 @@ Retargeting pixels (privacy cost > ROI below ~50 leads/wk) and A/B testing (need
 
 ---
 
-## 8. Tech & infra recommendation (build on the stack you have)
+## 8. Tech and infrastructure
 
-### 8.1 Recommendation
-**A separate static marketing site built with Astro, deployed on Cloudflare Pages (the platform you already use for the PWA), on its own domain.** Form handled by a **Cloudflare Pages Function** → email (Resend) + insert into Supabase `leads`.
+### 8.1 Implemented architecture
+**A separate static Astro 7 marketing site deployed on Cloudflare Pages at `getsort.app`.** A **Cloudflare Pages Function** handles the lead form, writes to Supabase `leads`, and sends the best-effort Resend notification.
 
 ### 8.2 Why separate, not a route in the PWA
 | Option | SEO | Perf (CWV) | Effort | Verdict |
@@ -343,48 +354,46 @@ Keeping it separate also means **marketing iteration never risks the prod PWA**,
 - **Cloudflare Pages** already hosts the PWA — same account, same Git-deploy muscle memory, free tier covers it.
 - **Supabase** already runs — a `leads` table is trivial and keeps data in-house ([reuse, don't add SaaS]).
 - **Resend** (or Cloudflare Email) for the notification email; Pages Functions for the endpoint — no new Railway service needed.
-- Do **not** serve the landing from the PWA root `fefo.pages.dev` — that's the app. The landing needs its own domain (§9.3).
+- Do **not** serve the landing from the PWA root; the public landing is `getsort.app` and the application is `app.getsort.app`.
 
-### 8.4 Form endpoint sketch (build session)
-`POST /api/lead` (Pages Function) → validate (name, café, poster_subdomain, contact) → insert Supabase `leads` → send Resend email to Dee + optional Telegram ping → return `{ ok, redirect: '/thank-you' }`. Honeypot field for spam instead of reCAPTCHA.
+### 8.4 Form endpoint
+`POST /api/lead` (Pages Function) → honeypot and rate-limit checks → validate contact and length bounds → insert Supabase `leads` → send Resend email to Dee → return structured JSON. Upstream insert failures return an error; a missing service-role key returns `persisted: false` instead of claiming the lead was stored.
 
-### 8.5 New infra to provision (small)
-Domain (§9.3) · Cloudflare Pages project (Astro) · Plausible account · Resend account + verified sender · Supabase `leads` table (one migration via `/fefo-migration` if you want it in the same DB; or a standalone). 
-
----
-
-## 9. Open decisions to validate (your call)
-
-### 9.1 Page language — **recommend: Ukrainian-only at launch**
-Matches the Lviv beachhead and the Ukrainian-only app. English/Russian are phase-2 localizations per [pricing-and-gtm](pricing-and-gtm.md) §7.7 — build `hreflang` in now, add the EN page when you push beyond UA. *Alternative: UA + EN toggle immediately (more work, only useful if you're pitching outside UA now).*
-
-### 9.2 CTA mechanism — **recommend: contact form + Telegram, not a calendar**
-For UA café owners, **Telegram is the dominant channel** ([pricing-and-gtm](pricing-and-gtm.md) §7.1). Lead with the short form (§5.2) and offer a **direct Telegram link** as the low-friction alternate. A Calendly/Cal.com booking feels corporate for this audience and adds a step. *Alternative: add a calendar later for warmer leads.*
-
-### 9.3 Domain / brand — **needs a decision**
-The product is **SORT**; the infra is `fefo.pages.dev` (the app). The landing needs a clean home. Options to weigh: a SORT-branded apex (e.g. `getsort.*`, `sort.coffee`), or under a feelofeel brand domain. *I can't pick this for you — it's a brand + purchase decision. Flag your preference and I'll wire the CF Pages + DNS.*
-
-### 9.4 Tech approach — **recommend: separate Astro site (§8)**
-Confirm so the next session can scaffold it. *Alternative: hand-rolled static HTML if you want it in a day and don't need a component system.*
-
-### 9.5 Pricing on page — **recommend: light honest teaser (§4.9)**
-Show the Free + one paid band + the "less than a week's waste" line, marked "first cafés onboarded personally". *Alternative: no pricing, "early access — contact us" (cleaner but operators distrust hidden pricing).*
-
-### 9.6 How much product to show — **recommend: real screenshots, generously**
-The product *is* the proof; show the actual Ukrainian UI (dev seed). The decomposition's demo-surface column (§4.6) already tells us which features to foreground and which to hide.
+### 8.5 Operational configuration
+Cloudflare Pages needs `SUPABASE_SERVICE_ROLE_KEY`, `RESEND_API_KEY`, `LEAD_NOTIFY_EMAIL`, `PUBLIC_PLAUSIBLE_DOMAIN`, and `PUBLIC_SITE_URL`; the public Supabase project URL is fixed in the function. Keep the authoritative inventory in `.env.example` and verify production/preview values in the Pages dashboard.
 
 ---
 
-## 10. Build checklist / what the next sessions do
+## 9. Resolved implementation decisions
 
-1. **Confirm §9 decisions** (language, CTA, domain, tech, pricing).
-2. **Finalize copy** — lock headline option (§3.2), write final Ukrainian body copy per §4.
-3. **Capture screenshots** on `dev.fefo.pages.dev` with the demo seed — the six F-cards (§4.6) + hero «Сьогодні» + push mock. *(Dee's job per CLAUDE.md.)*
-4. **Provision infra** (§8.5): domain, CF Pages (Astro), Plausible, Resend, Supabase `leads`.
-5. **Scaffold Astro** — sections §4, components per card, `Base` layout with `<head>` (meta §6.2, schema §6.5, OG §6.6).
-6. **Form function** (§8.4) + thank-you page + events (§7.2).
-7. **Pre-launch QA:** Lighthouse (CWV §6.7), Rich Results test (schema), mobile-first pass, all alt text present.
-8. **Wire UTM links** for the first Telegram/Instagram/Poster posts.
+### 9.1 Page language — Ukrainian default plus English
+Ukrainian is canonical at `/`; English is published at `/en/`. The native Astro i18n routes, manual language switcher, and `uk`/`en`/`x-default` hreflang are live.
+
+### 9.2 CTA mechanism — contact form plus Telegram
+The short form is primary and a direct `@feelofeel` Telegram link is the low-friction alternative. No calendar is embedded.
+
+### 9.3 Domain / brand — `getsort.app`
+The landing is live at `getsort.app`; the application is linked at `app.getsort.app`.
+
+### 9.4 Tech approach — separate Astro site
+The landing is a separate Astro 7 repository and Cloudflare Pages project, so marketing iteration remains isolated from the FEFO/SORT PWA.
+
+### 9.5 Pricing — light honest teaser
+The page shows Free plus one Pro card with an intentionally uncommitted `від ₴…` price and personal-onboarding note.
+
+### 9.6 Product visuals — real UI, curated
+All six feature surfaces are represented with committed Ukrainian UI assets; the hero remains an honest video placeholder until a real walkthrough is ready.
+
+---
+
+## 10. Maintenance checklist
+
+1. Start copy/visual changes in this spec, then update both locale dictionaries and markup.
+2. Recapture visuals from the FEFO/SORT demo seed; commit only curated public assets.
+3. Run `pnpm test` and `pnpm build`; visually verify Ukrainian/English desktop and mobile output when layout changes.
+4. Run `/feel-doc` after meaningful spec edits and `feel-repeat --diff` after any doc change.
+5. Run `/sort-release` for every Cloudflare preview or production deployment; `CHANGELOG.md` is mandatory.
+6. Periodically verify Pages environment variables, lead persistence/notification behavior, analytics events, schema, and Core Web Vitals.
 
 ---
 
@@ -405,4 +414,4 @@ The product *is* the proof; show the actual Ukrainian UI (dev seed). The decompo
 | Pricing teaser | pricing-and-gtm §3 | Free + one paid band |
 
 ## Appendix B — what's deliberately NOT on the page
-Sub-batches/derivation, concurrent-batch rotation, thermal shelves, remove-from-shelf manager queue — all **satellites** ([decomposition](../product/decomposition.md) §4, §7) that distract from the core loop in a first pitch. Mention "and more" at most; don't feature them.
+Sub-batches/derivation, concurrent-batch rotation, thermal shelves, remove-from-shelf manager queue — all **satellites** ([feature decomposition](https://github.com/feelofeel/fefo/blob/main/docs/product/decomposition.md) §4, §7) that distract from the core loop in a first pitch. Mention "and more" at most; don't feature them.

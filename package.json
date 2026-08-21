@@ -3,7 +3,7 @@
 	"type": "module",
 	"version": "1.0.0",
 	"packageManager": "pnpm@9.14.2",
-	"description": "A design-led SaaS website template built with Astro, Tailwind CSS v4, MDX, and a reusable component system.",
+	"description": "Ukrainian-first SORT marketing and documentation site for expiry-aware café operations on top of Poster POS.",
 	"keywords": [
 		"astro",
 		"astro-template",
@@ -41,10 +41,12 @@
 	"scripts": {
 		"dev": "astro dev",
 		"start": "astro dev",
+		"prebuild": "pnpm release:check",
 		"build": "astro build",
 		"preview": "astro preview",
 		"astro": "astro",
 		"check": "biome check --apply-unsafe .",
+		"release:check": "node tools/release/verify-deploy-docs.mjs",
 		"test": "vitest run",
 		"test:watch": "vitest"
 	},

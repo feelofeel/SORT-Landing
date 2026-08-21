@@ -3,9 +3,9 @@ title: SORT Landing — Repository Guide
 id: readme
 role: index
 status: living
-doc_revision: 2
+doc_revision: 3
 app_version: 1.0.0
-updated: 2026-08-03
+updated: 2026-08-21
 source_of: []
 derived_from: []
 audience: [developer]
@@ -13,7 +13,7 @@ audience: [developer]
 
 # SORT Landing
 
-Ukrainian-first Astro 6 + Tailwind v4 marketing and documentation site for SORT. It deploys separately from the FEFO/SORT application to Cloudflare Pages.
+Ukrainian-first Astro 7 + Tailwind v4 marketing and documentation site for SORT. It deploys separately from the FEFO/SORT application to Cloudflare Pages.
 
 Start with [`CLAUDE.md`](CLAUDE.md) for task routing and [`docs/landing-page-definition.md`](docs/landing-page-definition.md) for the landing-page specification.
 
@@ -33,12 +33,15 @@ Guide routes are:
 ```bash
 pnpm install
 pnpm dev
+pnpm release:check
 pnpm test
 pnpm build
 pnpm preview
 ```
 
-`pnpm test` validates the guide collection, translation pairs, routes, and article/landing metadata contract. `pnpm build` validates the complete static output; the current build emits 23 routes.
+`pnpm test` validates the guide collection, translation pairs, routes, release-doc guard, and article/landing metadata contract. `pnpm build` first runs `pnpm release:check`, then validates the complete static output; the current build emits 23 routes.
+
+Every Cloudflare Pages preview or production commit must add a concise entry to [`CHANGELOG.md`](CHANGELOG.md). Run `/sort-release` before deployment: it closes the changelog, routes meaningful implementation drift to the relevant FEEL-governed docs via `feel-doc`, and runs the release checks. The build-time guard rejects deployable commits without a new changelog record.
 
 ## Main locations
 
@@ -47,5 +50,6 @@ pnpm preview
 - `src/pages/{guides,en/guides}` — guide routes
 - `functions/api/lead.ts` — Cloudflare Pages lead endpoint
 - `docs/` — FEEL-governed project documentation
+- `.claude/commands/sort-release.md` and `tools/release/verify-deploy-docs.mjs` — deployment workflow and enforced changelog gate
 
 The site began from the MIT-licensed [ricoui-saas-template](https://github.com/ricocc/ricoui-saas-template). Icons used in the How It Works section are from [SVG Repo](https://www.svgrepo.com/) under their stated licenses.

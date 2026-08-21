@@ -3,9 +3,9 @@ title: Decision Index
 id: decisions
 role: log
 status: living
-doc_revision: 2
+doc_revision: 3
 app_version: 1.0.0
-updated: 2026-06-16
+updated: 2026-08-21
 source_of: []
 derived_from: []
 ---
@@ -32,3 +32,9 @@ A **thin, append-only, skill-only** breadcrumb trail of non-obvious choices. **O
 | Date | Decision | Codified in |
 |---|---|---|
 | 2026-06-16 | English added via Astro **native** i18n (no lib); UA stays canonical at `/`, EN at `/en/`; SEO via hreflang (uk/en/x-default) not root-language; entry = manual switcher (localStorage wins) + one-time browser auto-detect redirect; same-URL swap rejected as cloaking; strings in typed `src/i18n/{uk,en}.ts`, shared `LandingPage.astro` | CLAUDE.md change-type router · CHANGELOG [Unreleased] |
+
+## Release discipline (2026-08-21)
+
+| Date | Decision | Codified in |
+|---|---|---|
+| 2026-08-21 | Every Cloudflare Pages deployable commit, preview or production and regardless of ceremony level, adds a changelog record; `sort-release` prepares docs and the package `prebuild` hook enforces the gate | CLAUDE.md §Behavioral guidelines · `.claude/commands/sort-release.md` · `tools/release/verify-deploy-docs.mjs` |

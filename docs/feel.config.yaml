@@ -8,7 +8,7 @@
 #   PROJECT DATA (SORT Landing-specific) — audiences, docs, relations,
 #     comparison groups. Replace when adopting FEEL in a new project.
 #
-# Updated: 2026-08-03  app_version: 1.0.0  feel_version: 1.5
+# Updated: 2026-08-21  app_version: 1.0.0  feel_version: 1.5
 # Maintained by: feel-repeat (validation), feel-doc (catalog sync)
 # -------------------------------------------------------------------
 
@@ -55,6 +55,11 @@ docs:
     audience: [developer, architect]
     guards: the FEEL doc convention itself; spec for all heads and skills
 
+  - id: feel-adoption
+    path: docs/conventions/feel-adoption.md
+    audience: [developer, architect]
+    guards: FEEL adoption layers; agent bindings; framework/project skill boundary
+
   - id: decisions
     path: docs/history/decisions.md
     audience: [architect, developer]
@@ -67,8 +72,12 @@ docs:
 
 
 # ── Relation registry ─────────────────────────────────────────────
-# No derived docs yet. Add entries here when a doc is authored FROM another.
-relations: []
+relations:
+  - source: feel
+    derived: feel-adoption
+    intent: >
+      feel-adoption is the adoption/scaling half of the FEEL convention, split
+      from the every-session operating spec by reading occasion rather than audience.
 
 
 # ── Comparison groups ─────────────────────────────────────────────
@@ -95,6 +104,13 @@ roles:
     required_docs: [feel]
     required_skills: [feel-doc, feel-repeat]
     session_recommendation: light
+
+  - name: deployment
+    label: Cloudflare preview / production release
+    required_docs: [super-index]
+    required_skills: [sort-release]
+    required_code: ["tools/release/verify-deploy-docs.mjs", "package.json"]
+    session_recommendation: any
 
 
 # ══════════════════════════════════════════════════════════════════
@@ -124,15 +140,15 @@ ceremony_levels:
     requires: [governing_docs, load_bearing_doc_update, decision_log_if_non_obvious, verification]
   normal:
     includes: [lead_form, analytics, meaningful_copy_change, operator_workflow]
-    requires: [spec_or_doc_sync, changelog_if_behaviour_changed, release_record_if_configured]
+    requires: [spec_or_doc_sync, changelog_for_every_deployable_commit, release_verification]
   light:
     includes: [copy_tweaks, css, visual_polish, internal_refactors]
-    requires: [nearby_context, risk_based_tests]
-    skips_by_default: [changelog, version_bump, doc_head_churn]
+    requires: [nearby_context, risk_based_tests, changelog_if_deployed]
+    skips_by_default: [version_bump, doc_head_churn]
   emergency_skip:
     explicit_phrases: ["skip ceremony", "no ceremony", "skip the skills", "quick one"]
-    skips_by_default: [changelog, doc_sync, routine_skill_invocation]
-    never_skips: [safety]
+    skips_by_default: [doc_sync, routine_skill_invocation]
+    never_skips: [safety, changelog_if_deployed]
 
 # ── Head-count thresholds ─────────────────────────────────────────
 head_count:
@@ -199,3 +215,12 @@ routines:
     what_it_does: >
       Reports session health plus complete-head lines/tokens, malformed delimiters,
       configured metadata errors, and oversized-head outliers.
+
+  - name: sort-release
+    skill: sort-release
+    trigger: before every Cloudflare Pages preview or production deployment
+    scope: deployment diff, CHANGELOG.md, affected governed docs, release verification
+    what_it_does: >
+      Always adds a changelog record, routes meaningful doc drift through feel-doc,
+      runs feel-repeat --diff after doc edits, and verifies the release check, tests,
+      and production build. The package prebuild hook enforces the changelog gate.
