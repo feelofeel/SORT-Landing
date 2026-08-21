@@ -8,6 +8,7 @@ export interface Props {
 	keywords?: string;
 	url?: string;
 	ogImage?: string;
+	ogImageAlt?: string;
 	twitterHandle?: string;
 	alternatePaths?: Partial<Record<Lang, string>>;
 }
@@ -18,6 +19,7 @@ const {
 	description,
 	keywords = "",
 	ogImage = "/og.jpg",
+	ogImageAlt,
 	twitterHandle = siteConfig.social.twitterName || "",
 	alternatePaths,
 } = Astro.props;
@@ -31,6 +33,11 @@ const canonical =
 const absoluteOg = ogImage.startsWith("http")
 	? ogImage
 	: new URL(ogImage, origin).href;
+const resolvedOgImageAlt =
+	ogImageAlt ??
+	(lang === "en"
+		? "SORT expiry control for cafés, showing the Today screen with urgent batches."
+		: "SORT для контролю термінів у кав'ярні: екран «Сьогодні» з терміновими партіями.");
 
 // hreflang: the home page exists in uk + en, so cross-link them; other pages
 // (404, blog) self-reference. uk is x-default (the primary locale).
@@ -101,6 +108,11 @@ const hasLocalizedAlternates = Boolean(ukAlternate && enAlternate);
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonical} />
 <meta property="og:image" content={absoluteOg} />
+<meta property="og:image:secure_url" content={absoluteOg} />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={resolvedOgImageAlt} />
 <meta property="og:site_name" content={siteConfig.title} />
 <meta property="og:locale" content={ogLocale} />
 {(isHome || hasLocalizedAlternates) && lang === "en" && <meta property="og:locale:alternate" content="uk_UA" />}
@@ -111,5 +123,6 @@ const hasLocalizedAlternates = Boolean(ukAlternate && enAlternate);
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={absoluteOg} />
+<meta name="twitter:image:alt" content={resolvedOgImageAlt} />
 {twitterHandle && <meta name="twitter:site" content={twitterHandle} />}
 {twitterHandle && <meta name="twitter:creator" content={twitterHandle} />}

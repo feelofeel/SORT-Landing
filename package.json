@@ -52,7 +52,7 @@
 		"@astrojs/check": "^0.9.9",
 		"@biomejs/biome": "1.7.3",
 		"@tailwindcss/typography": "^0.5.13",
-		"astro": "^6.4.2",
+		"astro": "^6.4.8",
 		"postcss": "^8.4.31",
 		"puppeteer": "^25.1.0",
 		"tailwindcss": "^4.1.14",
