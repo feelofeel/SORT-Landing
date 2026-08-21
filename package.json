@@ -49,22 +49,22 @@
 		"test:watch": "vitest"
 	},
 	"devDependencies": {
-		"@astrojs/check": "^0.9.9",
+		"@astrojs/check": "^0.9.10",
 		"@biomejs/biome": "1.7.3",
 		"@tailwindcss/typography": "^0.5.13",
-		"astro": "^6.4.8",
+		"astro": "^7.2.4",
 		"postcss": "^8.4.31",
 		"puppeteer": "^25.1.0",
 		"tailwindcss": "^4.1.14",
 		"typescript": "^5.4.5",
-		"vite": "^7.3.3",
+		"vite": "^8.2.2",
 		"vitest": "^4.1.9"
 	},
 	"dependencies": {
-		"@astrojs/mdx": "^6.0.1",
-		"@astrojs/rss": "^4.0.18",
+		"@astrojs/mdx": "^7.0.7",
+		"@astrojs/rss": "^4.0.19",
 		"@astrojs/sitemap": "^3.7.3",
-		"@lucide/astro": "^1.17.0",
+		"@lucide/astro": "^1.33.0",
 		"@tailwindcss/vite": "^4.1.14",
 		"aos": "^2.3.4",
 		"motion": "^12.23.24",
