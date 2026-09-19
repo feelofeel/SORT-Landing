@@ -19,6 +19,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Semver: `major
 - A project-specific `sort-release` workflow and build-time release-doc check; every Cloudflare preview or production deployment must add a `CHANGELOG.md` entry, and governed docs are closed through `feel-doc` when they changed meaningfully.
 
 ### Changed
+- Synchronized the published Ukrainian and English SORT guides from [FEFO `3281ce8`](https://github.com/feelofeel/fefo/commit/3281ce89cb081dec414c71b2e14ba8add8ff024e).
 - Upgraded the site from Astro 6.4 to Astro 7.2 and aligned the Astro integrations and Vite dependency.
 - Published the F1/F6 product visuals, improved their responsive framing, refreshed `og.jpg`, and added explicit Open Graph/Twitter image metadata.
 
