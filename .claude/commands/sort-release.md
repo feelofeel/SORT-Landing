@@ -51,6 +51,19 @@ non-optional Pages enforcement point. Fix failures; do not bypass the check.
 - If the deployment fails, keep the changelog entry and correct it in the next
   commit; the attempted change remains useful history.
 
+## 5. Cutting a dated section (occasional, on request)
+
+`[Unreleased]` logs deployments as they ship. Cut it only when Dee decides a
+batch is coherent — never per deployment.
+
+1. Rename `## [Unreleased]` to `## [x.y.z] — YYYY-MM-DD` (minor for user-visible
+   content or features, patch for fixes only) and keep its body as is.
+2. Add a fresh `## [Unreleased]` above it containing an empty `### Changed`
+   heading (FEFO's guide-sync exporter requires it).
+3. Bump `package.json` `version`, the CLAUDE.md "Package version" fact, and
+   `app_version` on governed docs edited that day.
+4. Run the section 3 checks; the new release section counts as the changelog record.
+
 ## Contract
 
 **Requires**

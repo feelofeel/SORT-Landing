@@ -1,7 +1,7 @@
 {
 	"name": "sort-landing",
 	"type": "module",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"packageManager": "pnpm@9.14.2",
 	"description": "Ukrainian-first SORT marketing and documentation site for expiry-aware café operations on top of Poster POS.",
 	"keywords": [

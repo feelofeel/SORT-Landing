@@ -4,7 +4,7 @@ id: landing-page-definition
 role: spec
 status: canonical
 doc_revision: 5
-app_version: 1.0.0
+app_version: 1.1.0
 updated: 2026-09-20
 source_of: [lead-followup-templates]
 derived_from: []
