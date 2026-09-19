@@ -274,7 +274,7 @@ export const en: Content = {
 			{
 				question: "Will SORT flood us with notifications?",
 					answer:
-						"No. Baristas get a push only at shift start and shift end. Managers are reminded about pending decisions at most once a week — sooner only when a batch has been taken off the shelf since the last reminder. Non-perishables (cups, lids) never become stock decisions, and the “Допустима різниця” (allowed difference) setting filters out small differences with Poster.",
+						"No. Baristas get a push only at shift start and shift end. Managers are reminded about pending decisions at most once a week — more often only when a batch has been taken off the shelf since the last reminder. Non-perishables (cups, lids) never become stock decisions, and the “Допустима різниця” (allowed difference) setting filters out small differences with Poster.",
 				},
 				{
 					question: "What's needed to connect?",

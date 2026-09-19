@@ -8,6 +8,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Semver: `major
 ## [Unreleased]
 
 ### Deployed
+- 2026-09-20 01:12 EEST — [`d895a5d`](https://github.com/feelofeel/SORT-Landing/commit/d895a5d404e59b9169df3db586640043e6ae886c): added minimal GitHub Actions CI, Dependabot, and the changelog-heading guard test.
 - 2026-09-20 01:11 EEST — [`6701236`](https://github.com/feelofeel/SORT-Landing/commit/670123666105a272ae14f10f1f6a63216a920946): aligned the landing spec with SORT app 1.86–1.88 and added the notification-load FAQ (UA/EN).
 - 2026-09-20 01:06 EEST — [`9ea507d`](https://github.com/feelofeel/SORT-Landing/commit/9ea507d5741f8aab0e64c90199c3b0d147bc699d) (PR #3): synchronized the public UA/EN guides from FEFO `6392b31` (app 1.86.0–1.88.0: «Що відстежувати» rename, stock-import removal, quieter reconciliation).
 - 2026-09-20 01:06 EEST — [`502434c`](https://github.com/feelofeel/SORT-Landing/commit/502434cbf8c1d6f269a229d23d3207f411d28c24): registered the lead follow-up templates in the doc catalog.
@@ -33,6 +34,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Semver: `major
 - Published the F1/F6 product visuals, improved their responsive framing, refreshed `og.jpg`, and added explicit Open Graph/Twitter image metadata.
 
 ### Fixed
+- Clarified the notification FAQ answer (UA/EN and spec): manager reminders are weekly at most, and more frequent only when a batch was removed from the shelf.
 - Added lead form abuse controls before Supabase persistence and notification fan-out, removed raw Supabase error-body logging, and stopped serving untracked screenshot JPGs.
 
 ---
