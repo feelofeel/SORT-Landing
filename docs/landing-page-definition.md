@@ -3,9 +3,9 @@ title: Landing Page Definition — SORT marketing site
 id: landing-page-definition
 role: spec
 status: canonical
-doc_revision: 4
+doc_revision: 5
 app_version: 1.0.0
-updated: 2026-09-17
+updated: 2026-09-20
 source_of: [lead-followup-templates]
 derived_from: []
 toc:
@@ -237,10 +237,11 @@ A grid of cards, each **pain → mechanism → outcome + one visual**. Selection
 1. «Чи замінює SORT Poster?» — Ні, працює поверх нього; Poster лишається обліком.
 2. «Скільки навчати баристу?» — Майже не треба: одна дія, українською.
 3. «Чи додасть SORT роботи баристам?» — Ні: SORT може бути manager-only. Якщо бариста долучаються, це один-два дотики, не новий облік; часто економить час на фото, чатах і питаннях менеджеру.
-4. «Що потрібно для підключення?» — Доступ до вашого Poster; решту робимо ми.
-5. «Чи можна скасувати списання?» — Так, усе оборотне в Poster.
-6. «Працює, якщо впав інтернет?» — Так, дані з кешу, дії синхронізуються потім.
-7. «Скільки коштує?» — Є безкоштовний тариф; платний — від ₴… за заклад.
+4. «Чи не засипатиме SORT сповіщеннями?» — Ні: бариста — лише пуш на початку й наприкінці зміни; менеджеру не частіше ніж раз на тиждень (раніше — лише коли партію зняли з полиці); непсувні позиції не стають рішеннями за кількістю; дрібні розбіжності з Poster відсікає «Допустима різниця» (app 1.86.0).
+5. «Що потрібно для підключення?» — Доступ до вашого Poster; решту робимо ми.
+6. «Чи можна скасувати списання?» — Так, усе оборотне в Poster.
+7. «Працює, якщо впав інтернет?» — Так, дані з кешу, дії синхронізуються потім.
+8. «Скільки коштує?» — Є безкоштовний тариф; платний — від ₴… за заклад.
 - **Visual:** none (accordion). Each Q/A also emitted as `FAQPage` JSON-LD.
 
 ### 4.11 Final CTA (pre-footer)
@@ -268,7 +269,7 @@ The form carries UTM/referrer context, includes a hidden `company_url` honeypot,
 On the page: thank-you state + "ми напишемо вам у Telegram протягом доби". Behind it, Dee's onboarding playbook (existing tooling):
 1. Contact prospect → short screen-share/visit.
 2. Run **Poster OAuth** for their account (the account-specific OAuth URL pattern; app ID 4946).
-3. Seed the shelf-life registry via **«Імпорт з Poster»** (Feature 27) + `remap-shelf-life.js`.
+3. Seed the shelf-life registry via **«Що відстежувати»** (Feature 27; renamed from «Імпорт з Poster» in app 1.88.0) + `remap-shelf-life.js`. Stock already on the shelf enters through **Рішення менеджера → Звірити залишки з Poster → Виправити** — the bulk «Імпортувати поточні залишки» action was removed in app 1.87.0 (see the public `first-steps` guide, step 6).
 4. Set the **shift schedule** (Feature 12), invite the manager (magic-link, role from Poster).
 5. Verify first push → hand off.
 
@@ -405,7 +406,7 @@ All six feature surfaces are represented with committed Ukrainian UI assets; the
 | F1 shift-start push | Features 1, 12 | Core promise |
 | F2 Today | Feature 1 | Prioritized surface |
 | F3 one-tap write-off | Feature 4 | FEFO leftover pre-fill + undo |
-| F4 zero data entry | Features 2, 27 | Confirm + Poster import |
+| F4 zero data entry | Features 2, 27 | Confirm + «Що відстежувати» |
 | F5 waste analytics | Feature 25 | "see why" ROI proof |
 | F6 shelf without chat photos | Feature 14 & 20 | Secondary manager-value proof; visual stock cards support the value |
 | Trust strip | Features 26, 4; invariants | Offline, reversible, Poster-record |

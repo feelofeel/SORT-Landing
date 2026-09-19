@@ -272,7 +272,12 @@ export const en: Content = {
 					"No. SORT can be used as a manager-only tool: baristas never have to interact with it. When the team does join in, it is not heavy training or a new accounting system — confirming a batch or writing off a leftover takes one or two taps. In many cases it saves time: fewer photos, fewer chat messages and fewer manager questions during the shift.",
 			},
 			{
-				question: "What's needed to connect?",
+				question: "Will SORT flood us with notifications?",
+					answer:
+						"No. Baristas get a push only at shift start and shift end. Managers are reminded about pending decisions at most once a week — sooner only when a batch has been taken off the shelf since the last reminder. Non-perishables (cups, lids) never become stock decisions, and the “Допустима різниця” (allowed difference) setting filters out small differences with Poster.",
+				},
+				{
+					question: "What's needed to connect?",
 				answer:
 					"Access to your Poster. Everything else — the expiry registry, schedule, settings — we set up together with you.",
 			},

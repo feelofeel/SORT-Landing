@@ -8,6 +8,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Semver: `major
 ## [Unreleased]
 
 ### Deployed
+- 2026-09-20 01:06 EEST — [`9ea507d`](https://github.com/feelofeel/SORT-Landing/commit/9ea507d5741f8aab0e64c90199c3b0d147bc699d) (PR #3): synchronized the public UA/EN guides from FEFO `6392b31` (app 1.86.0–1.88.0: «Що відстежувати» rename, stock-import removal, quieter reconciliation).
+- 2026-09-20 01:06 EEST — [`502434c`](https://github.com/feelofeel/SORT-Landing/commit/502434cbf8c1d6f269a229d23d3207f411d28c24): registered the lead follow-up templates in the doc catalog.
 - 2026-08-21 16:14 EEST — [`9eec3cd`](https://github.com/feelofeel/SORT-Landing/commit/9eec3cd378766c9f3509a09b565f563d3423c881): upgraded the build toolchain from Astro 6 to Astro 7, including the matching MDX, RSS, Lucide, Vite, and validation dependencies.
 - 2026-08-21 16:01 EEST — [`5c57f75`](https://github.com/feelofeel/SORT-Landing/commit/5c57f75f1088a0b71d7826d9ab197817f488c2a9) (feature commit [`ebb7042`](https://github.com/feelofeel/SORT-Landing/commit/ebb7042ab7ea869b3d329aa117d38efb86da38b3)): published the landing-page product visuals, refreshed the social preview, added OG image metadata, and replaced the hero screenshot placeholder with the upcoming-video state.
 
@@ -20,6 +22,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Semver: `major
 - Lead follow-up templates and outreach playbook (`docs/lead-followup-templates.md`), registered in the doc catalog and super-index.
 
 ### Changed
+- Landing spec aligned with SORT app 1.86–1.88: the onboarding playbook now uses «Що відстежувати» plus «Рішення менеджера → Виправити» (the bulk stock import is gone), and the FAQ spec gained the notification-load question.
+- Added a UA/EN FAQ answer, «Чи не засипатиме SORT сповіщеннями?», covering shift-boundary pushes, the weekly manager reminder, non-perishable exclusion and the «Допустима різниця» threshold. It also feeds the FAQPage JSON-LD.
 - Synchronized the published Ukrainian and English SORT guides from [FEFO `6392b31`](https://github.com/feelofeel/fefo/commit/6392b31f7437419e8c8d3f4567fff1f3f2119ab3).
 - Upgraded the site from Astro 6.4 to Astro 7.2 and aligned the Astro integrations and Vite dependency.
 - Published the F1/F6 product visuals, improved their responsive framing, refreshed `og.jpg`, and added explicit Open Graph/Twitter image metadata.
