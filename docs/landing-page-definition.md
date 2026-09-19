@@ -3,10 +3,10 @@ title: Landing Page Definition — SORT marketing site
 id: landing-page-definition
 role: spec
 status: canonical
-doc_revision: 3
+doc_revision: 4
 app_version: 1.0.0
-updated: 2026-08-21
-source_of: []
+updated: 2026-09-17
+source_of: [lead-followup-templates]
 derived_from: []
 toc:
   - "§0 How to read and maintain this doc"

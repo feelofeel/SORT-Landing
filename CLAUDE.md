@@ -3,9 +3,9 @@ title: SORT Landing — Engineering Brief & Super-Index
 id: super-index
 role: index
 status: living
-doc_revision: 3
+doc_revision: 4
 app_version: 1.0.0
-updated: 2026-08-21
+updated: 2026-09-17
 source_of: []
 derived_from: []
 toc: ["Super-index", "Behavioral guidelines", "Project excellency", "Sticky facts"]
@@ -26,6 +26,7 @@ Docs run on **[FEEL](docs/conventions/feel.md)** — this file is the super-inde
 ### Doc catalog
 
 - **Specs:** [landing-page-definition](docs/landing-page-definition.md) — full page definition, section-by-section copy + layout spec; source for all copy changes
+- **Guides & Outreach:** [lead-followup-templates](docs/lead-followup-templates.md) — lead response email and Telegram templates + outreach playbook
 - **Conventions:** [feel](docs/conventions/feel.md) — operating spec; FEEL v1.5 · [feel-adoption](docs/conventions/feel-adoption.md) — layers, adoption steps, agent bindings, scale
 - **Planning & history:** [decisions](docs/history/decisions.md) *(log — skill-only)*
 - **Release history:** [CHANGELOG](CHANGELOG.md) *(every deployable commit)* · `sort-release` *(project deployment workflow)*
@@ -38,7 +39,7 @@ Docs run on **[FEEL](docs/conventions/feel.md)** — this file is the super-inde
 | Page copy / UA + EN text | [landing-page-definition](docs/landing-page-definition.md) | `src/i18n/{uk,en}.ts` (strings) · `src/components/LandingPage.astro` (markup) |
 | Public guide source / classification | FEFO/SORT `docs/public/{uk,en}` plus its super-index | Generated mirror: `src/content/guides/{uk,en}` — never edit directly · exporter lives in FEFO/SORT `tools/docs/export-public.mjs` |
 | Guide routes / rendering / schema | [feel](docs/conventions/feel.md) §5 | `src/content.config.js` · `src/lib/guides.ts` · `src/pages/{guides,en/guides}` |
-| Lead form / API | [landing-page-definition](docs/landing-page-definition.md) §lead-form | `functions/api/lead.ts` · form markup+script in `src/components/LandingPage.astro` |
+| Lead form / API / Outreach | [landing-page-definition](docs/landing-page-definition.md) §lead-form · [lead-followup-templates](docs/lead-followup-templates.md) | `functions/api/lead.ts` · form markup+script in `src/components/LandingPage.astro` |
 | SEO / meta / JSON-LD / i18n | [landing-page-definition](docs/landing-page-definition.md) §SEO | `src/layouts/Meta.astro` (hreflang/og) · `src/components/widgets/Schema.astro` · `astro.config.mjs` i18n |
 | Analytics / Plausible | [landing-page-definition](docs/landing-page-definition.md) §analytics | `src/components/widgets/TrackGa.astro` · `src/assets/js/main.js` |
 | Nav / menu / language switch | — | `nav` in `src/i18n/{uk,en}.ts` · `src/components/ui/LangSwitcher.astro` (`menu.json` now unused) |

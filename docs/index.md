@@ -3,9 +3,9 @@ title: SORT Landing — Documentation Index
 id: index
 role: index
 status: living
-doc_revision: 3
+doc_revision: 4
 app_version: 1.0.0
-updated: 2026-08-21
+updated: 2026-09-17
 source_of: []
 derived_from: []
 ---
@@ -21,6 +21,7 @@ FEFO/SORT is the canonical source for the public guide corpus. The 18 files unde
 ## Docs
 
 - [`landing-page-definition.md`](landing-page-definition.md) — full page spec: section-by-section copy, layout, lead form, SEO, analytics
+- [`lead-followup-templates.md`](lead-followup-templates.md) — lead response email and Telegram templates + outreach playbook
 - [`conventions/feel.md`](conventions/feel.md) — the documentation operating system (FEEL v1.5)
 - [`conventions/feel-adoption.md`](conventions/feel-adoption.md) — FEEL adoption layers, agent bindings, and scale guidance
 - [`history/decisions.md`](history/decisions.md) — append-only decision log (skill-only; see FEEL §6)

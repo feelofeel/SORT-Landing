@@ -17,6 +17,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Semver: `major
 - Public SORT guides: a landing-page section and footer link, plus separate onboarding and manager guides in Ukrainian and English.
 - Local screenshot-capture tooling, with only curated product visuals committed to the published `public/` directory.
 - A project-specific `sort-release` workflow and build-time release-doc check; every Cloudflare preview or production deployment must add a `CHANGELOG.md` entry, and governed docs are closed through `feel-doc` when they changed meaningfully.
+- Lead follow-up templates and outreach playbook (`docs/lead-followup-templates.md`), registered in the doc catalog and super-index.
 
 ### Changed
 - Upgraded the site from Astro 6.4 to Astro 7.2 and aligned the Astro integrations and Vite dependency.
