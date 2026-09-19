@@ -4,12 +4,12 @@ title: "A barista's first shift with SORT"
 summary: "Learn to confirm new batches, sell the earliest expiry first, and write off the remainder at shift end."
 locale: "en"
 translationKey: "barista-first-shift"
-translationRevision: 1
+translationRevision: 2
 slug: "barista/first-shift"
 diataxis: "tutorial"
 audience: "barista"
-updated: "2026-08-02"
-sourceRevision: 1
+updated: "2026-09-16"
+sourceRevision: 2
 order: 30
 pageKind: "article"
 ---
@@ -29,6 +29,6 @@ Sell the earliest expiry first. If a card says an older batch exists, find it an
 
 ## At the end
 
-Open **Today** again. For anything expired or unable to last until the next shift, check the remainder, choose the truthful reason, and tap **🗑 Write off**. Follow [write off a batch correctly](/en/guides/write-off-batch/) for the full procedure.
+Open **Today** again. For anything expired, check the remainder, choose the truthful reason, and tap **🗑 Write off**. Anything still within its date that will not last until the next shift (the **Until the next shift** section) is written off with **Manual write-off**. Follow [write off a batch correctly](/en/guides/write-off-batch/) for the full procedure.
 
 If nothing expires, there is no extra work. SORT never writes off stock automatically.
