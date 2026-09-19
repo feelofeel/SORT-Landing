@@ -4,16 +4,18 @@ title: "For managers"
 summary: "Set up SORT, handle daily decisions, and keep expiry rules useful for your café."
 locale: "en"
 translationKey: "manager"
-translationRevision: 1
+translationRevision: 3
 slug: "manager"
 audience: "manager"
-updated: "2026-08-02"
-sourceRevision: 1
+updated: "2026-08-26"
+sourceRevision: 3
 order: 10
 pageKind: "landing"
 ---
 
 SORT helps the team see what expires today and gives managers a place to configure rules and resolve exceptions. Poster remains the system of record for quantities, supplies, and write-offs.
+
+The Inventory health card on Manager Home shows the saved check from the start or end of a shift and explains when the age of the latest inventory, negative leftovers, and repeated temporary confirmations together make a physical count worthwhile. It names when that check ran; until the first scheduled check, it gives no recommendation. SORT only recommends opening the inventory workflow in Poster and never changes quantities itself.
 
 ## Start here
 
