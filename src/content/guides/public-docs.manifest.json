@@ -7,64 +7,64 @@
       "id": "public-barista-first-shift-en",
       "locale": "en",
       "slug": "barista/first-shift",
-      "sourceRevision": 1,
-      "translationRevision": 1,
+      "sourceRevision": 2,
+      "translationRevision": 2,
       "path": "en/barista/first-shift.md",
-      "checksum": "d1d66a4c9a354e2826ac9b6dc49b5e98a274bbd0d38290357001ca5cd3245a3d"
+      "checksum": "319031280a8c99df9383994fe00c323499acff67680d1a1c28ee1368fbc6d86c"
     },
     {
       "id": "public-configure-products-and-shelves-en",
       "locale": "en",
       "slug": "configure-products-and-shelves",
-      "sourceRevision": 3,
-      "translationRevision": 3,
+      "sourceRevision": 6,
+      "translationRevision": 6,
       "path": "en/configure-products-and-shelves.md",
-      "checksum": "9da17b2f57385263c06e2ac1ead3a26ecf50f8cc4547a2ec5c00a60e8c7c3012"
+      "checksum": "3e2f0b7d973ae21bfa7ac59ead36b2e426348f27c4dcf38d847e09ba224cc093"
     },
     {
       "id": "public-confirm-or-correct-batch-en",
       "locale": "en",
       "slug": "confirm-or-correct-batch",
-      "sourceRevision": 2,
-      "translationRevision": 2,
+      "sourceRevision": 3,
+      "translationRevision": 3,
       "path": "en/confirm-or-correct-batch.md",
-      "checksum": "d4163b4ea7f39da5fd921935ece073cd789e65ea7a8b6ddc1ab1b8ab7b558ba5"
+      "checksum": "9981a1e54e7b23ae0edaf88a12d6d406d6b22902d5ef3bce059717150e224c28"
     },
     {
       "id": "public-first-steps-en",
       "locale": "en",
       "slug": "first-steps",
-      "sourceRevision": 1,
-      "translationRevision": 1,
+      "sourceRevision": 3,
+      "translationRevision": 3,
       "path": "en/first-steps.md",
-      "checksum": "1600a455323292875b4bf57bcae359e6528f8495d2ebb2a768b80c1977d07738"
+      "checksum": "c5ab5c5e93b13bf69dc994f1ccc73fad1d2879e1cf935e5989180737a6329348"
     },
     {
       "id": "public-manager-en",
       "locale": "en",
       "slug": "manager",
-      "sourceRevision": 1,
-      "translationRevision": 1,
+      "sourceRevision": 3,
+      "translationRevision": 3,
       "path": "en/manager.md",
-      "checksum": "30842c53d7278f04d3363e29bb4af509c936149885da7996f6e95635452b176e"
+      "checksum": "f5335e63e160cb37112b597d30a3afc4d92b1899393cf82ba863856b34fa1c3f"
     },
     {
       "id": "public-product-reference-en",
       "locale": "en",
       "slug": "product-reference",
-      "sourceRevision": 1,
-      "translationRevision": 1,
+      "sourceRevision": 3,
+      "translationRevision": 3,
       "path": "en/product-reference.md",
-      "checksum": "690e0e721c58ef2bda0d3327cd6f253de18a50bc14e4de8d98e296c37d263281"
+      "checksum": "17db9aa13cfcc278c848374d2b827957b4834e1d4cd14650063cffd4f3565b73"
     },
     {
       "id": "public-resolve-manager-decisions-en",
       "locale": "en",
       "slug": "resolve-manager-decisions",
-      "sourceRevision": 2,
-      "translationRevision": 2,
+      "sourceRevision": 6,
+      "translationRevision": 6,
       "path": "en/resolve-manager-decisions.md",
-      "checksum": "217b2cf03e465cbe7afb6fc923e8ca7624691249f130e6470c6d9338ab4c53c3"
+      "checksum": "f638bd62320a22149527ccf318122b67a3429b08b0fcaf2120e091e57316995c"
     },
     {
       "id": "public-sort-and-poster-en",
@@ -79,73 +79,73 @@
       "id": "public-write-off-batch-en",
       "locale": "en",
       "slug": "write-off-batch",
-      "sourceRevision": 2,
-      "translationRevision": 2,
+      "sourceRevision": 3,
+      "translationRevision": 3,
       "path": "en/write-off-batch.md",
-      "checksum": "246c6c44cb0ad5652511f5a9f9a53f88ffbd5639e0b0e76d796d34524fda5dff"
+      "checksum": "20acb100d2efaa9975820de364523a6d056823fb206642e3306aea716a3c5bd2"
     },
     {
       "id": "public-barista-first-shift-uk",
       "locale": "uk",
       "slug": "barista/first-shift",
-      "sourceRevision": 1,
-      "translationRevision": 1,
+      "sourceRevision": 2,
+      "translationRevision": 2,
       "path": "uk/barista/first-shift.md",
-      "checksum": "a92f34818ecafc3595396c7e296603bd296c50aa87bd1fcd712549523a92ef8c"
+      "checksum": "023dddbb3b46d23056533cab99f673bdf30c022e3013199756c2b2f8192a9e24"
     },
     {
       "id": "public-configure-products-and-shelves-uk",
       "locale": "uk",
       "slug": "configure-products-and-shelves",
-      "sourceRevision": 3,
-      "translationRevision": 3,
+      "sourceRevision": 6,
+      "translationRevision": 6,
       "path": "uk/configure-products-and-shelves.md",
-      "checksum": "96149ff78ba7e105a5be0d403fab4eaba1bbedb04ad47e9ea0b6dd6e26a5850e"
+      "checksum": "ad27da6eb279fec895fd271afc453480d99c08c3650d759ba13905813ab274ff"
     },
     {
       "id": "public-confirm-or-correct-batch-uk",
       "locale": "uk",
       "slug": "confirm-or-correct-batch",
-      "sourceRevision": 2,
-      "translationRevision": 2,
+      "sourceRevision": 3,
+      "translationRevision": 3,
       "path": "uk/confirm-or-correct-batch.md",
-      "checksum": "3d1e10321f997feffb7319990ce4c8a0755509e15da4638f1e2404e4ab1bbaae"
+      "checksum": "edf7e563d9ce1e555184d9d7ef8ffcfdf2bea85469ee30e5e9fb3b33c642d3ba"
     },
     {
       "id": "public-first-steps-uk",
       "locale": "uk",
       "slug": "first-steps",
-      "sourceRevision": 1,
-      "translationRevision": 1,
+      "sourceRevision": 3,
+      "translationRevision": 3,
       "path": "uk/first-steps.md",
-      "checksum": "c348a2bab8ae009994fc09f39075cacd057093234ef4b6b45ef264376d4145eb"
+      "checksum": "0b0ab6b0b3b47c1cb7a5acd8f7a87896d3c2c0851ad26d622fb1bb92eb3980d8"
     },
     {
       "id": "public-manager-uk",
       "locale": "uk",
       "slug": "manager",
-      "sourceRevision": 1,
-      "translationRevision": 1,
+      "sourceRevision": 3,
+      "translationRevision": 3,
       "path": "uk/manager.md",
-      "checksum": "26564b03000c9a24a72b85748e8af30bbbcc39eb60b47e607039c52c439c7f81"
+      "checksum": "9ad17fb6234e686b522be88964466ea3e0ac7f6500203e1fab88734f07f5860f"
     },
     {
       "id": "public-product-reference-uk",
       "locale": "uk",
       "slug": "product-reference",
-      "sourceRevision": 1,
-      "translationRevision": 1,
+      "sourceRevision": 3,
+      "translationRevision": 3,
       "path": "uk/product-reference.md",
-      "checksum": "a8ad8efe74527e85971e7b226ecc71ea6a66aefc3a384697e8503b615993d330"
+      "checksum": "24674bc635ca907a672e11b49cc6757384a2e37c5d9d75d0e084b7a0f9a366a9"
     },
     {
       "id": "public-resolve-manager-decisions-uk",
       "locale": "uk",
       "slug": "resolve-manager-decisions",
-      "sourceRevision": 2,
-      "translationRevision": 2,
+      "sourceRevision": 6,
+      "translationRevision": 6,
       "path": "uk/resolve-manager-decisions.md",
-      "checksum": "2a906e4ddc68a0a640e1b51cf7fea9adfa3c9d1a42c071a0339c70f70dfac6e1"
+      "checksum": "98636c7abde19332ace1a82bf4e893c1dc609e9c789c3df2de8b1bae5977ed2a"
     },
     {
       "id": "public-sort-and-poster-uk",
@@ -160,10 +160,10 @@
       "id": "public-write-off-batch-uk",
       "locale": "uk",
       "slug": "write-off-batch",
-      "sourceRevision": 2,
-      "translationRevision": 2,
+      "sourceRevision": 3,
+      "translationRevision": 3,
       "path": "uk/write-off-batch.md",
-      "checksum": "22676f8a26ee8024207eccf957a906b72e5f6eff5439da288458e27a42fb42a7"
+      "checksum": "6c830844d7e079d1be07cae7ec21bb83a738f44f97ad77e0cc55cf613eaa09fe"
     }
   ]
 }

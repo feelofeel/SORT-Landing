@@ -4,17 +4,17 @@ title: "Write off a batch correctly"
 summary: "Check the physical remainder, choose an honest reason, and safely create the write-off in Poster."
 locale: "en"
 translationKey: "write-off-batch"
-translationRevision: 2
+translationRevision: 3
 slug: "write-off-batch"
 diataxis: "how-to"
 audience: "barista"
-updated: "2026-08-04"
-sourceRevision: 2
+updated: "2026-09-16"
+sourceRevision: 3
 order: 90
 pageKind: "article"
 ---
 
-1. On an expired batch, or one that will not last until the next shift, tap **🗑 Write off**. For damage, spills, or defects before expiry, use **Manual write-off** immediately.
+1. On an expired batch, tap **🗑 Write off**. If a batch is still within its date but will not last until the next shift (the **Until the next shift** section), or it was broken, spilled, or spoiled before expiry, tap **Manual write-off**.
 2. Compare SORT's suggested remainder with the physical amount and adjust it with **−/+**.
 3. Choose the truthful Poster reason, such as Expired, Defect, or Damaged.
 4. If **Also written off** appears, check or choose the linked ingredients.
