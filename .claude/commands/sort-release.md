@@ -19,6 +19,9 @@ Prepare one traceable Cloudflare Pages preview or production deployment.
 - **Always update `CHANGELOG.md`.** Every Pages build is a deployment, including
   branch previews. Add a concise item under `[Unreleased]`; after deployment,
   include the deployed commit and timestamp when they are known.
+- **Keep a `### Changed` heading under `[Unreleased]`.** FEFO's guide-sync
+  exporter records each sync there and fails when it is missing (a test guards
+  this), so re-create the heading if a release cut moves the section away.
 - Route changed behavior through the `CLAUDE.md` change-type table. Update the
   authoritative spec or guide when implementation has made it stale.
 - After any meaningful governed-doc edit, run the `feel-doc` workflow on the

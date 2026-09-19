@@ -8,12 +8,16 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Semver: `major
 ## [Unreleased]
 
 ### Deployed
+- 2026-09-20 01:11 EEST — [`6701236`](https://github.com/feelofeel/SORT-Landing/commit/670123666105a272ae14f10f1f6a63216a920946): aligned the landing spec with SORT app 1.86–1.88 and added the notification-load FAQ (UA/EN).
 - 2026-09-20 01:06 EEST — [`9ea507d`](https://github.com/feelofeel/SORT-Landing/commit/9ea507d5741f8aab0e64c90199c3b0d147bc699d) (PR #3): synchronized the public UA/EN guides from FEFO `6392b31` (app 1.86.0–1.88.0: «Що відстежувати» rename, stock-import removal, quieter reconciliation).
 - 2026-09-20 01:06 EEST — [`502434c`](https://github.com/feelofeel/SORT-Landing/commit/502434cbf8c1d6f269a229d23d3207f411d28c24): registered the lead follow-up templates in the doc catalog.
 - 2026-08-21 16:14 EEST — [`9eec3cd`](https://github.com/feelofeel/SORT-Landing/commit/9eec3cd378766c9f3509a09b565f563d3423c881): upgraded the build toolchain from Astro 6 to Astro 7, including the matching MDX, RSS, Lucide, Vite, and validation dependencies.
 - 2026-08-21 16:01 EEST — [`5c57f75`](https://github.com/feelofeel/SORT-Landing/commit/5c57f75f1088a0b71d7826d9ab197817f488c2a9) (feature commit [`ebb7042`](https://github.com/feelofeel/SORT-Landing/commit/ebb7042ab7ea869b3d329aa117d38efb86da38b3)): published the landing-page product visuals, refreshed the social preview, added OG image metadata, and replaced the hero screenshot placeholder with the upcoming-video state.
 
 ### Added
+- GitHub Actions CI (`.github/workflows/ci.yml`): `pnpm test` and an Astro build on Node 24 for pull requests and `main`, covering the tests Cloudflare Pages does not run.
+- Dependabot (`.github/dependabot.yml`): grouped monthly npm minor/patch updates.
+- A test that `CHANGELOG.md` keeps a `### Changed` heading under `[Unreleased]`, which FEFO's guide-sync exporter requires; noted in `sort-release`.
 - English localization via Astro native i18n — UA at `/` (default), EN at `/en/`. Typed content dictionaries (`src/i18n/{uk,en}.ts`), shared `LandingPage.astro` body, header language switcher, and a one-time browser-language auto-detect (manual choice wins, SEO-safe). Full coverage: page copy, nav, footer, pricing, FAQ, meta + `hreflang`/`og:locale` + JSON-LD `inLanguage`. Bilingual 404.
 - FEEL documentation framework installed — CLAUDE.md super-index, decision log, conventions, core skills (`feel-doc`, `feel-decision`, `feel-repeat`, `feel-session`, `feel-health`)
 - Public SORT guides: a landing-page section and footer link, plus separate onboarding and manager guides in Ukrainian and English.

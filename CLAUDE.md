@@ -3,9 +3,9 @@ title: SORT Landing — Engineering Brief & Super-Index
 id: super-index
 role: index
 status: living
-doc_revision: 4
+doc_revision: 5
 app_version: 1.0.0
-updated: 2026-09-17
+updated: 2026-09-20
 source_of: []
 derived_from: []
 toc: ["Super-index", "Behavioral guidelines", "Project excellency", "Sticky facts"]
@@ -92,7 +92,7 @@ Docs run on **[FEEL](docs/conventions/feel.md)** — this file is the super-inde
 - **Supabase project:** `demlkcxujqtdbtppqmvl` (FEFO App prod — `public.leads` table, RLS on, no policies yet)
 - **CF Pages env vars needed:** `SUPABASE_SERVICE_ROLE_KEY`, `RESEND_API_KEY`, `LEAD_NOTIFY_EMAIL`, `PUBLIC_PLAUSIBLE_DOMAIN`, `PUBLIC_SITE_URL` (`LEAD_FROM_EMAIL` and Telegram notification vars are optional; the public Supabase URL is fixed in the function)
 - **Build:** `pnpm build` runs the release-doc guard, then emits `dist/`; `functions/api/lead.ts` is auto-detected as a CF Pages Function.
-- **Deploys:** Cloudflare Pages Git integration auto-builds branch previews and `main` production commits; GitHub `main` is not branch-protected, so the build lifecycle is the repository-side release gate.
+- **Deploys:** Cloudflare Pages Git integration auto-builds branch previews and `main` production commits; GitHub `main` is not branch-protected, so the build lifecycle is the repository-side release gate. GitHub Actions CI (`.github/workflows/ci.yml`) additionally runs `pnpm test` and a build on Node 24 for PRs and `main`; Dependabot proposes grouped monthly npm updates (each needs a `CHANGELOG.md` line, like any Pages build).
 - **Package version:** 1.0.0; deployment history is maintained under `CHANGELOG.md` `[Unreleased]`, while a semantic release-cut train is not yet established.
 - **Live:** `https://getsort.app` (landing) · `https://app.getsort.app` (application); curated F1–F6 visuals are published.
 - **Pending (Dee):** verify the current CF Pages environment-variable inventory for SCRUM-63; publish/link a privacy notice for lead collection.

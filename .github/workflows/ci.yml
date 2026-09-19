@@ -1,0 +1,34 @@
+name: CI
+
+# Cloudflare Pages already builds every branch and main. This adds what Pages
+# does not run: the test suite. The release-doc guard stays with Pages
+# (`prebuild`), so CI builds with `astro build` directly.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Enable pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@9.14.2 --activate
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test
+      - run: pnpm exec astro build

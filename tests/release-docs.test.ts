@@ -1,5 +1,11 @@
 import { execFileSync } from "node:child_process";
-import { appendFileSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import {
+	appendFileSync,
+	mkdtempSync,
+	readFileSync,
+	rmSync,
+	writeFileSync,
+} from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
@@ -63,5 +69,19 @@ describe("release documentation guard", () => {
 		} finally {
 			rmSync(cwd, { recursive: true, force: true });
 		}
+	});
+});
+
+describe("FEFO guide-sync contract", () => {
+	// FEFO's export-public.mjs records each sync under the first `### Changed`
+	// heading and throws when none exists, which would silently stop the sync PR.
+	it("keeps a `### Changed` heading inside [Unreleased]", () => {
+		const changelog = readFileSync(
+			new URL("../CHANGELOG.md", import.meta.url),
+			"utf8",
+		);
+		const unreleased = changelog.split(/^## \[/m)[1] ?? "";
+		expect(unreleased.startsWith("Unreleased]")).toBe(true);
+		expect(unreleased).toMatch(/^### Changed\s*$/m);
 	});
 });
