@@ -4,11 +4,11 @@ title: "For managers"
 summary: "Set up SORT, handle daily decisions, and keep expiry rules useful for your café."
 locale: "en"
 translationKey: "manager"
-translationRevision: 3
+translationRevision: 4
 slug: "manager"
 audience: "manager"
-updated: "2026-08-26"
-sourceRevision: 3
+updated: "2026-09-20"
+sourceRevision: 4
 order: 10
 pageKind: "landing"
 ---
@@ -25,6 +25,7 @@ The Inventory health card on Manager Home shows the saved check from the start o
 
 ## For the team
 
+- [Install SORT on the tablet](/en/guides/install-app/)
 - [A barista's first shift](/en/guides/barista/first-shift/)
 - [Confirm or correct a new batch](/en/guides/confirm-or-correct-batch/)
 - [Write off a batch correctly](/en/guides/write-off-batch/)

@@ -10,7 +10,7 @@ diataxis: "how-to"
 audience: "barista"
 updated: "2026-09-16"
 sourceRevision: 3
-order: 90
+order: 100
 pageKind: "article"
 ---
 
