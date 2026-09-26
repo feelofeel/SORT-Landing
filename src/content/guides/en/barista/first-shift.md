@@ -4,13 +4,13 @@ title: "A barista's first shift with SORT"
 summary: "Learn to confirm new batches, sell the earliest expiry first, and write off the remainder at shift end."
 locale: "en"
 translationKey: "barista-first-shift"
-translationRevision: 2
+translationRevision: 3
 slug: "barista/first-shift"
 diataxis: "tutorial"
 audience: "barista"
-updated: "2026-09-16"
-sourceRevision: 2
-order: 30
+updated: "2026-09-20"
+sourceRevision: 3
+order: 40
 pageKind: "article"
 ---
 
@@ -18,7 +18,7 @@ SORT shows what needs attention today. Poster still records sales and quantities
 
 ## At the start
 
-1. Open [app.getsort.app](https://app.getsort.app) on the work tablet and allow notifications.
+1. Open SORT from the work tablet's Home Screen (not installed yet — [install it first](/en/guides/install-app/)). If the app asks you to sign in, enter your work email and the 6-digit code from the email, then allow notifications.
 2. On **Today**, find **New batches**.
 3. Compare the date and quantity with the packaging. If correct, tap **Confirm**. If not, [correct the batch](/en/guides/confirm-or-correct-batch/).
 4. Review orange cards that expire today and red cards that are already expired.

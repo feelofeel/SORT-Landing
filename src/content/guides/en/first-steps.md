@@ -4,12 +4,12 @@ title: "Prepare SORT for the first shift"
 summary: "Connect a manager, configure products, and verify the first batch before the team starts."
 locale: "en"
 translationKey: "first-steps"
-translationRevision: 3
+translationRevision: 4
 slug: "first-steps"
 diataxis: "tutorial"
 audience: "manager"
-updated: "2026-09-19"
-sourceRevision: 3
+updated: "2026-09-20"
+sourceRevision: 4
 order: 20
 pageKind: "article"
 ---
@@ -22,10 +22,12 @@ Make sure ready-made items are **Goods**, items made in the café have tech card
 
 ## 2. Sign in as a manager
 
-1. Open [app.getsort.app](https://app.getsort.app).
+1. [Install SORT on the device](/en/guides/install-app/) if you have not yet, and open the app from the Home Screen. On iPad, a browser tab and the installed app are separate sign-ins.
 2. Enter the work email used as the employee `login` in Poster.
-3. Open the email on the same device and follow the sign-in link.
+3. Type the 6-digit code from the email into the app. The code is valid for 10 minutes, and a new code cancels the previous one.
 4. Confirm that **⚙️ Settings** is visible. If it is not, check the employee role in Poster.
+
+If SORT shows **No access yet**, your email is not on the Poster employee list: add it as the employee's `login` (**Access → Employees**) or sign in with another address.
 
 ## 3. Create shelves and rules
 
