@@ -4,11 +4,11 @@ title: "Менеджеру"
 summary: "Налаштування SORT, щоденні рішення та контроль термінів для менеджера кафе."
 locale: "uk"
 translationKey: "manager"
-translationRevision: 3
+translationRevision: 4
 slug: "manager"
 audience: "manager"
-updated: "2026-08-26"
-sourceRevision: 3
+updated: "2026-09-20"
+sourceRevision: 4
 order: 10
 pageKind: "landing"
 ---
@@ -25,6 +25,7 @@ SORT допомагає команді побачити, що закінчуєт
 
 ## Для команди
 
+- [Встановіть SORT на планшет](/guides/install-app/)
 - [Перша зміна бариста](/guides/barista/first-shift/)
 - [Підтвердити або виправити нову партію](/guides/confirm-or-correct-batch/)
 - [Правильно списати партію](/guides/write-off-batch/)
