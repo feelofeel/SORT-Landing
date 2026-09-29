@@ -4,13 +4,13 @@ title: "Write off a batch correctly"
 summary: "Check the physical remainder, choose an honest reason, and safely create the write-off in Poster."
 locale: "en"
 translationKey: "write-off-batch"
-translationRevision: 3
+translationRevision: 4
 slug: "write-off-batch"
 diataxis: "how-to"
 audience: "barista"
-updated: "2026-09-16"
-sourceRevision: 3
-order: 90
+updated: "2026-09-29"
+sourceRevision: 4
+order: 100
 pageKind: "article"
 ---
 
@@ -21,6 +21,8 @@ pageKind: "article"
 5. Confirm the write-off once. For 30 seconds you can tap **Cancel**; SORT does not contact Poster before that window ends.
 
 A full write-off closes the batch. A partial write-off reduces the remainder and keeps the card on its shelf. This action creates the main batch write-off in Poster; configured linked ingredients may also be written off at confirmation or when the batch closes.
+
+If the card shows a remainder but the shelf is empty, there is nothing to write off: choose **📭 Not on the shelf** and enter how much is missing. SORT lowers its own remainder and writes nothing off in Poster, so the manager recounts that item in Poster. Spoiled, broken, or tasting stock is written off with its truthful reason.
 
 If the interface says the outcome is unknown, do not tap again: a manager must check Poster first. If the correct reason is missing, ask the manager to add it in Poster.
 
