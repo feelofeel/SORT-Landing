@@ -8,6 +8,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Semver: `major
 ## [Unreleased]
 
 ### Changed
+- Synchronized the published Ukrainian and English SORT guides from [FEFO `d37d1b2`](https://github.com/feelofeel/fefo/commit/d37d1b2b3f220a3bdca92534ceae8bb48388b7ca).
 
 ---
 
