@@ -4,11 +4,11 @@ title: "Менеджеру"
 summary: "Налаштування SORT, щоденні рішення та контроль термінів для менеджера кафе."
 locale: "uk"
 translationKey: "manager"
-translationRevision: 3
+translationRevision: 5
 slug: "manager"
 audience: "manager"
-updated: "2026-08-26"
-sourceRevision: 3
+updated: "2026-10-10"
+sourceRevision: 5
 order: 10
 pageKind: "landing"
 ---
@@ -23,8 +23,13 @@ SORT допомагає команді побачити, що закінчуєт
 - [Налаштуйте терміни й полиці](/guides/configure-products-and-shelves/) — додайте правила для товарів і місця зберігання.
 - [Опрацюйте рішення менеджера](/guides/resolve-manager-decisions/) — що робити з невідомими термінами, прибраними партіями та змінами в Poster.
 
+## Розкажіть покупцям
+
+- [Публікуйте дописи для покупців у Telegram](/guides/customer-telegram-posts/) — «Свіже сьогодні» та «Знижка сьогодні»: ви перевіряєте текст і самі натискаєте «Опублікувати».
+
 ## Для команди
 
+- [Встановіть SORT на планшет](/guides/install-app/)
 - [Перша зміна бариста](/guides/barista/first-shift/)
 - [Підтвердити або виправити нову партію](/guides/confirm-or-correct-batch/)
 - [Правильно списати партію](/guides/write-off-batch/)
