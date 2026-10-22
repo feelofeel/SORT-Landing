@@ -4,13 +4,13 @@ title: "Configure product shelf life and shelves"
 summary: "Create physical shelves, choose what SORT tracks, and give each product an expiry rule."
 locale: "en"
 translationKey: "configure-products-and-shelves"
-translationRevision: 6
+translationRevision: 7
 slug: "configure-products-and-shelves"
 diataxis: "how-to"
 audience: "manager"
-updated: "2026-09-19"
-sourceRevision: 6
-order: 40
+updated: "2026-10-14"
+sourceRevision: 7
+order: 50
 pageKind: "article"
 ---
 
@@ -30,6 +30,8 @@ A shelf describes a physical location. Shelf life belongs to the product, not th
 3. For a tracked item, enter shelf life in hours and minutes and choose its initial shelf.
 4. For an item you want visible without expiry alerts, choose **Non-perishable**.
 5. Save, then maintain the rule under **Product registry**.
+
+Shelf life counts from the supply time in Poster. If items with a term of a day or more should sell until the end of their last day, turn on **Time and notifications → Shift end → Sell until the end of the shift on the last day of the term**. A batch with a term of 24 hours or more then ends at shift end on the day its term runs out. A shorter term, such as filter coffee's, stays exact to the hour. The setting applies to new batches; batches already on the shelf keep their expiry.
 
 **What to track** decides one thing: what SORT tracks. It never creates a batch. How much is on the shelf right now is a separate question, answered in [Manager decisions](/en/guides/resolve-manager-decisions/).
 

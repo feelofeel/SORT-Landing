@@ -4,12 +4,12 @@ title: "Prepare SORT for the first shift"
 summary: "Connect a manager, configure products, and verify the first batch before the team starts."
 locale: "en"
 translationKey: "first-steps"
-translationRevision: 3
+translationRevision: 6
 slug: "first-steps"
 diataxis: "tutorial"
 audience: "manager"
-updated: "2026-09-19"
-sourceRevision: 3
+updated: "2026-10-16"
+sourceRevision: 6
 order: 20
 pageKind: "article"
 ---
@@ -22,10 +22,12 @@ Make sure ready-made items are **Goods**, items made in the café have tech card
 
 ## 2. Sign in as a manager
 
-1. Open [app.getsort.app](https://app.getsort.app).
+1. [Install SORT on the device](/en/guides/install-app/) if you have not yet, and open the app from the Home Screen. On iPad, a browser tab and the installed app are separate sign-ins.
 2. Enter the work email used as the employee `login` in Poster.
-3. Open the email on the same device and follow the sign-in link.
+3. Type the 6-digit code from the email into the app. The code is valid for 10 minutes, and a new code cancels the previous one.
 4. Confirm that **⚙️ Settings** is visible. If it is not, check the employee role in Poster.
+
+If SORT shows **No access yet**, your email is not on the Poster employee list: add it as the employee's `login` (**Access → Employees**) or sign in with another address.
 
 ## 3. Create shelves and rules
 
@@ -33,7 +35,7 @@ In **Settings → Shelves**, create locations that match the real café, such as
 
 ## 4. Set the shift rhythm
 
-Under **Time and notifications**, set the time zone, weekday and weekend start times, shift end, and the required pushes. Allow notifications on the work tablet.
+Under **Time and notifications**, set the time zone, weekday and weekend start times, shift end, and the required pushes. You can also turn on **Sell until the end of the shift on the last day of the term** there — [how it works](/en/guides/configure-products-and-shelves/). Allow notifications on the work tablet.
 
 ## 5. Run a test batch
 
@@ -47,7 +49,7 @@ Under **Time and notifications**, set the time zone, weekday and weekend start t
 SORT creates batches from supplies. Stock that sat on the shelf before you connected SORT has no supply behind it, so enter it once by hand.
 
 1. Run a stocktake in Poster so its leftovers are fresh. This is optional, but everything below reads those numbers.
-2. Open **Manager decisions → Poster changes** and tap **🔁 Reconcile stock with Poster**.
+2. Open **Manager decisions → Stock** and tap **🔁 Reconcile stock with Poster**.
 3. Every tracked item that Poster has and SORT does not yet becomes a card.
 4. For an item that really is on the shelf, tap **Fix** — SORT creates the batch and the barista confirms it on **Today**.
 5. For a leftover not worth tracking from scratch, tap **Close with no change**.

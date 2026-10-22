@@ -4,11 +4,11 @@ title: "For managers"
 summary: "Set up SORT, handle daily decisions, and keep expiry rules useful for your café."
 locale: "en"
 translationKey: "manager"
-translationRevision: 3
+translationRevision: 6
 slug: "manager"
 audience: "manager"
-updated: "2026-08-26"
-sourceRevision: 3
+updated: "2026-10-16"
+sourceRevision: 6
 order: 10
 pageKind: "landing"
 ---
@@ -21,10 +21,15 @@ The Inventory health card on Manager Home shows the saved check from the start o
 
 - [Prepare your first café](/en/guides/first-steps/) — a guided setup before the first shift.
 - [Configure shelf life and shelves](/en/guides/configure-products-and-shelves/) — add product rules and storage locations.
-- [Resolve manager decisions](/en/guides/resolve-manager-decisions/) — handle unknown expiry, removed batches, and Poster changes.
+- [Resolve manager decisions](/en/guides/resolve-manager-decisions/) — handle unknown expiry, batches waiting for you, and stock differences.
+
+## Tell your customers
+
+- [Post to your customers on Telegram](/en/guides/customer-telegram-posts/) — fresh-today and discount-today posts: you check the text and tap Publish yourself.
 
 ## For the team
 
+- [Install SORT on the tablet](/en/guides/install-app/)
 - [A barista's first shift](/en/guides/barista/first-shift/)
 - [Confirm or correct a new batch](/en/guides/confirm-or-correct-batch/)
 - [Write off a batch correctly](/en/guides/write-off-batch/)
