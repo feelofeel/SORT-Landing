@@ -7,19 +7,19 @@
       "id": "public-barista-first-shift-en",
       "locale": "en",
       "slug": "barista/first-shift",
-      "sourceRevision": 2,
-      "translationRevision": 2,
+      "sourceRevision": 3,
+      "translationRevision": 3,
       "path": "en/barista/first-shift.md",
-      "checksum": "319031280a8c99df9383994fe00c323499acff67680d1a1c28ee1368fbc6d86c"
+      "checksum": "42abe43f27858be3be2e69534fe508f146e74d6bc4363119fd2494571e398efb"
     },
     {
       "id": "public-configure-products-and-shelves-en",
       "locale": "en",
       "slug": "configure-products-and-shelves",
-      "sourceRevision": 6,
-      "translationRevision": 6,
+      "sourceRevision": 7,
+      "translationRevision": 7,
       "path": "en/configure-products-and-shelves.md",
-      "checksum": "3e2f0b7d973ae21bfa7ac59ead36b2e426348f27c4dcf38d847e09ba224cc093"
+      "checksum": "ca0cd87ad0ec9fe5fab6564d40d4cf1dd770f63bdbb3b125f7cf21b8da30d41d"
     },
     {
       "id": "public-confirm-or-correct-batch-en",
@@ -28,25 +28,43 @@
       "sourceRevision": 3,
       "translationRevision": 3,
       "path": "en/confirm-or-correct-batch.md",
-      "checksum": "9981a1e54e7b23ae0edaf88a12d6d406d6b22902d5ef3bce059717150e224c28"
+      "checksum": "2b494a454b9c0de8ff6fd0df1cd78517a27931078cf891b3ed1bd8bebdf14a38"
+    },
+    {
+      "id": "public-customer-telegram-posts-en",
+      "locale": "en",
+      "slug": "customer-telegram-posts",
+      "sourceRevision": 3,
+      "translationRevision": 3,
+      "path": "en/customer-telegram-posts.md",
+      "checksum": "d8935b3b00300f4aa8540e2dfcd6fe727d829c60b4d881ecc3bf495c5062b16e"
     },
     {
       "id": "public-first-steps-en",
       "locale": "en",
       "slug": "first-steps",
-      "sourceRevision": 3,
-      "translationRevision": 3,
+      "sourceRevision": 6,
+      "translationRevision": 6,
       "path": "en/first-steps.md",
-      "checksum": "c5ab5c5e93b13bf69dc994f1ccc73fad1d2879e1cf935e5989180737a6329348"
+      "checksum": "114aaf37a70528928a0a0e3f55ea3e8a85250c7bafe9d93c48af95d484536d25"
+    },
+    {
+      "id": "public-install-app-en",
+      "locale": "en",
+      "slug": "install-app",
+      "sourceRevision": 1,
+      "translationRevision": 1,
+      "path": "en/install-app.md",
+      "checksum": "5487b8206a020f6d3cdb8ff2871e4f30762422041d13093f1d318dda141f0d9b"
     },
     {
       "id": "public-manager-en",
       "locale": "en",
       "slug": "manager",
-      "sourceRevision": 3,
-      "translationRevision": 3,
+      "sourceRevision": 6,
+      "translationRevision": 6,
       "path": "en/manager.md",
-      "checksum": "f5335e63e160cb37112b597d30a3afc4d92b1899393cf82ba863856b34fa1c3f"
+      "checksum": "c2a580db8be9ecc7818f579c2f45435d2b3e294ecde66cb9a1b0996b6361b632"
     },
     {
       "id": "public-product-reference-en",
@@ -55,16 +73,16 @@
       "sourceRevision": 3,
       "translationRevision": 3,
       "path": "en/product-reference.md",
-      "checksum": "17db9aa13cfcc278c848374d2b827957b4834e1d4cd14650063cffd4f3565b73"
+      "checksum": "d09c049a4fa85c06976bc487be5e7dc9cd3f73e42bbd7e8e3d4ce57d64078b8e"
     },
     {
       "id": "public-resolve-manager-decisions-en",
       "locale": "en",
       "slug": "resolve-manager-decisions",
-      "sourceRevision": 6,
-      "translationRevision": 6,
+      "sourceRevision": 9,
+      "translationRevision": 9,
       "path": "en/resolve-manager-decisions.md",
-      "checksum": "f638bd62320a22149527ccf318122b67a3429b08b0fcaf2120e091e57316995c"
+      "checksum": "43d570050e02ee358ba3cef97328f66aaeac2d8f7f9d832b11b4122968302c79"
     },
     {
       "id": "public-sort-and-poster-en",
@@ -73,34 +91,34 @@
       "sourceRevision": 2,
       "translationRevision": 2,
       "path": "en/sort-and-poster.md",
-      "checksum": "41f809962073d001db653900644a854909b12ffc958d797e6b2be2bfd6967df6"
+      "checksum": "bb8a39b6884e77f90d3420b37f6f0b92f93494a18e92ecd7a807d7279524b3a6"
     },
     {
       "id": "public-write-off-batch-en",
       "locale": "en",
       "slug": "write-off-batch",
-      "sourceRevision": 3,
-      "translationRevision": 3,
+      "sourceRevision": 4,
+      "translationRevision": 4,
       "path": "en/write-off-batch.md",
-      "checksum": "20acb100d2efaa9975820de364523a6d056823fb206642e3306aea716a3c5bd2"
+      "checksum": "729f948b09b1a3077e59690db74f06251e61a090d8dc2d470041ab9d87c9d4f7"
     },
     {
       "id": "public-barista-first-shift-uk",
       "locale": "uk",
       "slug": "barista/first-shift",
-      "sourceRevision": 2,
-      "translationRevision": 2,
+      "sourceRevision": 3,
+      "translationRevision": 3,
       "path": "uk/barista/first-shift.md",
-      "checksum": "023dddbb3b46d23056533cab99f673bdf30c022e3013199756c2b2f8192a9e24"
+      "checksum": "827be73402074188686910b290cd93cedb6eda7fcbd0ab13e12f72e382bbc8ba"
     },
     {
       "id": "public-configure-products-and-shelves-uk",
       "locale": "uk",
       "slug": "configure-products-and-shelves",
-      "sourceRevision": 6,
-      "translationRevision": 6,
+      "sourceRevision": 7,
+      "translationRevision": 7,
       "path": "uk/configure-products-and-shelves.md",
-      "checksum": "ad27da6eb279fec895fd271afc453480d99c08c3650d759ba13905813ab274ff"
+      "checksum": "ec9f16b038509f8983c033ce4061ee2e4c403de41ee63530577b4460c6ca02b1"
     },
     {
       "id": "public-confirm-or-correct-batch-uk",
@@ -109,25 +127,43 @@
       "sourceRevision": 3,
       "translationRevision": 3,
       "path": "uk/confirm-or-correct-batch.md",
-      "checksum": "edf7e563d9ce1e555184d9d7ef8ffcfdf2bea85469ee30e5e9fb3b33c642d3ba"
+      "checksum": "17d12b3e59bc90bab34e71517bde16e46f92187657bc9f66c6b4a52df60f4f48"
+    },
+    {
+      "id": "public-customer-telegram-posts-uk",
+      "locale": "uk",
+      "slug": "customer-telegram-posts",
+      "sourceRevision": 3,
+      "translationRevision": 3,
+      "path": "uk/customer-telegram-posts.md",
+      "checksum": "c5c389e9bf28efcd0c7b632f07ff8e7656e902d4df22d8a855c3ea847422e683"
     },
     {
       "id": "public-first-steps-uk",
       "locale": "uk",
       "slug": "first-steps",
-      "sourceRevision": 3,
-      "translationRevision": 3,
+      "sourceRevision": 6,
+      "translationRevision": 6,
       "path": "uk/first-steps.md",
-      "checksum": "0b0ab6b0b3b47c1cb7a5acd8f7a87896d3c2c0851ad26d622fb1bb92eb3980d8"
+      "checksum": "81c4e6a503e5ebd2dc36c8f723c05263eb6ae2d4fb3a178479b1734523c6b1e6"
+    },
+    {
+      "id": "public-install-app-uk",
+      "locale": "uk",
+      "slug": "install-app",
+      "sourceRevision": 1,
+      "translationRevision": 1,
+      "path": "uk/install-app.md",
+      "checksum": "0160702556b8e09b521106423d50b7598578cc8d08d97ef8926107f14b50ce4e"
     },
     {
       "id": "public-manager-uk",
       "locale": "uk",
       "slug": "manager",
-      "sourceRevision": 3,
-      "translationRevision": 3,
+      "sourceRevision": 6,
+      "translationRevision": 6,
       "path": "uk/manager.md",
-      "checksum": "9ad17fb6234e686b522be88964466ea3e0ac7f6500203e1fab88734f07f5860f"
+      "checksum": "358f5e15d099895b40ec30c94967995fc0865dae3518c2d413bd8f5f7cf2e720"
     },
     {
       "id": "public-product-reference-uk",
@@ -136,16 +172,16 @@
       "sourceRevision": 3,
       "translationRevision": 3,
       "path": "uk/product-reference.md",
-      "checksum": "24674bc635ca907a672e11b49cc6757384a2e37c5d9d75d0e084b7a0f9a366a9"
+      "checksum": "4ba8db0ecadc523c49fa4dc7ad30dc90ba1ec143ad9455b70a8264c0e4f84aba"
     },
     {
       "id": "public-resolve-manager-decisions-uk",
       "locale": "uk",
       "slug": "resolve-manager-decisions",
-      "sourceRevision": 6,
-      "translationRevision": 6,
+      "sourceRevision": 9,
+      "translationRevision": 9,
       "path": "uk/resolve-manager-decisions.md",
-      "checksum": "98636c7abde19332ace1a82bf4e893c1dc609e9c789c3df2de8b1bae5977ed2a"
+      "checksum": "761f624962f971da14b792bf8732345061f1843ced218fd7212049ab6cb87389"
     },
     {
       "id": "public-sort-and-poster-uk",
@@ -154,16 +190,16 @@
       "sourceRevision": 2,
       "translationRevision": 2,
       "path": "uk/sort-and-poster.md",
-      "checksum": "a5ad8988ac68b29e61e4bcdbe895f34d762405c30a64fe6abdfb234997258591"
+      "checksum": "adf44c81e8e69be4275183855e16bba76649641aa5cca5071261e0a4a1b0504e"
     },
     {
       "id": "public-write-off-batch-uk",
       "locale": "uk",
       "slug": "write-off-batch",
-      "sourceRevision": 3,
-      "translationRevision": 3,
+      "sourceRevision": 4,
+      "translationRevision": 4,
       "path": "uk/write-off-batch.md",
-      "checksum": "6c830844d7e079d1be07cae7ec21bb83a738f44f97ad77e0cc55cf613eaa09fe"
+      "checksum": "e34c7e50c8ed95a0ae31c4aa8848669c58e63e8737ea5696b832ec5dbb0b2cfd"
     }
   ]
 }
